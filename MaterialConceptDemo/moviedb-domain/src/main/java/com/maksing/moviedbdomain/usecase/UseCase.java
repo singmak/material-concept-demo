@@ -2,7 +2,7 @@
  * Copyright (C) 2014 android10.org. All rights reserved.
  * @author Fernando Cejas (the android10 coder)
  */
-package com.maksing.moviedbdomain.interactor;
+package com.maksing.moviedbdomain.usecase;
 
 /**
  * Common interface for an Interactor {@link Runnable} declared in the application.
@@ -12,7 +12,7 @@ package com.maksing.moviedbdomain.interactor;
  * By convention each Interactor implementation will return the result using a Callback that should
  * be executed in the UI thread.
  */
-public interface Interactor extends Runnable {
+public interface UseCase extends Runnable {
   /**
    * Everything inside this method will be executed asynchronously.
    */
