@@ -12,6 +12,7 @@ import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
  */
 public class MainActivity extends BaseActivity {
     private ListView mList;
+    private MovieListPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected Presenter onCreatePresenter() {
-        return new MovieListPresenter();
+        mPresenter = new MovieListPresenter();
+        return mPresenter;
     }
 }

@@ -18,8 +18,8 @@ public class StateFragment extends Fragment {
     /**
      * Handler for this activity
      */
-    public PauseHandler mHandler;
-    public Presenter mPresenter;
+    private PauseHandler mHandler;
+    private Presenter mPresenter;
 
     public static StateFragment createInstance(FragmentManager fragmentManager, PauseHandler handler, Presenter presenter) {
         StateFragment fragment = (StateFragment)fragmentManager.findFragmentByTag(TAG);

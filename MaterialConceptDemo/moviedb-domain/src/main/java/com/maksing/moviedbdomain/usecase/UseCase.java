@@ -12,9 +12,6 @@ package com.maksing.moviedbdomain.usecase;
  * By convention each Interactor implementation will return the result using a Callback that should
  * be executed in the UI thread.
  */
-public interface UseCase extends Runnable {
-  /**
-   * Everything inside this method will be executed asynchronously.
-   */
-  void run();
+public interface UseCase {
+
 }

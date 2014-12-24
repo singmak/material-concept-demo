@@ -29,7 +29,6 @@ public abstract class BaseActivity extends Activity {
     private BaseHandler mBaseHandler = new BaseHandler(this);
     protected CompositeSubscription mSubscriptions = new CompositeSubscription();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +43,10 @@ public abstract class BaseActivity extends Activity {
 
     protected void hideProgressDialog() {
         mStateFragment.getHandler().obtainMessage(MSG_HIDE_PROGRESS_DIALOG, 0, 0).sendToTarget();
+    }
+
+    protected Presenter getPresenter() {
+        return mStateFragment.getPresenter();
     }
 
     protected boolean processMessage(Message message) {
