@@ -6,7 +6,7 @@ import retrofit.RestAdapter;
  * Created by maksing on 23/12/14.
  */
 public class MovieDbConfigDataStoreFactory {
-    private String mEndpoint = "";
+    private final String mEndpoint;
 
     public MovieDbConfigDataStoreFactory(String endpoint) {
         mEndpoint = endpoint;

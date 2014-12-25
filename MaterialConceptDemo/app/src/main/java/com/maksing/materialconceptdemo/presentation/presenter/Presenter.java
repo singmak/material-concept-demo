@@ -13,6 +13,13 @@ public interface Presenter {
      * (Activity or Fragment) onCreate() method.
      */
     void initialize();
+
+    /**
+     * Method that control the lifecycle of the view. It should be called in the view's
+     * (Activity or Fragment) onDestroy() method.
+     */
+    void destroy();
+
     /**
     * Method that control the lifecycle of the view. It should be called in the view's
     * (Activity or Fragment) onResume() method.

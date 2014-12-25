@@ -1,12 +1,11 @@
-package com.maksing.moviedbdata.repository;
+package com.maksing.moviedbdata.service;
 
 import android.content.Context;
 
 import com.maksing.moviedbdata.data.ConfigurationData;
-import com.maksing.moviedbdata.datastore.MovieDbConfigDataStore;
 import com.maksing.moviedbdata.datastore.MovieDbConfigDataStoreFactory;
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
-import com.maksing.moviedbdomain.repository.ConfigurationRepository;
+import com.maksing.moviedbdomain.service.ConfigurationService;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -15,19 +14,20 @@ import rx.schedulers.Schedulers;
 /**
  * Created by maksing on 24/12/14.
  */
-public class ConfigurationDataRepository implements ConfigurationRepository {
-    MovieDbConfigDataStore mMovieDbConfigDataStore;
-    Context mContext;
-    String mApiKey;
-    MovieDbConfig mCachedMovieDbConfig;
+public class ConfigurationDataService implements ConfigurationService {
+    private final MovieDbConfigDataStoreFactory mMovieDbConfigDataStoreFactory;
+    private final Context mContext;
+    private final String mApiKey;
 
-    private static volatile ConfigurationDataRepository sInstance;
+    private MovieDbConfig mCachedMovieDbConfig;
 
-    public static ConfigurationDataRepository getInstance(Context context, MovieDbConfigDataStoreFactory builder, String apiKey) {
+    private static volatile ConfigurationDataService sInstance;
+
+    public static ConfigurationDataService getInstance(Context context, MovieDbConfigDataStoreFactory factory, String apiKey) {
         if (sInstance == null) {
-            synchronized (ConfigurationDataRepository.class) {
+            synchronized (ConfigurationDataService.class) {
                 if (sInstance == null) {
-                    sInstance = new ConfigurationDataRepository(context, builder, apiKey);
+                    sInstance = new ConfigurationDataService(context, factory, apiKey);
                 }
             }
         }
@@ -35,12 +35,12 @@ public class ConfigurationDataRepository implements ConfigurationRepository {
     }
 
     //Make it private to disallow to call constructor directly
-    private ConfigurationDataRepository(Context context, MovieDbConfigDataStoreFactory factory, String apiKey) {
+    private ConfigurationDataService(Context context, MovieDbConfigDataStoreFactory factory, String apiKey) {
         if (context == null || factory == null || apiKey == null) {
             throw new IllegalArgumentException("Arguments must not be null in constructing ConfigurationDataRepository");
         }
 
-        mMovieDbConfigDataStore = factory.create();
+        mMovieDbConfigDataStoreFactory = factory;
         mContext = context;
         mApiKey = apiKey;
     }
@@ -50,7 +50,7 @@ public class ConfigurationDataRepository implements ConfigurationRepository {
         if (mCachedMovieDbConfig != null) {
             return Observable.just(mCachedMovieDbConfig);
         } else {
-            return mMovieDbConfigDataStore.getConfiguration(mApiKey).map(new Func1<ConfigurationData, MovieDbConfig>() {
+            return mMovieDbConfigDataStoreFactory.create().getConfiguration(mApiKey).map(new Func1<ConfigurationData, MovieDbConfig>() {
                 @Override
                 public MovieDbConfig call(ConfigurationData configurationData) {
                     //TODO: do the mapping

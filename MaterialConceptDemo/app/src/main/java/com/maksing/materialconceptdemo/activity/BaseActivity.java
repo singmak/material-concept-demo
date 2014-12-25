@@ -1,15 +1,12 @@
 package com.maksing.materialconceptdemo.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Message;
 
 import com.maksing.materialconceptdemo.fragment.ProgressDialogFragment;
 import com.maksing.materialconceptdemo.fragment.StateFragment;
 import com.maksing.materialconceptdemo.handler.PauseHandler;
-import com.maksing.materialconceptdemo.presentation.presenter.MovieListPresenter;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 
 import java.lang.ref.WeakReference;

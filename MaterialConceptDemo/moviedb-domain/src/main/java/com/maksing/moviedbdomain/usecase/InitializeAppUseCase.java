@@ -1,47 +1,40 @@
 package com.maksing.moviedbdomain.usecase;
 
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
-import com.maksing.moviedbdomain.repository.ConfigurationRepository;
+import com.maksing.moviedbdomain.entity.Session;
+import com.maksing.moviedbdomain.service.ServiceHolder;
 
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.functions.Action0;
-import rx.functions.Action1;
+import rx.Observable;
+import rx.functions.Func1;
 
 /**
- * Created by maksing on 24/12/14.
+ * Created by maksing on 26/12/14.
  */
-public class InitializeAppUseCase implements UseCase {
-    private ConfigurationRepository mConfigurationRepository;
-    private Scheduler mObserverScheduler;
-
-    public InitializeAppUseCase(ConfigurationRepository repository, Scheduler ObserverScheduler) {
-        mConfigurationRepository = repository;
-        mObserverScheduler = ObserverScheduler;
+public class InitializeAppUseCase extends SessionUseCase {
+    public InitializeAppUseCase(ServiceHolder serviceHolder) {
+        super(serviceHolder);
     }
 
-    public void execute(final Callback callback) {
-        mConfigurationRepository.getMovieDbConfiguration().cache().subscribe(new Subscriber<MovieDbConfig>() {
+    public Observable<Boolean> getObservable(final Callback callback) {
+        return getMovieDbConfig().flatMap(new Func1<MovieDbConfig, Observable<MovieDbConfig>>() {
             @Override
-            public void onCompleted() {
-                callback.onInitialized();
+            public Observable<MovieDbConfig> call(MovieDbConfig movieDbConfig) {
+                return callback.onNotified(movieDbConfig);
             }
-
+        }).flatMap(new Func1<MovieDbConfig, Observable<Session>>() {
             @Override
-            public void onError(Throwable e) {
-                callback.onOutageOccured();
+            public Observable<Session> call(MovieDbConfig movieDbConfig) {
+                return getSession();
             }
-
+        }).map(new Func1<Session, Boolean>() {
             @Override
-            public void onNext(MovieDbConfig movieDbConfig) {
-
+            public Boolean call(Session session) {
+                return true;
             }
         });
     }
 
     public interface Callback {
-        void onInitialized();
-        void onOutageOccured();
-        void onSessionExpired();
+        public Observable<MovieDbConfig> onNotified(MovieDbConfig movieDbConfig); //handle this in presentation layer.
     }
 }
