@@ -4,8 +4,6 @@ package com.maksing.moviedbdomain.entity;
  * Created by maksing on 24/12/14.
  */
 public class Session {
-    public static final Session EMPTY_SESSION = new Session(User.EMPTY_USER, "");
-
     private final User mUser;
     private final String mSessionId;
 
@@ -13,7 +11,7 @@ public class Session {
 
         //validate the data
         if (user == null) {
-            user = User.EMPTY_USER;
+            user = User.GUEST;
         }
 
         if (sessionId == null) {
@@ -22,5 +20,9 @@ public class Session {
 
         mUser = user;
         mSessionId = sessionId;
+    }
+
+    public String getUserName() {
+        return mUser.getUsername();
     }
 }

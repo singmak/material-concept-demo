@@ -1,5 +1,6 @@
 package com.maksing.moviedbdomain.service;
 
+import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.MovieList;
 
 import rx.Observable;
@@ -9,4 +10,6 @@ import rx.Observable;
  */
 public interface MovieService {
     public Observable<MovieList> getMovieList();
+    public Observable<MovieList> getTopMovieList(int page, String posterBasePath, String backdropBasePath);
+    public Observable<Movie> getMovieById(int id, String posterBasePath, String backdropBasePath);
 }

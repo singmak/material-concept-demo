@@ -30,6 +30,8 @@ public class InitializePresenter implements Presenter {
 
     @Override
     public void initialize() {
+        mSubscription = new CompositeSubscription();
+
         if (mInitializeRequest == null) {
             mInitializeRequest = mInitializeAppUseCase.getObservable(new InitializeAppUseCase.Callback() {
                 @Override
@@ -54,6 +56,11 @@ public class InitializePresenter implements Presenter {
 
             }
         }));
+    }
+
+    @Override
+    public void destroy() {
+        mSubscription.unsubscribe();
     }
 
     @Override

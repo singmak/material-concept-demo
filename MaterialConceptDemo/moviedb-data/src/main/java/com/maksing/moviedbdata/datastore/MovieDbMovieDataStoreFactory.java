@@ -5,20 +5,20 @@ import retrofit.RestAdapter;
 /**
  * Created by maksing on 23/12/14.
  */
-public class MovieDbConfigDataStoreFactory {
+public class MovieDbMovieDataStoreFactory {
     private final String mEndpoint;
     private final RestAdapter mRestAdapter;
-    private final MovieDbConfigDataStore mResApiDataStore;
+    private final MovieDbMovieDataStore mResApiDataStore;
 
-    public MovieDbConfigDataStoreFactory(String endpoint) {
+    public MovieDbMovieDataStoreFactory(String endpoint) {
         mEndpoint = endpoint;
         mRestAdapter = new RestAdapter.Builder()
                 .setEndpoint(mEndpoint)
                 .build();
-        mResApiDataStore = mRestAdapter.create(MovieDbConfigDataStore.class);
+        mResApiDataStore = mRestAdapter.create(MovieDbMovieDataStore.class);
     }
 
-    public MovieDbConfigDataStore create() {
+    public MovieDbMovieDataStore create() {
         return mResApiDataStore;
     }
 }

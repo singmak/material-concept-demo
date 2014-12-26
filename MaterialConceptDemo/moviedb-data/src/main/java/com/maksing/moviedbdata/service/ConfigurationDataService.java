@@ -3,9 +3,12 @@ package com.maksing.moviedbdata.service;
 import android.content.Context;
 
 import com.maksing.moviedbdata.data.ConfigurationData;
+import com.maksing.moviedbdata.data.ImageConfigData;
 import com.maksing.moviedbdata.datastore.MovieDbConfigDataStoreFactory;
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.service.ConfigurationService;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -18,8 +21,6 @@ public class ConfigurationDataService implements ConfigurationService {
     private final MovieDbConfigDataStoreFactory mMovieDbConfigDataStoreFactory;
     private final Context mContext;
     private final String mApiKey;
-
-    private MovieDbConfig mCachedMovieDbConfig;
 
     private static volatile ConfigurationDataService sInstance;
 
@@ -47,17 +48,22 @@ public class ConfigurationDataService implements ConfigurationService {
 
     @Override
     public Observable<MovieDbConfig> getMovieDbConfiguration() {
-        if (mCachedMovieDbConfig != null) {
-            return Observable.just(mCachedMovieDbConfig);
-        } else {
-            return mMovieDbConfigDataStoreFactory.create().getConfiguration(mApiKey).map(new Func1<ConfigurationData, MovieDbConfig>() {
-                @Override
-                public MovieDbConfig call(ConfigurationData configurationData) {
-                    //TODO: do the mapping
-                    mCachedMovieDbConfig = new MovieDbConfig();
-                    return mCachedMovieDbConfig;
+        return mMovieDbConfigDataStoreFactory.create().getConfiguration(mApiKey).map(new Func1<ConfigurationData, MovieDbConfig>() {
+            @Override
+            public MovieDbConfig call(ConfigurationData configurationData) {
+                ImageConfigData imageConfigData = configurationData.getImage();
+                String baseUrl = "";
+                List<String> posterSizesList = null;
+                List<String> backdropSizesList = null;
+
+                if (imageConfigData != null) {
+                    baseUrl = imageConfigData.getBaseUrl();
+                    posterSizesList = imageConfigData.getPosterSizes();
+                    backdropSizesList = imageConfigData.getBackdropSizes();
                 }
-            }).subscribeOn(Schedulers.io());
-        }
+
+                return new MovieDbConfig(baseUrl, posterSizesList, backdropSizesList);
+            }
+        }).subscribeOn(Schedulers.io());
     }
 }

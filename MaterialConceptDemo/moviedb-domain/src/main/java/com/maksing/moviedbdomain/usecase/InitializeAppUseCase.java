@@ -24,7 +24,7 @@ public class InitializeAppUseCase extends SessionUseCase {
         }).flatMap(new Func1<MovieDbConfig, Observable<Session>>() {
             @Override
             public Observable<Session> call(MovieDbConfig movieDbConfig) {
-                return getSession();
+                return getCurrentSession();
             }
         }).map(new Func1<Session, Boolean>() {
             @Override

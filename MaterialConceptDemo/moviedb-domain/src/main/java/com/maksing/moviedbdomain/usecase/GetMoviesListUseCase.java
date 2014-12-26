@@ -3,7 +3,6 @@ package com.maksing.moviedbdomain.usecase;
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.entity.MovieList;
 import com.maksing.moviedbdomain.entity.Session;
-import com.maksing.moviedbdomain.service.ConfigurationService;
 import com.maksing.moviedbdomain.service.MovieService;
 import com.maksing.moviedbdomain.service.ServiceHolder;
 
@@ -23,7 +22,7 @@ public class GetMoviesListUseCase extends SessionUseCase {
     }
 
     public Observable<MovieList> getObservable() {
-        return Observable.zip(getMovieDbConfig(), getSession(), new Func2<MovieDbConfig, Session, Observable<MovieList>>() {
+        return Observable.zip(getMovieDbConfig(), getCurrentSession(), new Func2<MovieDbConfig, Session, Observable<MovieList>>() {
             @Override
             public Observable<MovieList> call(MovieDbConfig movieDbConfig, Session session) {
                 return mMovieService.getMovieList();
