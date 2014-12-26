@@ -1,6 +1,8 @@
 package com.maksing.materialconceptdemo.activity;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Message;
 
@@ -24,12 +26,18 @@ public abstract class BaseActivity extends Activity {
 
     protected StateFragment mStateFragment;
     private BaseHandler mBaseHandler = new BaseHandler(this);
-    protected CompositeSubscription mSubscriptions = new CompositeSubscription();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mStateFragment = StateFragment.createInstance(getFragmentManager(), mBaseHandler, onCreatePresenter());
+        mStateFragment = StateFragment.getInstance(getFragmentManager());
+
+        if (mStateFragment == null) {
+            mStateFragment = StateFragment.createInstance(mBaseHandler, onCreatePresenter());
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(mStateFragment, StateFragment.TAG);
+            ft.commit();
+        }
     }
 
     protected abstract Presenter onCreatePresenter();

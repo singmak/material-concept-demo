@@ -13,10 +13,7 @@ public class ProgressDialogFragment extends DialogFragment {
     public static final String TAG = "ProgressDialogFragment";
 
     public static ProgressDialogFragment createInstance(FragmentManager fragmentManager) {
-        ProgressDialogFragment fragment = getInstance(fragmentManager);
-        if (fragment == null) {
-            fragment = new ProgressDialogFragment();
-        }
+        ProgressDialogFragment fragment = new ProgressDialogFragment();
         return fragment;
     }
 

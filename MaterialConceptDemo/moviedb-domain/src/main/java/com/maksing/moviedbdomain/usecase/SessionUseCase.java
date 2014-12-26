@@ -24,6 +24,6 @@ public class SessionUseCase implements UseCase {
     }
 
     protected Observable<Session> getSession() {
-        return mSessionService.getSession();
+        return mSessionService.getAuthenticatedSession();
     }
 }

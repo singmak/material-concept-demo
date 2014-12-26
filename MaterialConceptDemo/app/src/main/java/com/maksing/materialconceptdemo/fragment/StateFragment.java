@@ -8,12 +8,14 @@ import android.os.Handler;
 import com.maksing.materialconceptdemo.handler.PauseHandler;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 
+import java.util.HashMap;
+
 /**
  * Created by maksing on 23/12/14.
  */
 public class StateFragment extends Fragment {
 
-    static final String TAG = "com.maksing.materialconceptdemo.fragment.StateFragment";
+    public static final String TAG = "com.maksing.materialconceptdemo.fragment.StateFragment";
 
     /**
      * Handler for this activity
@@ -21,16 +23,22 @@ public class StateFragment extends Fragment {
     private PauseHandler mHandler;
     private Presenter mPresenter;
 
-    public static StateFragment createInstance(FragmentManager fragmentManager, PauseHandler handler, Presenter presenter) {
-        StateFragment fragment = (StateFragment)fragmentManager.findFragmentByTag(TAG);
+    private HashMap<String, Presenter> mChildPresentersMap = new HashMap<>();
 
-        if (fragment == null) {
-            fragment = new StateFragment();
-            fragment.mPresenter = presenter; //presenter is only set once, it cannot be set when there's a retained fragment.
-        }
+    public static StateFragment createInstance(PauseHandler handler, Presenter presenter) {
+        StateFragment fragment = new StateFragment();
+        fragment.mPresenter = presenter; //presenter is only set once, it cannot be set when there's a retained fragment.
         fragment.mHandler = handler;
 
         return fragment;
+    }
+
+    public static StateFragment getInstance(FragmentManager fragmentManager) {
+        Fragment fragment = fragmentManager.findFragmentByTag(TAG);
+        if (fragment instanceof StateFragment) {
+            return (StateFragment)fragment;
+        }
+        return null;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.maksing.materialconceptdemo.activity;
+package com.maksing.materialconceptdemo;
 
 import android.app.Application;
 

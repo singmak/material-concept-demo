@@ -21,8 +21,6 @@ public class SessionDataService implements SessionService {
     private final Context mContext;
     private final String mApiKey;
 
-    private Session mCurrentSession;
-
     private static volatile SessionDataService sInstance;
 
     public static SessionDataService getInstance(Context context, MovieDbConfigDataStoreFactory factory, String apiKey) {
@@ -48,7 +46,7 @@ public class SessionDataService implements SessionService {
     }
 
     @Override
-    public Observable<Session> getSession() {
+    public Observable<Session> getAuthenticatedSession() {
         if (mCurrentSession != null) {
             return Observable.just(mCurrentSession);
         } else {
@@ -61,5 +59,10 @@ public class SessionDataService implements SessionService {
                 }
             }).subscribeOn(Schedulers.io());
         }
+    }
+
+    @Override
+    public Observable<Session> getGuestSession() {
+        return null;
     }
 }
