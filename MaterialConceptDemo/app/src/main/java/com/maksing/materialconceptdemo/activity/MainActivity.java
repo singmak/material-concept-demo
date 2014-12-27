@@ -22,8 +22,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected Presenter onCreatePresenter() {
-        mPresenter = new MovieListPresenter();
-        return mPresenter;
+    protected Presenter onCreatePresenter(Presenter presenter) {
+        return null;
     }
+
 }

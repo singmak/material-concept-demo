@@ -7,6 +7,7 @@ import java.util.List;
  * Created by maksing on 25/12/14.
  */
 public class Movie {
+    private final String mId;
     private final String mTitle;
     private final String mPosterSource;
     private final String mBackdropSource;
@@ -14,7 +15,12 @@ public class Movie {
     private String mDescription = "";
     private List<String> mGenres = new ArrayList<>();
 
-    public Movie(String title, String posterSource, String backdropSource) {
+    public Movie(String id, String title, String posterSource, String backdropSource) {
+
+        if (id == null) {
+            id = "";
+        }
+
         if (title == null) {
             title = "";
         }
@@ -27,6 +33,7 @@ public class Movie {
             backdropSource = "";
         }
 
+        mId = id;
         mTitle = title;
         mPosterSource = posterSource;
         mBackdropSource = backdropSource;

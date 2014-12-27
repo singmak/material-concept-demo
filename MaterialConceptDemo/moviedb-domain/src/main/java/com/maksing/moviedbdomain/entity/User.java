@@ -4,7 +4,7 @@ package com.maksing.moviedbdomain.entity;
  * Created by maksing on 24/12/14.
  */
 public class User {
-    public static final User GUEST = new User("", "");
+    public static final User GUEST = new User("", "Guest");
 
     private final String mId;
     private final String mUsername;

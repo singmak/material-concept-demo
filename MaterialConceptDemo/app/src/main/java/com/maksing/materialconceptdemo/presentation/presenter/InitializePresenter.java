@@ -1,5 +1,7 @@
 package com.maksing.materialconceptdemo.presentation.presenter;
 
+import android.util.Log;
+
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.usecase.InitializeAppUseCase;
@@ -8,7 +10,10 @@ import com.maksing.moviedbdomain.usecase.SessionUseCase;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -22,43 +27,55 @@ public class InitializePresenter implements Presenter {
 
     private Observable<Boolean> mInitializeRequest;
 
-    public InitializePresenter(InitializeView view, InitializeAppUseCase initializeAppUseCase) {
-        mInitializeView = view;
+    public InitializePresenter(InitializeAppUseCase initializeAppUseCase) {
         mInitializeAppUseCase = initializeAppUseCase;
 
     }
 
-    @Override
-    public void initialize() {
+    public void initialize(InitializeView view) {
+        mInitializeView = view;
+
         mSubscription = new CompositeSubscription();
 
         if (mInitializeRequest == null) {
             mInitializeRequest = mInitializeAppUseCase.getObservable(new InitializeAppUseCase.Callback() {
                 @Override
-                public Observable<MovieDbConfig> onNotified(MovieDbConfig movieDbConfig) {
-                    return null;
+                public Observable<Boolean> onInitialized() {
+                    return mInitializeView.showConfirmDialog().map(new Func1<Integer, Boolean>() {
+                        @Override
+                        public Boolean call(Integer whichButton) {
+                            switch (whichButton) {
+                                case Presenter.DIALOG_OK:
+                                    return true;
+                                case Presenter.DIALOG_CANCEL:
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
                 }
-            }).cache();
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
+
         mSubscription.add(mInitializeRequest.subscribe(new Subscriber<Boolean>() {
             @Override
             public void onCompleted() {
-
+                Log.d("", "demo:yeah");
             }
 
             @Override
             public void onError(Throwable e) {
-
+                e.printStackTrace();
+                Log.d("", "demo:error");
             }
 
             @Override
             public void onNext(Boolean aBoolean) {
-
+                Log.d("", "demo:next");
             }
         }));
     }
 
-    @Override
     public void destroy() {
         mSubscription.unsubscribe();
     }

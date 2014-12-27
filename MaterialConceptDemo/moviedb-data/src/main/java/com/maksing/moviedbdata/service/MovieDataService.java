@@ -67,7 +67,7 @@ public class MovieDataService implements MovieService {
 
                 if (movieListData.getResults() != null) {
                     for (Result result : movieListData.getResults()) {
-                        movies.add(new Movie(result.getTitle(), posterBasePath + result.getPosterPath(), backdropBasePath + result.getBackdropPath()));
+                        movies.add(new Movie(String.valueOf(result.getId()), result.getTitle(), posterBasePath + result.getPosterPath(), backdropBasePath + result.getBackdropPath()));
                     }
                 }
 
@@ -81,7 +81,7 @@ public class MovieDataService implements MovieService {
         return mMovieDbMovieDataStoreFactory.create().getMovieById(mApiKey, id).map(new Func1<MovieData, Movie>() {
             @Override
             public Movie call(MovieData movieData) {
-                Movie movie = new Movie(movieData.getTitle(), posterBasePath + movieData.getPosterPath(), backdropBasePath + movieData.getBackdropPath());
+                Movie movie = new Movie(String.valueOf(movieData.getId()), movieData.getTitle(), posterBasePath + movieData.getPosterPath(), backdropBasePath + movieData.getBackdropPath());
                 movie.setDescription(movieData.getOverview());
 
                 List<String> genres = new ArrayList<>();

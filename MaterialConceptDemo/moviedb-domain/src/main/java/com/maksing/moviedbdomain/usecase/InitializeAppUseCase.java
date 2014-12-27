@@ -2,6 +2,7 @@ package com.maksing.moviedbdomain.usecase;
 
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.entity.Session;
+import com.maksing.moviedbdomain.manager.AuthenticationManager;
 import com.maksing.moviedbdomain.service.ServiceHolder;
 
 import rx.Observable;
@@ -16,25 +17,33 @@ public class InitializeAppUseCase extends SessionUseCase {
     }
 
     public Observable<Boolean> getObservable(final Callback callback) {
-        return getMovieDbConfig().flatMap(new Func1<MovieDbConfig, Observable<MovieDbConfig>>() {
+        return getMovieDbConfig().cache().flatMap(new Func1<MovieDbConfig, Observable<Boolean>>() {
             @Override
-            public Observable<MovieDbConfig> call(MovieDbConfig movieDbConfig) {
-                return callback.onNotified(movieDbConfig);
+            public Observable<Boolean> call(MovieDbConfig movieDbConfig) {
+                if (AuthenticationManager.getInstance().getCurrentSession() == null) {
+                    return callback.onInitialized();
+                } else {
+                    return Observable.just(true);
+                }
             }
-        }).flatMap(new Func1<MovieDbConfig, Observable<Session>>() {
+        }).flatMap(new Func1<Boolean, Observable<Session>>() {
             @Override
-            public Observable<Session> call(MovieDbConfig movieDbConfig) {
-                return getCurrentSession();
+            public Observable<Session> call(Boolean startSession) {
+                if (startSession) {
+                    return getCurrentSession();
+                } else {
+                    return null;
+                }
             }
         }).map(new Func1<Session, Boolean>() {
             @Override
             public Boolean call(Session session) {
-                return true;
+                return !(session == null);
             }
         });
     }
 
     public interface Callback {
-        public Observable<MovieDbConfig> onNotified(MovieDbConfig movieDbConfig); //handle this in presentation layer.
+        public Observable<Boolean> onInitialized(); //handle this in presentation layer. Presenter should return true if want to start session.
     }
 }

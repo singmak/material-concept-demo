@@ -7,8 +7,9 @@ import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
  * Created by maksing on 25/12/14.
  */
 public class SignInActivity extends BaseActivity{
+
     @Override
-    protected Presenter onCreatePresenter() {
+    protected Presenter onCreatePresenter(Presenter presenter) {
         return null;
     }
 }

@@ -12,7 +12,7 @@ import android.os.Bundle;
 public class ProgressDialogFragment extends DialogFragment {
     public static final String TAG = "ProgressDialogFragment";
 
-    public static ProgressDialogFragment createInstance(FragmentManager fragmentManager) {
+    public static ProgressDialogFragment createInstance() {
         ProgressDialogFragment fragment = new ProgressDialogFragment();
         return fragment;
     }

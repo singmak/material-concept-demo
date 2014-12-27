@@ -41,6 +41,10 @@ public class StateFragment extends Fragment {
         return null;
     }
 
+    public void setHandler(PauseHandler handler) {
+        mHandler = handler;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

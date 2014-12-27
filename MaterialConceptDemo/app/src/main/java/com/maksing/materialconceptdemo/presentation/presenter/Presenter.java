@@ -8,17 +8,9 @@ package com.maksing.materialconceptdemo.presentation.presenter;
  * Interface representing a Presenter in a model view presenter (MVP) pattern.
  */
 public interface Presenter {
-    /**
-     * Method that control the lifecycle of the view. It should be called in the view's
-     * (Activity or Fragment) onCreate() method.
-     */
-    void initialize();
 
-    /**
-     * Method that control the lifecycle of the view. It should be called in the view's
-     * (Activity or Fragment) onDestroy() method.
-     */
-    void destroy();
+    public static int DIALOG_OK = 0;
+    public static int DIALOG_CANCEL = 1;
 
     /**
     * Method that control the lifecycle of the view. It should be called in the view's

@@ -31,23 +31,58 @@ public abstract class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStateFragment = StateFragment.getInstance(getFragmentManager());
+    }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         if (mStateFragment == null) {
-            mStateFragment = StateFragment.createInstance(mBaseHandler, onCreatePresenter());
+            mStateFragment = StateFragment.createInstance(mBaseHandler, onCreatePresenter(null));
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(mStateFragment, StateFragment.TAG);
             ft.commit();
+        } else {
+            onCreatePresenter(mStateFragment.getPresenter());
+            mStateFragment.setHandler(mBaseHandler);
         }
     }
 
-    protected abstract Presenter onCreatePresenter();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getPresenter() != null) {
+            getPresenter().resume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (getPresenter() != null) {
+            getPresenter().pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mStateFragment.setHandler(null);
+        super.onDestroy();
+    }
+
+    protected abstract Presenter onCreatePresenter(Presenter presenter);
+
+    protected void postHandlerMessage(int what) {
+        if (mStateFragment.getHandler() != null) {
+            mStateFragment.getHandler().obtainMessage(what, 0, 0).sendToTarget();
+        }
+    }
 
     protected void showProgressDialog() {
-        mStateFragment.getHandler().obtainMessage(MSG_SHOW_PROGRESS_DIALOG, 0, 0).sendToTarget();
+        postHandlerMessage(MSG_SHOW_PROGRESS_DIALOG);
     }
 
     protected void hideProgressDialog() {
-        mStateFragment.getHandler().obtainMessage(MSG_HIDE_PROGRESS_DIALOG, 0, 0).sendToTarget();
+        postHandlerMessage(MSG_HIDE_PROGRESS_DIALOG);
     }
 
     protected Presenter getPresenter() {
@@ -67,7 +102,10 @@ public abstract class BaseActivity extends Activity {
     }
 
     private void processShowProgressDialog() {
-        ProgressDialogFragment fragment = ProgressDialogFragment.createInstance(getFragmentManager());
+        ProgressDialogFragment fragment = ProgressDialogFragment.getInstance(getFragmentManager());
+        if (fragment == null) {
+            ProgressDialogFragment.createInstance();
+        }
 
         if (!fragment.isAdded()) {
             fragment.show(getFragmentManager(), ProgressDialogFragment.TAG);

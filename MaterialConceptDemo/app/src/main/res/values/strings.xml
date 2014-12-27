@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Material Concept Demo</string>
     <string name="moviedb_apikey">dfb0c59040ada3bb78403a75c4772977</string>
-    <string name="api_endpoint">http:\/\/api.themoviedb.org\/3\/</string>
+    <string name="api_endpoint">http://api.themoviedb.org/3/</string>
+    <string name="status_loading">Loading...</string>
+    <string name="status_loading_configuration">Loading Configuration...</string>
+    <string name="status_initialize_session">Initializing Session...</string>
+    <string name="confirm_ok">OK</string>
+    <string name="confirm_cancel">Cancel</string>
+    <string name="initialized_message">Configuration initialized. Start session?</string>
 </resources>
