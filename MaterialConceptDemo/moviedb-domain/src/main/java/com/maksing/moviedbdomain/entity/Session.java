@@ -25,4 +25,8 @@ public class Session {
     public String getUserName() {
         return mUser.getUsername();
     }
+
+    public String getSessionId() {
+        return mSessionId;
+    }
 }

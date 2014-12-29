@@ -76,7 +76,7 @@ public class SessionDataService implements SessionService {
         return mFactory.create().login(mApiKey, requestToken, userName, password).map(new Func1<RequestTokenData, String>() {
             @Override
             public String call(RequestTokenData requestTokenData) {
-                return null;
+                return requestTokenData.getRequestToken();
             }
         });
     }

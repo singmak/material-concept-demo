@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.maksing.testdata">
+          package="com.maksing.moviedbdata">
 
     <application android:allowBackup="true">
     </application>

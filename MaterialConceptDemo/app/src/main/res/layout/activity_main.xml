@@ -5,6 +5,8 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <include layout="@layout/toolbar"/>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"

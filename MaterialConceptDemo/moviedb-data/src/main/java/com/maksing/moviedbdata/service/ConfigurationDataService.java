@@ -1,11 +1,18 @@
 package com.maksing.moviedbdata.service;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
 
+import com.maksing.moviedbdata.R;
 import com.maksing.moviedbdata.data.ConfigurationData;
 import com.maksing.moviedbdata.data.ImageConfigData;
 import com.maksing.moviedbdata.datastore.MovieDbConfigDataStoreFactory;
+import com.maksing.moviedbdomain.entity.DeviceConfig;
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
+import com.maksing.moviedbdomain.entity.Session;
+import com.maksing.moviedbdomain.entity.User;
+import com.maksing.moviedbdomain.manager.AuthenticationManager;
 import com.maksing.moviedbdomain.service.ConfigurationService;
 
 import java.util.List;
@@ -21,6 +28,10 @@ public class ConfigurationDataService implements ConfigurationService {
     private final MovieDbConfigDataStoreFactory mMovieDbConfigDataStoreFactory;
     private final Context mContext;
     private final String mApiKey;
+    private static final String PREF_SETTINGS = "PREF_SETTINGS";
+    private static final String KEY_USERNAME = "USERNAME";
+    private static final String KEY_ID = "KEY_ID";
+    private static final String KEY_SESSION_ID = "KEY_SESSION_ID";
 
     private static volatile ConfigurationDataService sInstance;
 
@@ -65,5 +76,21 @@ public class ConfigurationDataService implements ConfigurationService {
                 return new MovieDbConfig(baseUrl, posterSizesList, backdropSizesList);
             }
         }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<DeviceConfig> getDeviceConfiguration() {
+
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+
+        String username = sharedPreferences.getString(KEY_USERNAME, "");
+        String id = sharedPreferences.getString(KEY_ID, "");
+        String sessionId = sharedPreferences.getString(KEY_SESSION_ID, "");
+
+        if (!TextUtils.isEmpty(sessionId)) {
+            AuthenticationManager.getInstance().setCurrentSession(new Session(new User(id, username), sessionId));
+        }
+
+        return Observable.just(new DeviceConfig(mContext.getResources().getBoolean(R.bool.isTablet)));
     }
 }

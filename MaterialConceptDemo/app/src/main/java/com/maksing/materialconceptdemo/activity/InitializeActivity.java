@@ -5,22 +5,19 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Message;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.fragment.ConfirmDialogFragment;
 import com.maksing.materialconceptdemo.manager.ServiceManager;
+import com.maksing.materialconceptdemo.navigation.Navigator;
 import com.maksing.materialconceptdemo.presentation.presenter.InitializePresenter;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
-import com.maksing.moviedbdata.datastore.MovieDbConfigDataStoreFactory;
-import com.maksing.moviedbdata.service.ConfigurationDataService;
-import com.maksing.moviedbdomain.service.ConfigurationService;
-import com.maksing.moviedbdomain.usecase.InitializeAppUseCase;
-import com.maksing.moviedbdomain.usecase.SessionUseCase;
+import com.maksing.moviedbdomain.usecase.InitializeSessionUseCase;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by maksing on 24/12/14.
@@ -39,7 +36,7 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mStatusText = (TextView)findViewById(R.id.status_text);
-        mStatusText.setText(R.string.status_loading);
+        mStatusText.setText(R.string.status_loading_configuration);
 
         Fragment fragment = getFragmentManager().findFragmentByTag(TAG_CONFIRM_DIALOG);
         if (fragment instanceof ConfirmDialogFragment) {
@@ -57,7 +54,7 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
     @Override
     protected Presenter onCreatePresenter(Presenter presenter) {
         if (presenter == null) {
-            presenter = new InitializePresenter(new InitializeAppUseCase(ServiceManager.getInstance().getServiceHolder()));
+            presenter = new InitializePresenter(new InitializeSessionUseCase(ServiceManager.getInstance().getServiceHolder()));
         }
 
         mPresenter = (InitializePresenter)presenter;
@@ -67,17 +64,19 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
 
     @Override
     public void gotoOutagePage() {
-
+        mStatusText.setText("Error.");
     }
 
     @Override
     public void gotoSignInPage() {
-
+        Navigator.gotoSignInPage(this);
+        finish();
     }
 
     @Override
     public void gotoHomePage() {
-
+        Navigator.gotoMainPage(this);
+        finish();
     }
 
     @Override

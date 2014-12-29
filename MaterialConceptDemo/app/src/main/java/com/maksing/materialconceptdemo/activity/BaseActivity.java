@@ -1,11 +1,12 @@
 package com.maksing.materialconceptdemo.activity;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 
+import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.fragment.ProgressDialogFragment;
 import com.maksing.materialconceptdemo.fragment.StateFragment;
 import com.maksing.materialconceptdemo.handler.PauseHandler;
@@ -13,12 +14,10 @@ import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 
 import java.lang.ref.WeakReference;
 
-import rx.subscriptions.CompositeSubscription;
-
 /**
  * Created by maksing on 22/12/14.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends ActionBarActivity {
     protected final String TAG = getClass().getSimpleName();
 
     static final int MSG_SHOW_PROGRESS_DIALOG = 1;
@@ -31,6 +30,10 @@ public abstract class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStateFragment = StateFragment.getInstance(getFragmentManager());
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
     }
 
     @Override

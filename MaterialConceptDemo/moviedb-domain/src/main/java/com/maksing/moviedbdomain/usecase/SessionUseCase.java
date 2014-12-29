@@ -1,5 +1,6 @@
 package com.maksing.moviedbdomain.usecase;
 
+import com.maksing.moviedbdomain.entity.DeviceConfig;
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.entity.Session;
 import com.maksing.moviedbdomain.manager.AuthenticationManager;

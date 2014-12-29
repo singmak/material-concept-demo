@@ -3,15 +3,13 @@ package com.maksing.materialconceptdemo.presentation.presenter;
 import android.util.Log;
 
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
-import com.maksing.moviedbdomain.entity.MovieDbConfig;
-import com.maksing.moviedbdomain.usecase.InitializeAppUseCase;
-import com.maksing.moviedbdomain.usecase.SessionUseCase;
+import com.maksing.moviedbdomain.exception.InvalidSessionException;
+import com.maksing.moviedbdomain.manager.AuthenticationManager;
+import com.maksing.moviedbdomain.usecase.InitializeSessionUseCase;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -22,13 +20,13 @@ import rx.subscriptions.CompositeSubscription;
 public class InitializePresenter implements Presenter {
 
     private InitializeView mInitializeView;
-    private InitializeAppUseCase mInitializeAppUseCase;
+    private InitializeSessionUseCase mInitializeSessionUseCase;
     private CompositeSubscription mSubscription;
 
-    private Observable<Boolean> mInitializeRequest;
+    private Observable<String> mInitializeRequest;
 
-    public InitializePresenter(InitializeAppUseCase initializeAppUseCase) {
-        mInitializeAppUseCase = initializeAppUseCase;
+    public InitializePresenter(InitializeSessionUseCase initializeSessionUseCase) {
+        mInitializeSessionUseCase = initializeSessionUseCase;
 
     }
 
@@ -38,9 +36,9 @@ public class InitializePresenter implements Presenter {
         mSubscription = new CompositeSubscription();
 
         if (mInitializeRequest == null) {
-            mInitializeRequest = mInitializeAppUseCase.getObservable(new InitializeAppUseCase.Callback() {
+            mInitializeRequest = mInitializeSessionUseCase.getObservable(new InitializeSessionUseCase.Callback() {
                 @Override
-                public Observable<Boolean> onInitialized() {
+                public Observable<Boolean> shouldStartGuestSession() {
                     return mInitializeView.showConfirmDialog().map(new Func1<Integer, Boolean>() {
                         @Override
                         public Boolean call(Integer whichButton) {
@@ -57,21 +55,28 @@ public class InitializePresenter implements Presenter {
             }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
 
-        mSubscription.add(mInitializeRequest.subscribe(new Subscriber<Boolean>() {
+        mSubscription.add(mInitializeRequest.subscribe(new Subscriber<String>() {
             @Override
             public void onCompleted() {
-                Log.d("", "demo:yeah");
+
             }
 
             @Override
             public void onError(Throwable e) {
-                e.printStackTrace();
-                Log.d("", "demo:error");
+                if (e instanceof InvalidSessionException) {
+                    InvalidSessionException exception = (InvalidSessionException)e;
+                    switch (exception.getErrorCode()) {
+                        case InvalidSessionException.ERROR_CANCELLED:
+                            mInitializeView.gotoSignInPage();
+
+                    }
+                }
+                mInitializeView.gotoOutagePage();
             }
 
             @Override
-            public void onNext(Boolean aBoolean) {
-                Log.d("", "demo:next");
+            public void onNext(String userName) {
+                mInitializeView.gotoHomePage();
             }
         }));
     }

@@ -25,7 +25,7 @@ public class GetMoviesListUseCase extends SessionUseCase {
         return Observable.zip(getMovieDbConfig(), getCurrentSession(), new Func2<MovieDbConfig, Session, Observable<MovieList>>() {
             @Override
             public Observable<MovieList> call(MovieDbConfig movieDbConfig, Session session) {
-                return mMovieService.getMovieList();
+                return null;
             }
         }).flatMap(new Func1<Observable<MovieList>, Observable<MovieList>>() {
             @Override
