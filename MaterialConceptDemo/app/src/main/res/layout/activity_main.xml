@@ -1,16 +1,31 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- The important thing to note here is the added fitSystemWindows -->
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true">
 
-    <include layout="@layout/toolbar"/>
-
-    <ListView
-        android:id="@+id/list"
+    <!-- Your normal content view -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/list_item"/>
+        android:orientation="vertical">
+        <!-- We use a Toolbar so that our drawer can be displayed
+             in front of the action bar -->
+        <include layout="@layout/toolbar"/>
+    </LinearLayout>
 
-</LinearLayout>
+    <!-- Your drawer view. This can be any view, LinearLayout
+         is just an example. As we have set fitSystemWindows=true
+         this will be displayed under the status bar. -->
+    <LinearLayout
+        android:layout_width="@dimen/drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true">
+
+    </LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>

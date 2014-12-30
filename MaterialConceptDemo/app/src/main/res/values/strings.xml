@@ -5,7 +5,7 @@
     <string name="status_loading">Loading...</string>
     <string name="disclaimer">All content are provided by TMDb.</string>
     <string name="status_loading_configuration">Loading Configuration...</string>
-    <string name="status_initialize_session">Initializing Session...</string>
+    <string name="status_starting_guest_session">Starting guest session...</string>
     <string name="confirm_ok">OK</string>
     <string name="confirm_cancel">Cancel</string>
     <string name="initialized_message">You haven\'t signed in yet. Do you want to use the app as a guest?</string>
@@ -19,5 +19,9 @@
     <string name="ic_search">Search</string>
     <string name="ic_setting">Setting</string>
     <string name="title_home">Home</string>
+
+    <!--drawer-->
+    <string name="navigation_drawer_open">Open</string>>
+    <string name="navigation_drawer_close">Close</string>>
 
 </resources>

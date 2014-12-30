@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="splash_status_textSize">20sp</dimen>
+    <!--general-->
     <dimen name="form_label_textSize">18sp</dimen>
-    <dimen name="detail_header_textSize">25sp</dimen>
+
+    <!--splash-->
+    <dimen name="splash_status_textSize">20sp</dimen>
+    <dimen name="disclaimer_marginTop">50dp</dimen>
+
+    <!--home page-->
     <dimen name="hero_title_textSize">25sp</dimen>
-    <dimen name="disclaimer_marginTop">20dp</dimen>
+    <dimen name="drawer_width">234dp</dimen>
+
+    <!--details-->
+    <dimen name="detail_header_textSize">25sp</dimen>
+
 </resources>

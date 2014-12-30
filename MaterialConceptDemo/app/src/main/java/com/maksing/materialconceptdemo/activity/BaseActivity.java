@@ -7,6 +7,7 @@ import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.fragment.ProgressDialogFragment;
@@ -27,7 +28,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected StateFragment mStateFragment;
     private BaseHandler mBaseHandler = new BaseHandler(this);
-    private Toolbar mToolbar;
+    protected Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,15 @@ public abstract class BaseActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

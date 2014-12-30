@@ -91,6 +91,7 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
                                 subscriber.onNext(Presenter.DIALOG_OK);
+                                mStatusText.setText(R.string.status_starting_guest_session);
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 subscriber.onNext(Presenter.DIALOG_CANCEL);
