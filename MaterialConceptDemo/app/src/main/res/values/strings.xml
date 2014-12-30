@@ -3,6 +3,7 @@
     <string name="moviedb_apikey">dfb0c59040ada3bb78403a75c4772977</string>
     <string name="api_endpoint">http://api.themoviedb.org/3/</string>
     <string name="status_loading">Loading...</string>
+    <string name="disclaimer">All content are provided by TMDb.</string>
     <string name="status_loading_configuration">Loading Configuration...</string>
     <string name="status_initialize_session">Initializing Session...</string>
     <string name="confirm_ok">OK</string>
@@ -13,4 +14,10 @@
     <string name="login_username">User name:</string>
     <string name="login_password">Password:</string>
     <string name="btn_login_text">Login</string>
+
+    <!--app bar-->
+    <string name="ic_search">Search</string>
+    <string name="ic_setting">Setting</string>
+    <string name="title_home">Home</string>
+
 </resources>

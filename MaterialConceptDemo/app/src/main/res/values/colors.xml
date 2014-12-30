@@ -2,4 +2,6 @@
 <resources>
     <color name="splash_status">#000000</color>
     <color name="colorPrimary">#616161</color>
+    <color name="colorPrimaryDarker">#424242</color>
+    <color name="colorAccent">#E0E0E0</color>
 </resources>

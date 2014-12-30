@@ -22,6 +22,12 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        getSupportActionBar().setTitle(R.string.title_home);
+    }
+
+    @Override
     protected Presenter onCreatePresenter(Presenter presenter) {
         return null;
     }

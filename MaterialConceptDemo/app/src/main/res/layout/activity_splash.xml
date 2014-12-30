@@ -16,5 +16,14 @@
         android:text="@string/status_loading"
         android:layout_below="@id/progressbar"
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:color="@color/splash_status"
+        android:text="@string/disclaimer"
+        android:layout_marginTop="@dimen/disclaimer_marginTop"
+        android:layout_below="@id/status_text"
+        />
 
 </RelativeLayout>

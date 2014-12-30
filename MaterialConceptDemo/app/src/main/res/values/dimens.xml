@@ -4,4 +4,5 @@
     <dimen name="form_label_textSize">18sp</dimen>
     <dimen name="detail_header_textSize">25sp</dimen>
     <dimen name="hero_title_textSize">25sp</dimen>
+    <dimen name="disclaimer_marginTop">20dp</dimen>
 </resources>

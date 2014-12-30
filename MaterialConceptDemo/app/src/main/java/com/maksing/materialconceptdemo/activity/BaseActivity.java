@@ -3,8 +3,10 @@ package com.maksing.materialconceptdemo.activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Message;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.fragment.ProgressDialogFragment;
@@ -25,15 +27,12 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected StateFragment mStateFragment;
     private BaseHandler mBaseHandler = new BaseHandler(this);
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStateFragment = StateFragment.getInstance(getFragmentManager());
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
     }
 
     @Override
@@ -48,6 +47,18 @@ public abstract class BaseActivity extends ActionBarActivity {
             onCreatePresenter(mStateFragment.getPresenter());
             mStateFragment.setHandler(mBaseHandler);
         }
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.appbar, menu);
+        return true;
     }
 
     @Override
