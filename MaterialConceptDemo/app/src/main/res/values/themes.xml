@@ -2,7 +2,7 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppTheme.Base"/>
-    <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Base" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarker</item>
         <item name="colorAccent">@color/colorAccent</item>
