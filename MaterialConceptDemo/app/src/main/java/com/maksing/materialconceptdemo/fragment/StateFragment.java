@@ -64,6 +64,18 @@ public class StateFragment extends Fragment {
         mHandler.pause();
     }
 
+    public void putChildPresenter(String tag, Presenter presenter) {
+        mChildPresentersMap.put(tag, presenter);
+    }
+
+    public Presenter getChildPresenter(String tag) {
+        return mChildPresentersMap.get(tag);
+    }
+
+    public void removeChildPresenter(String tag) {
+        mChildPresentersMap.remove(tag);
+    }
+
     public Handler getHandler() {
         return mHandler;
     }

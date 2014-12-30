@@ -1,19 +1,24 @@
 package com.maksing.materialconceptdemo.activity;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Message;
-import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.maksing.materialconceptdemo.R;
+import com.maksing.materialconceptdemo.fragment.PresenterFragment;
 import com.maksing.materialconceptdemo.fragment.ProgressDialogFragment;
 import com.maksing.materialconceptdemo.fragment.StateFragment;
 import com.maksing.materialconceptdemo.handler.PauseHandler;
+import com.maksing.materialconceptdemo.manager.ServiceManager;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
+import com.maksing.moviedbdomain.service.ServiceHolder;
 
 import java.lang.ref.WeakReference;
 
@@ -34,11 +39,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStateFragment = StateFragment.getInstance(getFragmentManager());
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
         if (mStateFragment == null) {
             mStateFragment = StateFragment.createInstance(mBaseHandler, onCreatePresenter(null));
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -48,6 +48,11 @@ public abstract class BaseActivity extends ActionBarActivity {
             onCreatePresenter(mStateFragment.getPresenter());
             mStateFragment.setHandler(mBaseHandler);
         }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -56,6 +61,19 @@ public abstract class BaseActivity extends ActionBarActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
+    }
+
+    protected void switchPresenterFragment(int containerViewId, PresenterFragment fragment, String tag) {
+        FragmentManager fragmentManager = getFragmentManager();
+
+        Fragment oldFragment = fragmentManager.findFragmentById(containerViewId);
+        if (oldFragment instanceof PresenterFragment) {
+            mStateFragment.removeChildPresenter(oldFragment.getTag());
+        }
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(containerViewId, fragment, tag);
+        ft.commit();
     }
 
     @Override
@@ -92,7 +110,11 @@ public abstract class BaseActivity extends ActionBarActivity {
         super.onDestroy();
     }
 
-    protected abstract Presenter onCreatePresenter(Presenter presenter);
+    protected ServiceHolder getServiceHolder() {
+        return ServiceManager.getInstance().getServiceHolder();
+    }
+
+    abstract protected Presenter onCreatePresenter(@Nullable Presenter presenter);
 
     protected void postHandlerMessage(int what) {
         if (mStateFragment.getHandler() != null) {

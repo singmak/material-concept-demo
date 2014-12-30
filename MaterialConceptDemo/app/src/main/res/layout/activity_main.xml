@@ -7,14 +7,22 @@
     android:fitsSystemWindows="true">
 
     <!-- Your normal content view -->
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/page_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
         <!-- We use a Toolbar so that our drawer can be displayed
              in front of the action bar -->
         <include layout="@layout/toolbar"/>
-    </LinearLayout>
+
+    </FrameLayout>
 
     <!-- Your drawer view. This can be any view, LinearLayout
          is just an example. As we have set fitSystemWindows=true

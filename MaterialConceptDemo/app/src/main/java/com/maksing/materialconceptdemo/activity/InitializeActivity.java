@@ -14,6 +14,7 @@ import com.maksing.materialconceptdemo.navigation.Navigator;
 import com.maksing.materialconceptdemo.presentation.presenter.InitializePresenter;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
+import com.maksing.materialconceptdemo.presentation.view.View;
 import com.maksing.moviedbdomain.usecase.InitializeSessionUseCase;
 
 import rx.Observable;
@@ -36,7 +37,6 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mStatusText = (TextView)findViewById(R.id.status_text);
-        mStatusText.setText(R.string.status_loading_configuration);
 
         Fragment fragment = getFragmentManager().findFragmentByTag(TAG_CONFIRM_DIALOG);
         if (fragment instanceof ConfirmDialogFragment) {
@@ -44,6 +44,8 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
         } else {
             mConfirmDialogFragment = ConfirmDialogFragment.createInstance(getString(R.string.initialized_message));
         }
+
+        mPresenter.initialize(this);
     }
 
     @Override
@@ -54,11 +56,11 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
     @Override
     protected Presenter onCreatePresenter(Presenter presenter) {
         if (presenter == null) {
-            presenter = new InitializePresenter(new InitializeSessionUseCase(ServiceManager.getInstance().getServiceHolder()));
+            presenter = new InitializePresenter(new InitializeSessionUseCase(getServiceHolder()));
         }
 
         mPresenter = (InitializePresenter)presenter;
-        mPresenter.initialize(this);
+
         return presenter;
     }
 
@@ -80,21 +82,32 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
     }
 
     @Override
-    public Observable<Integer> showConfirmDialog() {
+    public void updateStatusText(Status status) {
+        switch(status) {
+            case LOADING_CONFIG:
+                mStatusText.setText(R.string.status_loading_configuration);
+                break;
+            case START_GUEST_SESSION:
+                mStatusText.setText(R.string.status_starting_guest_session);
+                break;
+        }
+    }
+
+    @Override
+    public Observable<ConfirmDialogButton> showConfirmDialog() {
         postHandlerMessage(MSG_SHOW_CONFIRM_DIALOG);
-        return Observable.create(new Observable.OnSubscribe<Integer>() {
+        return Observable.create(new Observable.OnSubscribe<ConfirmDialogButton>() {
             @Override
-            public void call(final Subscriber<? super Integer> subscriber) {
+            public void call(final Subscriber<? super ConfirmDialogButton> subscriber) {
                 mConfirmDialogFragment.setOnClickListener(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
-                                subscriber.onNext(Presenter.DIALOG_OK);
-                                mStatusText.setText(R.string.status_starting_guest_session);
+                                subscriber.onNext(ConfirmDialogButton.BTN_OK);
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
-                                subscriber.onNext(Presenter.DIALOG_CANCEL);
+                                subscriber.onNext(ConfirmDialogButton.BTN_CANCEL);
                                 break;
                         }
                         subscriber.onCompleted();

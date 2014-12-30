@@ -9,9 +9,11 @@ import com.maksing.moviedbdata.datastore.MovieDbConfigDataStoreFactory;
 import com.maksing.moviedbdata.datastore.MovieDbMovieDataStoreFactory;
 import com.maksing.moviedbdata.service.ConfigurationDataService;
 import com.maksing.moviedbdata.service.MovieDataService;
+import com.maksing.moviedbdata.service.NavigationDataService;
 import com.maksing.moviedbdata.service.SessionDataService;
 import com.maksing.moviedbdomain.service.ConfigurationService;
 import com.maksing.moviedbdomain.service.MovieService;
+import com.maksing.moviedbdomain.service.NavigationService;
 import com.maksing.moviedbdomain.service.ServiceHolder;
 import com.maksing.moviedbdomain.service.SessionService;
 
@@ -47,6 +49,11 @@ public class ServiceManager {
             @Override
             public SessionService getSessionService() {
                 return SessionDataService.getInstance(new MovieDbAuthenticateDataStoreFactory(END_POINT), API_KEY);
+            }
+
+            @Override
+            public NavigationService getNavigationService() {
+                return NavigationDataService.getInstance();
             }
         };
     }

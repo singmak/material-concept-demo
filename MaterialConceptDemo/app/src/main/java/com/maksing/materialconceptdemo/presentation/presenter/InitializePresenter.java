@@ -3,6 +3,7 @@ package com.maksing.materialconceptdemo.presentation.presenter;
 import android.util.Log;
 
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
+import com.maksing.materialconceptdemo.presentation.view.View;
 import com.maksing.moviedbdomain.exception.InvalidSessionException;
 import com.maksing.moviedbdomain.manager.AuthenticationManager;
 import com.maksing.moviedbdomain.usecase.InitializeSessionUseCase;
@@ -36,16 +37,18 @@ public class InitializePresenter implements Presenter {
         mSubscription = new CompositeSubscription();
 
         if (mInitializeRequest == null) {
+            mInitializeView.updateStatusText(InitializeView.Status.LOADING_CONFIG);
             mInitializeRequest = mInitializeSessionUseCase.getObservable(new InitializeSessionUseCase.Callback() {
                 @Override
                 public Observable<Boolean> shouldStartGuestSession() {
-                    return mInitializeView.showConfirmDialog().map(new Func1<Integer, Boolean>() {
+                    return mInitializeView.showConfirmDialog().map(new Func1<View.ConfirmDialogButton, Boolean>() {
                         @Override
-                        public Boolean call(Integer whichButton) {
+                        public Boolean call(View.ConfirmDialogButton whichButton) {
                             switch (whichButton) {
-                                case Presenter.DIALOG_OK:
+                                case BTN_OK:
+                                    mInitializeView.updateStatusText(InitializeView.Status.START_GUEST_SESSION);
                                     return true;
-                                case Presenter.DIALOG_CANCEL:
+                                case BTN_CANCEL:
                                 default:
                                     return false;
                             }

@@ -17,8 +17,8 @@ import rx.Observable;
  * Created by maksing on 23/12/14.
  */
 public interface MovieDbMovieDataStore {
-    @GET("/discover/movie")
-    Observable<MovieListData> getTopMovies(@Query("api_key") String apiKey, @Query("sort_by") String sortBy, @Query("page") int page);
+    @GET("/discover/movie?{query}")
+    Observable<MovieListData> getTopMovies(@Query("api_key") String apiKey, @Path("query") String query, @Query("page") int page);
 
     @GET("/movie/{id}")
     Observable<MovieData> getMovieById(@Query("api_key") String apiKey, @Path("id") int id);

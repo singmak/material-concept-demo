@@ -7,4 +7,5 @@ public interface ServiceHolder {
     public ConfigurationService getConfigurationService();
     public MovieService getMovieService();
     public SessionService getSessionService();
+    public NavigationService getNavigationService();
 }
