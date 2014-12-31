@@ -1,9 +1,9 @@
-package com.maksing.moviedbdata.datastore;
+package com.maksing.moviedbdata.retrofit;
 
-import com.maksing.moviedbdata.data.AccountData;
-import com.maksing.moviedbdata.data.GuestSessionData;
-import com.maksing.moviedbdata.data.RequestTokenData;
-import com.maksing.moviedbdata.data.SessionData;
+import com.maksing.moviedbdata.model.AccountData;
+import com.maksing.moviedbdata.model.GuestSessionData;
+import com.maksing.moviedbdata.model.RequestTokenData;
+import com.maksing.moviedbdata.model.SessionData;
 
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -12,7 +12,8 @@ import rx.Observable;
 /**
  * Created by maksing on 23/12/14.
  */
-public interface MovieDbAuthenticateDataStore {
+
+public interface MovieDbAuthenticateService {
     @GET("/authentication/token/new")
     Observable<RequestTokenData> createRequestToken(@Query("api_key") String apiKey);
 

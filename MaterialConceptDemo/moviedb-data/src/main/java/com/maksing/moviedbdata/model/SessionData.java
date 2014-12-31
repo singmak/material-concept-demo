@@ -1,4 +1,4 @@
-package com.maksing.moviedbdata.data;
+package com.maksing.moviedbdata.model;
 
 import com.google.gson.annotations.SerializedName;
 

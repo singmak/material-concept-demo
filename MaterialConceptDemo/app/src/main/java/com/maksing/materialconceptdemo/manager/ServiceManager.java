@@ -3,10 +3,6 @@ package com.maksing.materialconceptdemo.manager;
 import android.content.Context;
 
 import com.maksing.materialconceptdemo.R;
-import com.maksing.moviedbdata.data.ConfigurationData;
-import com.maksing.moviedbdata.datastore.MovieDbAuthenticateDataStoreFactory;
-import com.maksing.moviedbdata.datastore.MovieDbConfigDataStoreFactory;
-import com.maksing.moviedbdata.datastore.MovieDbMovieDataStoreFactory;
 import com.maksing.moviedbdata.service.ConfigurationDataService;
 import com.maksing.moviedbdata.service.MovieDataService;
 import com.maksing.moviedbdata.service.NavigationDataService;
@@ -38,17 +34,17 @@ public class ServiceManager {
         mServiceHolder = new ServiceHolder() {
             @Override
             public ConfigurationService getConfigurationService() {
-                return ConfigurationDataService.getInstance(mContext, new MovieDbConfigDataStoreFactory(END_POINT), API_KEY);
+                return ConfigurationDataService.getInstance(mContext, END_POINT, API_KEY);
             }
 
             @Override
             public MovieService getMovieService() {
-                return MovieDataService.getInstance(new MovieDbMovieDataStoreFactory(END_POINT), API_KEY);
+                return MovieDataService.getInstance(END_POINT, API_KEY);
             }
 
             @Override
             public SessionService getSessionService() {
-                return SessionDataService.getInstance(new MovieDbAuthenticateDataStoreFactory(END_POINT), API_KEY);
+                return SessionDataService.getInstance(END_POINT, API_KEY);
             }
 
             @Override

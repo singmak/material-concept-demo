@@ -1,33 +1,33 @@
-package com.maksing.moviedbdata.data;
+package com.maksing.moviedbdata.model;
 
 import com.google.gson.annotations.SerializedName;
 
 
-public class RequestTokenData {
+public class GuestSessionData{
 
-    private static final String FIELD_REQUEST_TOKEN = "request_token";
+    private static final String FIELD_GUEST_SESSION_ID = "guest_session_id";
     private static final String FIELD_EXPIRES_AT = "expires_at";
     private static final String FIELD_SUCCESS = "success";
 
 
-    @SerializedName(FIELD_REQUEST_TOKEN)
-    private String mRequestToken;
+    @SerializedName(FIELD_GUEST_SESSION_ID)
+    private String mGuestSessionId;
     @SerializedName(FIELD_EXPIRES_AT)
     private String mExpiresAt;
     @SerializedName(FIELD_SUCCESS)
     private boolean mSuccess;
 
 
-    public RequestTokenData(){
+    public GuestSessionData(){
 
     }
 
-    public void setRequestToken(String requestToken) {
-        mRequestToken = requestToken;
+    public void setGuestSessionId(String guestSessionId) {
+        mGuestSessionId = guestSessionId;
     }
 
-    public String getRequestToken() {
-        return mRequestToken;
+    public String getGuestSessionId() {
+        return mGuestSessionId;
     }
 
     public void setExpiresAt(String expiresAt) {

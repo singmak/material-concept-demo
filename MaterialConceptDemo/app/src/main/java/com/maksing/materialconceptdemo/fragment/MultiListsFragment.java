@@ -81,6 +81,6 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
 
     @Override
     public void displayLists(List<Movie> lists) {
-
+        mMultiListsAdapter.setMovies(lists);
     }
 }

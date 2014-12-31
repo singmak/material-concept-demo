@@ -1,9 +1,9 @@
-package com.maksing.moviedbdata.data.movie;
+package com.maksing.moviedbdata.model.movie;
 
 import com.google.gson.annotations.SerializedName;
 
 
-public class ProductionCompany{
+public class Genre{
 
     private static final String FIELD_ID = "id";
     private static final String FIELD_NAME = "name";
@@ -15,7 +15,7 @@ public class ProductionCompany{
     private String mName;
 
 
-    public ProductionCompany(){
+    public Genre(){
 
     }
 
