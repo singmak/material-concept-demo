@@ -29,4 +29,8 @@ public class Session {
     public String getSessionId() {
         return mSessionId;
     }
+
+    public User getUser() {
+        return mUser;
+    }
 }

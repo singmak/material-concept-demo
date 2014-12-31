@@ -6,20 +6,62 @@ package com.maksing.materialconceptdemo.presentation.presenter;
 
 import com.maksing.materialconceptdemo.presentation.view.View;
 
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Interface representing a Presenter in a model view presenter (MVP) pattern.
  */
-public interface Presenter {
+public abstract class Presenter<T extends View> {
+
+    private CompositeSubscription mSubscription;
+    private T mView;
+
+    protected Presenter() {
+        mSubscription = new CompositeSubscription();
+    }
+
+    public void initialize(T view) {
+        mView = view;
+        if (mSubscription == null) {
+            mSubscription = new CompositeSubscription();
+        }
+
+        if (shouldRestore()) {
+            restoreView();
+        } else {
+            initializeView();
+        }
+    }
+
+    abstract protected void restoreView();
+
+    abstract protected boolean shouldRestore();
+
+    abstract protected void initializeView();
+
+    protected T getView() {
+        return mView;
+    }
+
+    protected void addSubscription(Subscription subscription) {
+        mSubscription.add(subscription);
+    }
 
     /**
     * Method that control the lifecycle of the view. It should be called in the view's
     * (Activity or Fragment) onResume() method.
     */
-    abstract void resume();
+    abstract public void resume();
 
     /**
     * Method that control the lifecycle of the view. It should be called in the view's
     * (Activity or Fragment) onPause() method.
     */
-    abstract void pause();
+    abstract public void pause();
+
+    public void destroy() {
+        mSubscription.unsubscribe();
+        mSubscription = null;
+    }
 }

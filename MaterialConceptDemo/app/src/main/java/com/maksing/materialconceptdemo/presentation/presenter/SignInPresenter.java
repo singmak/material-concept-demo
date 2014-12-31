@@ -5,11 +5,21 @@ import com.maksing.materialconceptdemo.presentation.view.SignInView;
 /**
  * Created by maksing on 30/12/14.
  */
-public class SignInPresenter implements Presenter {
-    private SignInView mSignInView;
+public class SignInPresenter extends Presenter<SignInView> {
 
-    public void initialize(SignInView signInView) {
-        mSignInView = signInView;
+    @Override
+    protected void restoreView() {
+
+    }
+
+    @Override
+    protected boolean shouldRestore() {
+        return false;
+    }
+
+    @Override
+    protected void initializeView() {
+
     }
 
     @Override

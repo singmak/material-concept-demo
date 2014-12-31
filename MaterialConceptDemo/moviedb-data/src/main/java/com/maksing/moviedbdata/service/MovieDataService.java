@@ -54,7 +54,7 @@ public class MovieDataService implements MovieService {
     }
 
     @Override
-    public Observable<MovieList> getTopMovieList(int page, final String posterBasePath, final String backdropBasePath) {
+    public Observable<MovieList> getDiscoverMovieList(String query, int page, final String posterBasePath, final String backdropBasePath) {
         return mMovieDbMovieDataStoreFactory.create().getTopMovies(mApiKey, "popularity.desc", page).map(new Func1<MovieListData, MovieList>() {
             @Override
             public MovieList call(MovieListData movieListData) {

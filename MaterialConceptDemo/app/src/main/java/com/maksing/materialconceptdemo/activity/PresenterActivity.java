@@ -25,7 +25,7 @@ import java.lang.ref.WeakReference;
 /**
  * Created by maksing on 22/12/14.
  */
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class PresenterActivity<T extends Presenter> extends ActionBarActivity {
     protected final String TAG = getClass().getSimpleName();
 
     static final int MSG_SHOW_PROGRESS_DIALOG = 1;
@@ -40,12 +40,11 @@ public abstract class BaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         mStateFragment = StateFragment.getInstance(getFragmentManager());
         if (mStateFragment == null) {
-            mStateFragment = StateFragment.createInstance(mBaseHandler, onCreatePresenter(null));
+            mStateFragment = StateFragment.createInstance(mBaseHandler, onCreatePresenter());
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(mStateFragment, StateFragment.TAG);
             ft.commit();
         } else {
-            onCreatePresenter(mStateFragment.getPresenter());
             mStateFragment.setHandler(mBaseHandler);
         }
     }
@@ -114,7 +113,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         return ServiceManager.getInstance().getServiceHolder();
     }
 
-    abstract protected Presenter onCreatePresenter(@Nullable Presenter presenter);
+    abstract protected T onCreatePresenter();
 
     protected void postHandlerMessage(int what) {
         if (mStateFragment.getHandler() != null) {
@@ -130,8 +129,8 @@ public abstract class BaseActivity extends ActionBarActivity {
         postHandlerMessage(MSG_HIDE_PROGRESS_DIALOG);
     }
 
-    protected Presenter getPresenter() {
-        return mStateFragment.getPresenter();
+    protected T getPresenter() {
+        return (T)mStateFragment.getPresenter();
     }
 
     protected boolean processMessage(Message message) {
@@ -174,10 +173,10 @@ public abstract class BaseActivity extends ActionBarActivity {
         /**
          * Activity instance
          */
-        private WeakReference<BaseActivity> mBaseActivityWeakReference;
+        private WeakReference<PresenterActivity> mBaseActivityWeakReference;
 
-        private BaseHandler(BaseActivity baseActivity) {
-            mBaseActivityWeakReference = new WeakReference<BaseActivity>(baseActivity);
+        private BaseHandler(PresenterActivity presenterActivity) {
+            mBaseActivityWeakReference = new WeakReference<PresenterActivity>(presenterActivity);
         }
 
         @Override
@@ -188,7 +187,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
         @Override
         protected final void processMessage(Message msg) {
-            BaseActivity activity = mBaseActivityWeakReference.get();
+            PresenterActivity activity = mBaseActivityWeakReference.get();
             if (activity != null) {
                 activity.processMessage(msg);
             }

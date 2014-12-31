@@ -9,6 +9,6 @@ import rx.Observable;
  * Created by maksing on 26/12/14.
  */
 public interface MovieService {
-    public Observable<MovieList> getTopMovieList(int page, String posterBasePath, String backdropBasePath);
+    public Observable<MovieList> getDiscoverMovieList(String query, int page, String posterBasePath, String backdropBasePath);
     public Observable<Movie> getMovieById(int id, String posterBasePath, String backdropBasePath);
 }

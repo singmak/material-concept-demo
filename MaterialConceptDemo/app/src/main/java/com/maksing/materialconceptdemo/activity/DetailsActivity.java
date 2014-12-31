@@ -5,10 +5,10 @@ import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 /**
  * Created by maksing on 26/12/14.
  */
-public class DetailsActivity extends BaseActivity {
+public class DetailsActivity extends PresenterActivity {
 
     @Override
-    protected Presenter onCreatePresenter(Presenter presenter) {
+    protected Presenter onCreatePresenter() {
         return null;
     }
 }

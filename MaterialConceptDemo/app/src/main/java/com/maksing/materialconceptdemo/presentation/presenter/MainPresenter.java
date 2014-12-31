@@ -1,14 +1,19 @@
 package com.maksing.materialconceptdemo.presentation.presenter;
 
+import com.maksing.materialconceptdemo.presentation.model.NavMenu;
 import com.maksing.materialconceptdemo.presentation.view.MainView;
 import com.maksing.moviedbdomain.entity.NavItem;
+import com.maksing.moviedbdomain.entity.User;
 import com.maksing.moviedbdomain.usecase.GetNavItemsUseCase;
+import com.maksing.moviedbdomain.usecase.GetUserDataUseCase;
+import com.maksing.moviedbdomain.usecase.UseCase;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func2;
 import rx.observers.Subscribers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -16,41 +21,45 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by maksing on 30/12/14.
  */
-public class MainPresenter implements Presenter {
+public class MainPresenter extends Presenter<MainView> {
 
-    private MainView mMainView;
     private List<NavItem> mNavItems;
     private NavItem mCurrentNavItem;
 
+    private User mCurrentUser;
+
     private final GetNavItemsUseCase mGetNavItemsUseCase;
+    private final GetUserDataUseCase mGetUserDataUseCase;
 
-    private CompositeSubscription mSubscription;
+    private Observable<NavMenu> mGetNavigationRequest;
 
-    private Observable<List<NavItem>> mGetNavigationRequest;
-
-    public MainPresenter(GetNavItemsUseCase getNavItemsUseCase) {
+    public MainPresenter(GetNavItemsUseCase getNavItemsUseCase, GetUserDataUseCase getUserDataUseCase) {
         mGetNavItemsUseCase = getNavItemsUseCase;
+        mGetUserDataUseCase = getUserDataUseCase;
     }
 
-    private void restore(MainView mainView) {
-        mMainView.updateNavigationMenu(mNavItems);
+    @Override
+    protected void restoreView() {
+        updateData();
     }
 
-    public void initialize(MainView mainView) {
+    @Override
+    protected boolean shouldRestore() {
+        return mNavItems != null && mCurrentUser != null;
+    }
 
-        mMainView = mainView;
-
-        if (mNavItems != null) {
-            restore(mainView);
-        }
-
-        mSubscription = new CompositeSubscription();
-
+    @Override
+    protected void initializeView() {
         if (mGetNavigationRequest == null) {
-            mGetNavigationRequest = mGetNavItemsUseCase.getObservable().cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            mGetNavigationRequest = Observable.zip(mGetNavItemsUseCase.getObservable(), mGetUserDataUseCase.getObservable(), new Func2<List<NavItem>, User, NavMenu>() {
+                @Override
+                public NavMenu call(List<NavItem> navItems, User user) {
+                    return new NavMenu(navItems, user);
+                }
+            }).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
 
-        mSubscription.add(mGetNavigationRequest.subscribe(new Subscriber<List<NavItem>>() {
+        addSubscription(mGetNavigationRequest.subscribe(new Subscriber<NavMenu>() {
             @Override
             public void onCompleted() {
 
@@ -62,13 +71,23 @@ public class MainPresenter implements Presenter {
             }
 
             @Override
-            public void onNext(List<NavItem> navItems) {
-                mNavItems = navItems;
+            public void onNext(NavMenu navMenu) {
+                mNavItems = navMenu.getNavItems();
                 mCurrentNavItem = mNavItems.get(0);
-                mMainView.gotoPage(mCurrentNavItem.getPage());
-                mMainView.updateNavigationMenu(mNavItems);
+                mCurrentUser = navMenu.getUser();
+                getView().gotoPage(mCurrentNavItem.getPage());
+                updateData();
             }
         }));
+    }
+
+    public void selectedNavItem(NavItem navItem) {
+        getView().gotoPage(navItem.getPage());
+    }
+
+    private void updateData() {
+        getView().updateNavigationMenu(mNavItems);
+        getView().updateUser(mCurrentUser);
     }
 
     @Override
@@ -79,9 +98,5 @@ public class MainPresenter implements Presenter {
     @Override
     public void pause() {
 
-    }
-
-    public void destroy() {
-        mSubscription.unsubscribe();
     }
 }

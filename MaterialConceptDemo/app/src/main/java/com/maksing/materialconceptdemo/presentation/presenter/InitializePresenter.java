@@ -18,11 +18,9 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by maksing on 25/12/14.
  */
-public class InitializePresenter implements Presenter {
+public class InitializePresenter extends Presenter<InitializeView> {
 
-    private InitializeView mInitializeView;
     private InitializeSessionUseCase mInitializeSessionUseCase;
-    private CompositeSubscription mSubscription;
 
     private Observable<String> mInitializeRequest;
 
@@ -31,22 +29,29 @@ public class InitializePresenter implements Presenter {
 
     }
 
-    public void initialize(InitializeView view) {
-        mInitializeView = view;
+    @Override
+    protected void restoreView() {
 
-        mSubscription = new CompositeSubscription();
+    }
 
+    @Override
+    protected boolean shouldRestore() {
+        return false;
+    }
+
+    @Override
+    protected void initializeView() {
         if (mInitializeRequest == null) {
-            mInitializeView.updateStatusText(InitializeView.Status.LOADING_CONFIG);
+            getView().updateStatusText(InitializeView.Status.LOADING_CONFIG);
             mInitializeRequest = mInitializeSessionUseCase.getObservable(new InitializeSessionUseCase.Callback() {
                 @Override
                 public Observable<Boolean> shouldStartGuestSession() {
-                    return mInitializeView.showConfirmDialog().map(new Func1<View.ConfirmDialogButton, Boolean>() {
+                    return getView().showConfirmDialog().map(new Func1<View.ConfirmDialogButton, Boolean>() {
                         @Override
                         public Boolean call(View.ConfirmDialogButton whichButton) {
                             switch (whichButton) {
                                 case BTN_OK:
-                                    mInitializeView.updateStatusText(InitializeView.Status.START_GUEST_SESSION);
+                                    getView().updateStatusText(InitializeView.Status.START_GUEST_SESSION);
                                     return true;
                                 case BTN_CANCEL:
                                 default:
@@ -58,7 +63,7 @@ public class InitializePresenter implements Presenter {
             }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
 
-        mSubscription.add(mInitializeRequest.subscribe(new Subscriber<String>() {
+        addSubscription(mInitializeRequest.subscribe(new Subscriber<String>() {
             @Override
             public void onCompleted() {
 
@@ -70,22 +75,18 @@ public class InitializePresenter implements Presenter {
                     InvalidSessionException exception = (InvalidSessionException)e;
                     switch (exception.getErrorCode()) {
                         case InvalidSessionException.ERROR_CANCELLED:
-                            mInitializeView.gotoSignInPage();
+                            getView().gotoSignInPage();
 
                     }
                 }
-                mInitializeView.gotoOutagePage();
+                getView().gotoOutagePage();
             }
 
             @Override
             public void onNext(String userName) {
-                mInitializeView.gotoHomePage();
+                getView().gotoHomePage();
             }
         }));
-    }
-
-    public void destroy() {
-        mSubscription.unsubscribe();
     }
 
     @Override

@@ -36,4 +36,20 @@ public class MovieDbConfig {
         mPosterSizesList = posterSizesList;
         mBackdropSizesList = backdropSizesList;
     }
+
+    public String getPosterPath() {
+        if (mPosterSizesList.size() > 0) {
+            return mImageBaseUrl + mPosterSizesList.get(0);
+        } else {
+            return mImageBaseUrl;
+        }
+    }
+
+    public String getBackdropPath() {
+        if (mBackdropSizesList.size() > 0) {
+            return mImageBaseUrl + mBackdropSizesList.get(0);
+        } else {
+            return mImageBaseUrl;
+        }
+    }
 }

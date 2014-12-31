@@ -30,11 +30,36 @@
          this will be displayed under the status bar. -->
     <LinearLayout
         android:layout_width="@dimen/drawer_width"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_gravity="left|start"
-        android:background="?attr/colorPrimary"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="@android:color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navMenu_header_height">
+            <TextView
+                android:id="@+id/username"
+                android:textColor="@color/headerUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/navMenu_username_marginHorizontal"
+                android:layout_marginRight="@dimen/navMenu_username_marginHorizontal"
+                android:layout_marginTop="@dimen/navMenu_username_marginVertical"
+                android:layout_marginBottom="@dimen/navMenu_username_marginVertical"
+                />
+            </RelativeLayout>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/navMenu"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?attr/colorPrimary"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/navMenu_item_marginVertical"
+            android:paddingBottom="@dimen/navMenu_item_marginVertical"/>
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

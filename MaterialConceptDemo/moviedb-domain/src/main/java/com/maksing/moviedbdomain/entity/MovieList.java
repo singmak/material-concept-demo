@@ -33,4 +33,12 @@ public class MovieList {
     public boolean isLastPage() {
         return mPage == mTotalPages;
     }
+
+    public List<Movie> getMovies() {
+        return mMovies;
+    }
+
+    public int getPage() {
+        return mPage;
+    }
 }

@@ -2,6 +2,7 @@ package com.maksing.materialconceptdemo.presentation.view;
 
 import com.maksing.moviedbdomain.entity.NavItem;
 import com.maksing.moviedbdomain.entity.Page;
+import com.maksing.moviedbdomain.entity.User;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ import java.util.List;
 public interface MainView extends View {
     public void gotoPage(Page page);
     public void updateNavigationMenu(List<NavItem> navItems);
+    public void updateUser(User user);
 }

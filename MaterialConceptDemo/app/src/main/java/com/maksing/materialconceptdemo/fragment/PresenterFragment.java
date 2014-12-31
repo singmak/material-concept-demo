@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
+import com.maksing.materialconceptdemo.manager.ServiceManager;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
+import com.maksing.moviedbdomain.service.ServiceHolder;
 
 /**
  * Created by maksing on 26/12/14.
  */
-public abstract class PresenterFragment extends Fragment{
+public abstract class PresenterFragment<T extends Presenter> extends Fragment{
 
-    private Presenter mPresenter;
+    private T mPresenter;
     private StateFragment mStateFragment;
 
     @Override
@@ -24,7 +26,7 @@ public abstract class PresenterFragment extends Fragment{
             throw new IllegalArgumentException("Fragment must has a tag");
         }
         mStateFragment = StateFragment.getInstance(getFragmentManager());
-        mPresenter = mStateFragment.getChildPresenter(getTag());
+        mPresenter = (T)mStateFragment.getChildPresenter(getTag());
         if (mPresenter == null) {
             mPresenter = onCreateFragmentPresenter(null);
             mStateFragment.putChildPresenter(getTag(), mPresenter);
@@ -49,14 +51,18 @@ public abstract class PresenterFragment extends Fragment{
         }
     }
 
+    protected ServiceHolder getServiceHolder() {
+        return ServiceManager.getInstance().getServiceHolder();
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
 
-    protected Presenter getPresenter() {
+    protected T getPresenter() {
         return mPresenter;
     }
 
-    abstract Presenter onCreateFragmentPresenter(@Nullable Presenter presenter);
+    abstract T onCreateFragmentPresenter(@Nullable T presenter);
 }

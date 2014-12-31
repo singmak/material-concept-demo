@@ -5,16 +5,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Message;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.fragment.ConfirmDialogFragment;
-import com.maksing.materialconceptdemo.manager.ServiceManager;
 import com.maksing.materialconceptdemo.navigation.Navigator;
 import com.maksing.materialconceptdemo.presentation.presenter.InitializePresenter;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
-import com.maksing.materialconceptdemo.presentation.view.View;
 import com.maksing.moviedbdomain.usecase.InitializeSessionUseCase;
 
 import rx.Observable;
@@ -23,11 +20,10 @@ import rx.Subscriber;
 /**
  * Created by maksing on 24/12/14.
  */
-public class InitializeActivity extends BaseActivity implements InitializeView {
+public class InitializeActivity extends PresenterActivity<InitializePresenter> implements InitializeView {
 
     static final int MSG_SHOW_CONFIRM_DIALOG = 10;
 
-    private InitializePresenter mPresenter;
     private TextView mStatusText;
     private ConfirmDialogFragment mConfirmDialogFragment;
     private static final String TAG_CONFIRM_DIALOG = "TAG_CONFIRM_DIALOG";
@@ -45,7 +41,7 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
             mConfirmDialogFragment = ConfirmDialogFragment.createInstance(getString(R.string.initialized_message));
         }
 
-        mPresenter.initialize(this);
+        getPresenter().initialize(this);
     }
 
     @Override
@@ -54,14 +50,8 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
     }
 
     @Override
-    protected Presenter onCreatePresenter(Presenter presenter) {
-        if (presenter == null) {
-            presenter = new InitializePresenter(new InitializeSessionUseCase(getServiceHolder()));
-        }
-
-        mPresenter = (InitializePresenter)presenter;
-
-        return presenter;
+    protected InitializePresenter onCreatePresenter() {
+        return new InitializePresenter(new InitializeSessionUseCase(getServiceHolder()));
     }
 
     @Override
@@ -133,6 +123,6 @@ public class InitializeActivity extends BaseActivity implements InitializeView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.destroy();
+        getPresenter().destroy();
     }
 }
