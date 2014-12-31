@@ -11,6 +11,8 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by maksing on 23/12/14.
@@ -46,7 +48,7 @@ public class MultiListsPresenter extends Presenter<MultiListsView> {
         mMovies = new ArrayList<>();
 
         if (mGetMovieListRequest == null) {
-            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(0), mCurrentListPage);
+            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(0), mCurrentListPage).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
         getView().showProgressbar();
         addSubscription(mGetMovieListRequest.subscribe(new Subscriber<MovieList>() {

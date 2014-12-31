@@ -12,7 +12,7 @@ import rx.Observable;
 /**
  * Created by maksing on 31/12/14.
  */
-public class NavigationDataService implements NavigationService {
+public class NavigationDataService extends HttpService implements NavigationService {
 
     private static class LazyHolder {
         private static final NavigationDataService INSTANCE = new NavigationDataService();

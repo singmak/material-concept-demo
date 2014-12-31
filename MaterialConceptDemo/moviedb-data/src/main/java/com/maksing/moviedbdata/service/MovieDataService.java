@@ -15,15 +15,18 @@ import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
+import rx.observers.Subscribers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by maksing on 24/12/14.
  */
-public class MovieDataService implements MovieService {
+public class MovieDataService extends HttpService implements MovieService {
     private final String mApiKey;
 
     private static volatile MovieDataService sInstance;
     private final RetrofitServiceStore<MovieDbMovieService> mMovieDbMovieServiceStore;
+    private final String mEndpoint;
 
     public static MovieDataService getInstance(String endPoint, String apiKey) {
         if (sInstance == null) {
@@ -41,14 +44,14 @@ public class MovieDataService implements MovieService {
         if (endPoint == null || apiKey == null) {
             throw new IllegalArgumentException("Arguments must not be null in constructing ConfigurationDataRepository");
         }
-
+        mEndpoint = endPoint;
         mMovieDbMovieServiceStore = new RetrofitServiceStore<>(endPoint, MovieDbMovieService.class);
         mApiKey = apiKey;
     }
 
     @Override
     public Observable<MovieList> getDiscoverMovieList(String query, int page, final String posterBasePath, final String backdropBasePath) {
-        return mMovieDbMovieServiceStore.getService().getDiscoverMovies(mApiKey, query, page).map(new Func1<MovieListData, MovieList>() {
+        return requestGet(mEndpoint + "discover/movie?" + query + "&page=" + page + "&api_key=" + mApiKey, MovieListData.class).map(new Func1<MovieListData, MovieList>() {
             @Override
             public MovieList call(MovieListData movieListData) {
                 List<Movie> movies = new ArrayList<Movie>();
@@ -61,7 +64,7 @@ public class MovieDataService implements MovieService {
 
                 return new MovieList(movieListData.getPage(), movieListData.getTotalPage(), movies);
             }
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
     @Override

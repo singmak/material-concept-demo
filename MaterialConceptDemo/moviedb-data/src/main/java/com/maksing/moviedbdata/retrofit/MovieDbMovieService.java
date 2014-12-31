@@ -12,9 +12,6 @@ import rx.Observable;
  * Created by maksing on 23/12/14.
  */
 public interface MovieDbMovieService {
-    @GET("/discover/movie?{query}")
-    Observable<MovieListData> getDiscoverMovies(@Query("api_key") String apiKey, @Path("query") String query, @Query("page") int page);
-
     @GET("/movie/{id}")
     Observable<MovieData> getMovieById(@Query("api_key") String apiKey, @Path("id") int id);
 }

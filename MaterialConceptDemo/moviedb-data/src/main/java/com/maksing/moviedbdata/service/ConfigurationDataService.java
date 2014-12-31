@@ -25,7 +25,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by maksing on 24/12/14.
  */
-public class ConfigurationDataService implements ConfigurationService {
+public class ConfigurationDataService extends HttpService implements ConfigurationService {
     private final RetrofitServiceStore<MovieDbConfigService> mMovieDbConfigServiceStore;
     private final Context mContext;
     private final String mApiKey;

@@ -16,7 +16,7 @@ import rx.functions.Func1;
 /**
  * Created by maksing on 24/12/14.
  */
-public class SessionDataService implements SessionService {
+public class SessionDataService extends HttpService implements SessionService {
     private final RetrofitServiceStore<MovieDbAuthenticateService> mServiceStore;
     private final String mApiKey;
 
