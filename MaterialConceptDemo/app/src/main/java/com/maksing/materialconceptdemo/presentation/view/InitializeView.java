@@ -1,14 +1,11 @@
 package com.maksing.materialconceptdemo.presentation.view;
 
-import com.maksing.materialconceptdemo.presentation.presenter.InitializePresenter;
-
 import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by maksing on 25/12/14.
  */
-public interface InitializeView extends View {
+public interface InitializeView extends PresenterView {
     public enum Status {
         LOADING_CONFIG, START_GUEST_SESSION
     }

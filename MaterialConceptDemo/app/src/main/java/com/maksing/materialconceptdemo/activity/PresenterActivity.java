@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,6 +17,7 @@ import com.maksing.materialconceptdemo.fragment.StateFragment;
 import com.maksing.materialconceptdemo.handler.PauseHandler;
 import com.maksing.materialconceptdemo.manager.ServiceManager;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
+import com.maksing.materialconceptdemo.presentation.view.PresenterView;
 import com.maksing.moviedbdomain.service.ServiceHolder;
 
 import java.lang.ref.WeakReference;
@@ -25,7 +25,7 @@ import java.lang.ref.WeakReference;
 /**
  * Created by maksing on 22/12/14.
  */
-public abstract class PresenterActivity<T extends Presenter> extends ActionBarActivity {
+public abstract class PresenterActivity<T extends Presenter> extends ActionBarActivity implements PresenterView {
     protected final String TAG = getClass().getSimpleName();
 
     static final int MSG_SHOW_PROGRESS_DIALOG = 1;
@@ -60,6 +60,8 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
+
+        getPresenter().initialize(this);
     }
 
     protected void switchPresenterFragment(int containerViewId, PresenterFragment fragment, String tag) {

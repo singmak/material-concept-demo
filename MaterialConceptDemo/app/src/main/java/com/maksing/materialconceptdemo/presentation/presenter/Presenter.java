@@ -4,7 +4,7 @@
  */
 package com.maksing.materialconceptdemo.presentation.presenter;
 
-import com.maksing.materialconceptdemo.presentation.view.View;
+import com.maksing.materialconceptdemo.presentation.view.PresenterView;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -12,7 +12,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Interface representing a Presenter in a model view presenter (MVP) pattern.
  */
-public abstract class Presenter<T extends View> {
+public abstract class Presenter<T extends PresenterView> {
 
     private CompositeSubscription mSubscription;
     private T mView;
@@ -21,8 +21,8 @@ public abstract class Presenter<T extends View> {
         mSubscription = new CompositeSubscription();
     }
 
-    public void initialize(T view) {
-        mView = view;
+    public void initialize(PresenterView presenterView) {
+        mView = (T) presenterView;
         if (mSubscription == null) {
             mSubscription = new CompositeSubscription();
         }

@@ -1,12 +1,10 @@
 package com.maksing.materialconceptdemo.presentation.presenter;
 
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
-import com.maksing.materialconceptdemo.presentation.view.View;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.MovieList;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
-import com.maksing.moviedbdomain.usecase.GetMovieDbConfigUseCase;
 
 import java.util.ArrayList;
 import java.util.List;

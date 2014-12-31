@@ -40,8 +40,6 @@ public class InitializeActivity extends PresenterActivity<InitializePresenter> i
         } else {
             mConfirmDialogFragment = ConfirmDialogFragment.createInstance(getString(R.string.initialized_message));
         }
-
-        getPresenter().initialize(this);
     }
 
     @Override
@@ -118,11 +116,5 @@ public class InitializeActivity extends PresenterActivity<InitializePresenter> i
             default:
                 return super.processMessage(message);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        getPresenter().destroy();
     }
 }

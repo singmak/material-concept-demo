@@ -1,11 +1,8 @@
 package com.maksing.materialconceptdemo.presentation.presenter;
 
-import android.util.Log;
-
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
-import com.maksing.materialconceptdemo.presentation.view.View;
+import com.maksing.materialconceptdemo.presentation.view.PresenterView;
 import com.maksing.moviedbdomain.exception.InvalidSessionException;
-import com.maksing.moviedbdomain.manager.AuthenticationManager;
 import com.maksing.moviedbdomain.usecase.InitializeSessionUseCase;
 
 import rx.Observable;
@@ -13,7 +10,6 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by maksing on 25/12/14.
@@ -46,9 +42,9 @@ public class InitializePresenter extends Presenter<InitializeView> {
             mInitializeRequest = mInitializeSessionUseCase.getObservable(new InitializeSessionUseCase.Callback() {
                 @Override
                 public Observable<Boolean> shouldStartGuestSession() {
-                    return getView().showConfirmDialog().map(new Func1<View.ConfirmDialogButton, Boolean>() {
+                    return getView().showConfirmDialog().map(new Func1<PresenterView.ConfirmDialogButton, Boolean>() {
                         @Override
-                        public Boolean call(View.ConfirmDialogButton whichButton) {
+                        public Boolean call(PresenterView.ConfirmDialogButton whichButton) {
                             switch (whichButton) {
                                 case BTN_OK:
                                     getView().updateStatusText(InitializeView.Status.START_GUEST_SESSION);
@@ -72,7 +68,7 @@ public class InitializePresenter extends Presenter<InitializeView> {
             @Override
             public void onError(Throwable e) {
                 if (e instanceof InvalidSessionException) {
-                    InvalidSessionException exception = (InvalidSessionException)e;
+                    InvalidSessionException exception = (InvalidSessionException) e;
                     switch (exception.getErrorCode()) {
                         case InvalidSessionException.ERROR_CANCELLED:
                             getView().gotoSignInPage();

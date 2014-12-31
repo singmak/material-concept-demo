@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by maksing on 30/12/14.
  */
-public interface MultiListsView extends View {
+public interface MultiListsView extends PresenterView {
     void showProgressbar();
     void hideProgressbar();
     void displayHero(MovieList movieList);

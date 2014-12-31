@@ -50,17 +50,10 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_multilists, container, false);
         ButterKnife.inject(this, view);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mMultiListsAdapter);
-
-        getPresenter().initialize(this);
+        return view;
     }
 
     @Override

@@ -49,8 +49,6 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mNavigationMenuAdapter);
-
-        getPresenter().initialize(this);
     }
 
     @Override
@@ -73,12 +71,6 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        getPresenter().destroy();
     }
 
     @Override

@@ -5,15 +5,17 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.maksing.materialconceptdemo.manager.ServiceManager;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
+import com.maksing.materialconceptdemo.presentation.view.PresenterView;
 import com.maksing.moviedbdomain.service.ServiceHolder;
 
 /**
  * Created by maksing on 26/12/14.
  */
-public abstract class PresenterFragment<T extends Presenter> extends Fragment{
+public abstract class PresenterFragment<T extends Presenter> extends Fragment implements PresenterView {
 
     private T mPresenter;
     private StateFragment mStateFragment;
@@ -33,6 +35,12 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment{
         } else {
             onCreateFragmentPresenter(mPresenter);
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getPresenter().initialize(this);
     }
 
     @Override
@@ -65,4 +73,10 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment{
     }
 
     abstract T onCreateFragmentPresenter(@Nullable T presenter);
+
+    @Override
+    public void onDestroy() {
+        mPresenter.destroy();
+        super.onDestroy();
+    }
 }
