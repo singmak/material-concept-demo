@@ -1,6 +1,5 @@
 package com.maksing.materialconceptdemo.presentation.presenter;
 
-import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
 import com.maksing.materialconceptdemo.presentation.view.SingleListView;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.MovieList;
@@ -18,31 +17,38 @@ import rx.schedulers.Schedulers;
 /**
  * Created by maksing on 23/12/14.
  */
-public class MultiListsPresenter extends Presenter<MultiListsView> {
+public class SingleListPresenter extends Presenter<SingleListView> {
     private final Page mPage;
 
+    private List<Movie> mMovies;
     private final GetDiscoverListUseCase mGetDiscoverListUseCase;
     private Observable<MovieList> mGetMovieListRequest;
 
-    public MultiListsPresenter(Page page, GetDiscoverListUseCase getDiscoverListUseCase) {
+    private int mCurrentListPage = 1;
+    private boolean mIsLastPage;
+
+    public SingleListPresenter(Page page, GetDiscoverListUseCase getDiscoverListUseCase) {
         mGetDiscoverListUseCase = getDiscoverListUseCase;
         mPage = page;
     }
 
     @Override
     protected void restoreView() {
+        getView().displayLists(mMovies);
     }
 
     @Override
     protected boolean shouldRestore() {
-        return false;
+        return mMovies != null;
     }
 
     @Override
     protected void initializeView() {
 
+        mMovies = new ArrayList<>();
+
         if (mGetMovieListRequest == null) {
-            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(0), 0).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(0), mCurrentListPage).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
         getView().showProgressbar();
         addSubscription(mGetMovieListRequest.subscribe(new Subscriber<MovieList>() {
@@ -58,7 +64,10 @@ public class MultiListsPresenter extends Presenter<MultiListsView> {
 
             @Override
             public void onNext(MovieList movieList) {
-
+                mMovies.addAll(movieList.getMovies());
+                mCurrentListPage = movieList.getPage();
+                mIsLastPage = movieList.isLastPage();
+                getView().displayLists(mMovies);
             }
         }));
     }

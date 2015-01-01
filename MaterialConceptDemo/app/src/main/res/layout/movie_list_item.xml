@@ -5,7 +5,8 @@
     android:id="@+id/card_view"
     android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
     <LinearLayout
           android:orientation="vertical"
           android:layout_width="match_parent"
@@ -22,7 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_margin="@dimen/poster_title_margin"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
                 android:ellipsize="end"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

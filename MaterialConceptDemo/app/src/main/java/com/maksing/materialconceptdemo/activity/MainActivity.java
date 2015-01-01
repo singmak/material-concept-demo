@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.adapter.NavigationMenuAdapter;
-import com.maksing.materialconceptdemo.fragment.MultiListsFragment;
+import com.maksing.materialconceptdemo.fragment.SingleListFragment;
 import com.maksing.materialconceptdemo.presentation.presenter.MainPresenter;
-import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.MainView;
 import com.maksing.moviedbdomain.entity.NavItem;
 import com.maksing.moviedbdomain.entity.Page;
@@ -85,7 +84,7 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
     @Override
     public void gotoPage(Page page) {
-        switchPresenterFragment(R.id.page_container, MultiListsFragment.createInstance(page), page.getPath());
+        switchPresenterFragment(R.id.page_container, SingleListFragment.createInstance(page), page.getPath());
     }
 
     @Override

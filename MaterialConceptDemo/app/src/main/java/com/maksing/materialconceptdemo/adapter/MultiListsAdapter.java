@@ -1,68 +1,29 @@
 package com.maksing.materialconceptdemo.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.maksing.materialconceptdemo.R;
-import com.maksing.materialconceptdemo.view.FixedRatioImageView;
-import com.maksing.moviedbdomain.entity.Movie;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
 /**
- * Created by maksing on 31/12/14.
+ * Created by maksing on 1/1/15.
  */
-
-public class MultiListsAdapter extends RecyclerView.Adapter<MultiListsAdapter.MultiListsViewHolder> {
-
-    private List<Movie> mMovies = new ArrayList<>();
+public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<String> mQueries = new ArrayList<>();
 
     @Override
-    public MultiListsViewHolder onCreateViewHolder(ViewGroup parent, int pos) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_item, parent, false);
-        return new MultiListsViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(MultiListsViewHolder multiListsViewHolder, int pos) {
-        multiListsViewHolder.bindMovie(mMovies.get(pos));
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
     }
 
     @Override
     public int getItemCount() {
-        return mMovies.size();
-    }
-
-    public void setMovies(List<Movie> movies) {
-        mMovies = movies;
-        notifyDataSetChanged();
-    }
-
-    public static class MultiListsViewHolder extends RecyclerView.ViewHolder {
-
-        @InjectView(R.id.poster_image)
-        FixedRatioImageView mPosterImage;
-        @InjectView(R.id.movie_title)
-        TextView mTitle;
-
-        public MultiListsViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.inject(this, itemView);
-            mPosterImage.setRatio(2, 3);
-        }
-
-        public void bindMovie(Movie movie) {
-            mTitle.setText(movie.getTitle());
-            Picasso.with(mPosterImage.getContext()).load(movie.getPosterSource()).fit().centerCrop().into(mPosterImage);
-        }
+        return mQueries.size();
     }
 }
