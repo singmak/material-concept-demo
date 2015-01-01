@@ -1,8 +1,7 @@
 package com.maksing.moviedbdata.service;
 
 import com.google.gson.Gson;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MediaType;
+import com.maksing.moviedbdata.net.OKHttpManager;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -10,7 +9,6 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-import okio.BufferedSink;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -18,7 +16,7 @@ import rx.Subscriber;
  * Created by maksing on 1/1/15.
  */
 public class HttpService {
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = OKHttpManager.getInstance().getClient();
     private final Gson gson = new Gson();
 
     protected enum Method {

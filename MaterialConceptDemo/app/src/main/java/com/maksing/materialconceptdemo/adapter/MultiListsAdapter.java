@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
+import com.maksing.materialconceptdemo.view.FixedRatioImageView;
 import com.maksing.moviedbdomain.entity.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,17 +50,19 @@ public class MultiListsAdapter extends RecyclerView.Adapter<MultiListsAdapter.Mu
     public static class MultiListsViewHolder extends RecyclerView.ViewHolder {
 
         @InjectView(R.id.poster_image)
-        ImageView mPosterImage;
+        FixedRatioImageView mPosterImage;
         @InjectView(R.id.movie_title)
         TextView mTitle;
 
         public MultiListsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
+            mPosterImage.setRatio(2, 3);
         }
 
         public void bindMovie(Movie movie) {
             mTitle.setText(movie.getTitle());
+            Picasso.with(mPosterImage.getContext()).load(movie.getPosterSource()).fit().centerCrop().into(mPosterImage);
         }
     }
 }

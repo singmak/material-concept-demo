@@ -26,5 +26,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okio:okio:1.1.0'
+    compile 'com.squareup.picasso:picasso:2.4.0'
+
     compile project(':moviedb-domain')
 }

@@ -2,6 +2,7 @@ package com.maksing.materialconceptdemo.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
         View view = inflater.inflate(R.layout.fragment_multilists, container, false);
         ButterKnife.inject(this, view);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setAdapter(mMultiListsAdapter);
         return view;
     }

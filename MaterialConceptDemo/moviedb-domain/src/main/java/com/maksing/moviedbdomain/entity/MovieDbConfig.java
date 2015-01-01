@@ -38,18 +38,18 @@ public class MovieDbConfig {
     }
 
     public String getPosterPath() {
-        if (mPosterSizesList.size() > 0) {
-            return mImageBaseUrl + mPosterSizesList.get(0);
+        if (mPosterSizesList.size() > 1) {
+            return mImageBaseUrl + mPosterSizesList.get(mPosterSizesList.size() - 2);
         } else {
-            return mImageBaseUrl;
+            return mImageBaseUrl + "original";
         }
     }
 
     public String getBackdropPath() {
-        if (mBackdropSizesList.size() > 0) {
-            return mImageBaseUrl + mBackdropSizesList.get(0);
+        if (mBackdropSizesList.size() > 1) {
+            return mImageBaseUrl + mBackdropSizesList.get(mBackdropSizesList.size() - 2);
         } else {
-            return mImageBaseUrl;
+            return mImageBaseUrl + "original";
         }
     }
 }

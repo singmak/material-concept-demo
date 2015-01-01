@@ -6,4 +6,5 @@
     <color name="colorAccent">#E0E0E0</color>
 
     <color name="headerUserName">#000000</color>
+    <color name="multilistsBg">#EEEEEE</color>
 </resources>

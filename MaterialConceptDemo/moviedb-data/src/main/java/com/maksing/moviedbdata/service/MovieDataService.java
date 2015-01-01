@@ -58,7 +58,9 @@ public class MovieDataService extends HttpService implements MovieService {
 
                 if (movieListData.getResults() != null) {
                     for (Result result : movieListData.getResults()) {
-                        movies.add(new Movie(String.valueOf(result.getId()), result.getTitle(), posterBasePath + result.getPosterPath(), backdropBasePath + result.getBackdropPath()));
+                        String posterPath = posterBasePath + result.getPosterPath() + "?api_key=" + mApiKey;
+                        String backdropPath = backdropBasePath + result.getBackdropPath() + "?api_key=" + mApiKey;
+                        movies.add(new Movie(String.valueOf(result.getId()), result.getTitle(), posterPath, backdropPath));
                     }
                 }
 
@@ -72,7 +74,10 @@ public class MovieDataService extends HttpService implements MovieService {
         return mMovieDbMovieServiceStore.getService().getMovieById(mApiKey, id).map(new Func1<MovieData, Movie>() {
             @Override
             public Movie call(MovieData movieData) {
-                Movie movie = new Movie(String.valueOf(movieData.getId()), movieData.getTitle(), posterBasePath + movieData.getPosterPath(), backdropBasePath + movieData.getBackdropPath());
+                String posterPath = posterBasePath + movieData.getPosterPath() + "?api_key=" + mApiKey;
+                String backdropPath = backdropBasePath + movieData.getBackdropPath() + "?api_key=" + mApiKey;
+
+                Movie movie = new Movie(String.valueOf(movieData.getId()), movieData.getTitle(), posterPath, backdropPath);
                 movie.setDescription(movieData.getOverview());
 
                 List<String> genres = new ArrayList<>();

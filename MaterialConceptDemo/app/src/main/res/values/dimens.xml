@@ -15,9 +15,10 @@
     <dimen name="detail_header_textSize">25sp</dimen>
 
     <!--lists page-->
-    <dimen name="poster_width">50dp</dimen>
-    <dimen name="poster_height">120dp</dimen>
+    <dimen name="poster_width">120dp</dimen>
+    <dimen name="poster_height">180dp</dimen>
     <dimen name="poster_title_textSize">18sp</dimen>
+    <dimen name="poster_title_margin">10dp</dimen>
 
     <!--nav menu item-->
     <dimen name="navItem_title_textSize">20sp</dimen>
