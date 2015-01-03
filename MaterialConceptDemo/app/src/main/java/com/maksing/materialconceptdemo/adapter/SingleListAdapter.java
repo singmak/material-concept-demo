@@ -57,7 +57,7 @@ public class SingleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public PosterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
-            mPosterImage.setRatio(2, 3);
+            mPosterImage.setAspectRatio(2, 3);
         }
 
         public void bindMovie(Movie movie) {

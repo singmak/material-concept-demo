@@ -1,37 +1,27 @@
 package com.maksing.materialconceptdemo.view;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 /**
- * Created by maksing
+ * Created by maksing on 4/1/15.
  */
-public class FixedRatioImageView extends ImageView {
+public class FixedRatioViewPager extends ViewPager {
     private float mRatioWidth = 0;
     private float mRatioHeight = 0;
 
-    private boolean mWrapDrawable = false;
-
-    public FixedRatioImageView(Context context) {
+    public FixedRatioViewPager(Context context) {
         super(context);
     }
 
-    public FixedRatioImageView(Context context, AttributeSet attrs) {
+    public FixedRatioViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public FixedRatioImageView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
     }
 
     public void setAspectRatio(float width, float height) {
         mRatioHeight = height;
         mRatioWidth = width;
-    }
-
-    public void setWrapDrawable(boolean wrapDrawable) {
-        mWrapDrawable = wrapDrawable;
     }
 
     @Override
@@ -42,13 +32,8 @@ public class FixedRatioImageView extends ImageView {
 
         float imageSideRatio = 0;
 
-        if (mWrapDrawable) {
-            imageSideRatio = (float)getDrawable().getIntrinsicWidth() / getDrawable().getIntrinsicHeight();
-        } else if (mRatioHeight != 0 && mRatioWidth != 0) {
+        if (mRatioHeight != 0 && mRatioWidth != 0) {
             imageSideRatio = mRatioWidth / mRatioHeight;
-        }
-
-        if (imageSideRatio > 0) {
             height = (int) (width / imageSideRatio); //only modify height. the width of the view is always preserved.
         }
 
