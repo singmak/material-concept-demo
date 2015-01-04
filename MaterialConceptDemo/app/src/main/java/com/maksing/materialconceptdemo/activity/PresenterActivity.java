@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.maksing.materialconceptdemo.BuildConfig;
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.fragment.PresenterFragment;
 import com.maksing.materialconceptdemo.fragment.ProgressDialogFragment;
@@ -39,14 +41,21 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStateFragment = StateFragment.getInstance(getFragmentManager());
+        logD("onCreate");
         if (mStateFragment == null) {
             mStateFragment = StateFragment.createInstance(mBaseHandler, onCreatePresenter());
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(mStateFragment, StateFragment.TAG);
             ft.commit();
+            logD("onCreate new state");
         } else {
+            if (getPresenter() == null) {
+                mStateFragment.setPresenter(onCreatePresenter());
+            }
+            logD("onCreate old state");
             mStateFragment.setHandler(mBaseHandler);
         }
+
     }
 
     @Override
@@ -54,6 +63,8 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
         super.onPostCreate(savedInstanceState);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        logD("onPostCreate: " + (getPresenter() == null));
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,6 +73,12 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
         }
 
         getPresenter().initialize(this);
+    }
+
+    protected void logD(String message) {
+        if (BuildConfig.DEBUG) {
+            Log.d(getClass().getSimpleName(), "debug>> " + message);
+        }
     }
 
     protected void switchPresenterFragment(int containerViewId, PresenterFragment fragment, String tag) {

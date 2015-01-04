@@ -10,5 +10,5 @@ import java.util.List;
 public interface MultiListsView extends PresenterView {
     void showProgressbar();
     void hideProgressbar();
-    void displayLists(List<Movie> lists);
+    void displayListAt(List<Movie> movies, int row);
 }

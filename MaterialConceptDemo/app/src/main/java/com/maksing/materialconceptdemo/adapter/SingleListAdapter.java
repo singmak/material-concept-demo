@@ -46,23 +46,4 @@ public class SingleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         mMovies = movies;
         notifyDataSetChanged();
     }
-
-    public static class PosterViewHolder extends RecyclerView.ViewHolder {
-
-        @InjectView(R.id.poster_image)
-        FixedRatioImageView mPosterImage;
-        @InjectView(R.id.movie_title)
-        TextView mTitle;
-
-        public PosterViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.inject(this, itemView);
-            mPosterImage.setAspectRatio(2, 3);
-        }
-
-        public void bindMovie(Movie movie) {
-            mTitle.setText(movie.getTitle());
-            Picasso.with(mPosterImage.getContext()).load(movie.getPosterSource()).fit().centerCrop().into(mPosterImage);
-        }
-    }
 }

@@ -1,5 +1,7 @@
 package com.maksing.materialconceptdemo.presentation.presenter;
 
+import android.util.SparseArray;
+
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
 import com.maksing.materialconceptdemo.presentation.view.SingleListView;
 import com.maksing.moviedbdomain.entity.Movie;
@@ -12,6 +14,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -22,7 +25,8 @@ public class MultiListsPresenter extends Presenter<MultiListsView> {
     private final Page mPage;
 
     private final GetDiscoverListUseCase mGetDiscoverListUseCase;
-    private Observable<MovieList> mGetMovieListRequest;
+    private SparseArray<Observable<MovieList>> mGetMovieListRequestsMap = new SparseArray<>();
+    private SparseArray<Subscription> mSubscriptionsMap = new SparseArray<>();
 
     public MultiListsPresenter(Page page, GetDiscoverListUseCase getDiscoverListUseCase) {
         mGetDiscoverListUseCase = getDiscoverListUseCase;
@@ -41,11 +45,18 @@ public class MultiListsPresenter extends Presenter<MultiListsView> {
     @Override
     protected void initializeView() {
 
-        if (mGetMovieListRequest == null) {
-            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(0), 0).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public void loadListAt(final int row) {
+        Observable<MovieList> request = mGetMovieListRequestsMap.get(row);
+
+        if (request == null) {
+            request = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(row), 0).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            mGetMovieListRequestsMap.put(row, request);
         }
         getView().showProgressbar();
-        addSubscription(mGetMovieListRequest.subscribe(new Subscriber<MovieList>() {
+
+        Subscription subscription = request.subscribe(new Subscriber<MovieList>() {
             @Override
             public void onCompleted() {
                 getView().hideProgressbar();
@@ -58,9 +69,19 @@ public class MultiListsPresenter extends Presenter<MultiListsView> {
 
             @Override
             public void onNext(MovieList movieList) {
-
+                getView().displayListAt(movieList.getMovies(), row);
             }
-        }));
+        });
+
+        Subscription oldSubscription = mSubscriptionsMap.get(row);
+
+        if (oldSubscription != null) {
+            oldSubscription.unsubscribe();
+            removeSubscription(oldSubscription);
+        }
+
+        mSubscriptionsMap.put(row, subscription);
+        addSubscription(subscription);
     }
 
     @Override

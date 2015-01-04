@@ -19,15 +19,15 @@ public class InitializeSessionUseCase extends SessionUseCase {
 
     /**
      *
-     * @param callback
+     * @param callbacks
      * @return an obserable which emit true or false,
      */
-    public Observable<String> getObservable(final Callback callback) {
+    public Observable<String> getObservable(final Callbacks callbacks) {
         return getMovieDbConfig().cache().flatMap(new Func1<MovieDbConfig, Observable<Boolean>>() {
             @Override
             public Observable<Boolean> call(MovieDbConfig movieDbConfig) {
                 if (AuthenticationManager.getInstance().getCurrentSession() == null) {
-                    return callback.shouldStartGuestSession();
+                    return callbacks.shouldStartGuestSession();
                 } else {
                     return Observable.just(true);
                 }
@@ -62,7 +62,7 @@ public class InitializeSessionUseCase extends SessionUseCase {
         });
     }
 
-    public interface Callback {
+    public interface Callbacks {
         public Observable<Boolean> shouldStartGuestSession(); //handle this in presentation layer. Presenter should return true if want to start session.
     }
 }

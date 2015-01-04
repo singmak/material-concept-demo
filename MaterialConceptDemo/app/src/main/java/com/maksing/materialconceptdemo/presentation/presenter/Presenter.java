@@ -48,6 +48,10 @@ public abstract class Presenter<T extends PresenterView> {
         mSubscription.add(subscription);
     }
 
+    protected void removeSubscription(Subscription subscription) {
+        mSubscription.remove(subscription);
+    }
+
     /**
     * Method that control the lifecycle of the view. It should be called in the view's
     * (Activity or Fragment) onResume() method.

@@ -54,11 +54,8 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
     }
 
     @Override
-    SingleListPresenter onCreateFragmentPresenter(SingleListPresenter presenter) {
-        if (presenter == null) {
-            presenter = new SingleListPresenter((Page)getArguments().getSerializable(ARG_PAGE), new GetDiscoverListUseCase(getServiceHolder()));
-        }
-        return presenter;
+    SingleListPresenter onCreateFragmentPresenter() {
+        return new SingleListPresenter((Page)getArguments().getSerializable(ARG_PAGE), new GetDiscoverListUseCase(getServiceHolder()));
     }
 
     @Override

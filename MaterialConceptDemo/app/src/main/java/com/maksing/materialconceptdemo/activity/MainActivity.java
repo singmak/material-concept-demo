@@ -79,6 +79,7 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
     @Override
     protected MainPresenter onCreatePresenter() {
+        logD("onCreatePresenter");
         return new MainPresenter(new GetNavItemsUseCase(getServiceHolder()), new GetUserDataUseCase(getServiceHolder()));
     }
 

@@ -41,6 +41,10 @@ public class StateFragment extends Fragment {
         return null;
     }
 
+    public void setPresenter(Presenter presenter) {
+        mPresenter = presenter;
+    }
+
     public void setHandler(PauseHandler handler) {
         mHandler = handler;
     }

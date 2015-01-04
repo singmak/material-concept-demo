@@ -48,7 +48,7 @@ public class SingleListPresenter extends Presenter<SingleListView> {
         mMovies = new ArrayList<>();
 
         if (mGetMovieListRequest == null) {
-            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(0), mCurrentListPage).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(0), mCurrentListPage).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
         getView().showProgressbar();
         addSubscription(mGetMovieListRequest.subscribe(new Subscriber<MovieList>() {

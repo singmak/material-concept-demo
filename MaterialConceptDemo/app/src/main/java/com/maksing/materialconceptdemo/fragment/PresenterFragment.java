@@ -30,10 +30,8 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
         mStateFragment = StateFragment.getInstance(getFragmentManager());
         mPresenter = (T)mStateFragment.getChildPresenter(getTag());
         if (mPresenter == null) {
-            mPresenter = onCreateFragmentPresenter(null);
+            mPresenter = onCreateFragmentPresenter();
             mStateFragment.putChildPresenter(getTag(), mPresenter);
-        } else {
-            onCreateFragmentPresenter(mPresenter);
         }
     }
 
@@ -72,7 +70,7 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
         return mPresenter;
     }
 
-    abstract T onCreateFragmentPresenter(@Nullable T presenter);
+    abstract T onCreateFragmentPresenter();
 
     @Override
     public void onDestroy() {

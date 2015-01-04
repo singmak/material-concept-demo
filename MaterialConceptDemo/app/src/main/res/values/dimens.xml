@@ -29,4 +29,7 @@
     <dimen name="navMenu_username_marginVertical">10dp</dimen>
     <dimen name="navMenu_item_marginHorizontal">20dp</dimen>
     <dimen name="navMenu_item_marginVertical">10dp</dimen>
+
+    <!--main-->
+    <dimen name="pager_height">180dp</dimen>
 </resources>
