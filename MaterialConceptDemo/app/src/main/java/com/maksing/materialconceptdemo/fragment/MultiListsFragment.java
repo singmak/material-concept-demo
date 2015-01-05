@@ -2,9 +2,11 @@ package com.maksing.materialconceptdemo.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,6 +15,8 @@ import com.maksing.materialconceptdemo.adapter.MultiListsAdapter;
 import com.maksing.materialconceptdemo.presentation.presenter.MultiListsPresenter;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
+import com.maksing.materialconceptdemo.view.FixedRatioView;
+import com.maksing.materialconceptdemo.view.FixedRatioViewPager;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
@@ -33,6 +37,8 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
 
     @InjectView(R.id.list)
     RecyclerView mRecyclerView;
+    @InjectView(R.id.pager)
+    ViewPager mViewPager;
 
     public static MultiListsFragment createInstance(Page page) {
         MultiListsFragment fragment = new MultiListsFragment();
@@ -57,6 +63,15 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
         mRecyclerView.setAdapter(mMultiListsAdapter);
         mMultiListsAdapter.setCallbacks(this);
         mMultiListsAdapter.setListItems(mPage.getListItems());
+        mMultiListsAdapter.setOnHeroAnchorTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mViewPager.dispatchTouchEvent(event);
+                mRecyclerView.requestDisallowInterceptTouchEvent(true);
+                return true;
+            }
+        });
+        mViewPager.setAdapter(mMultiListsAdapter.getHeroAdapter());
         return view;
     }
 
@@ -73,6 +88,9 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
     @Override
     public void displayListAt(List<Movie> movies, int row) {
         mMultiListsAdapter.updateListAt(row, movies);
+        if (row == 0) {
+            mViewPager.setAdapter(mMultiListsAdapter.getHeroAdapter());
+        }
     }
 
     @Override

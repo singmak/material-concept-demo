@@ -4,17 +4,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/multilistsBg">
     <TextView
         android:id = "@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textColor="@android:color/black"
+        android:textSize="@dimen/list_title_textSize"
         android:layout_marginLeft="@dimen/poster_title_margin"/>
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="250dp"/>
+        android:layout_height="250dp"
+        android:paddingLeft="@dimen/poster_item_margin"
+        android:paddingRight="@dimen/poster_item_margin"
+        android:clipToPadding="false"/>
 </LinearLayout>

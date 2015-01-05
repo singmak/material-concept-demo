@@ -8,8 +8,7 @@ import android.util.AttributeSet;
  * Created by maksing on 4/1/15.
  */
 public class FixedRatioViewPager extends ViewPager {
-    private float mRatioWidth = 0;
-    private float mRatioHeight = 0;
+    private FixedRatioViewMeasurer mMeasurer;
 
     public FixedRatioViewPager(Context context) {
         super(context);
@@ -17,26 +16,14 @@ public class FixedRatioViewPager extends ViewPager {
 
     public FixedRatioViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public void setAspectRatio(float width, float height) {
-        mRatioHeight = height;
-        mRatioWidth = width;
+        mMeasurer = new FixedRatioViewMeasurer(context, attrs);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        mMeasurer.setMeasureSpec(widthMeasureSpec, heightMeasureSpec);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(mMeasurer.getViewHeight(), MeasureSpec.EXACTLY);
 
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-
-        float imageSideRatio = 0;
-
-        if (mRatioHeight != 0 && mRatioWidth != 0) {
-            imageSideRatio = mRatioWidth / mRatioHeight;
-            height = (int) (width / imageSideRatio); //only modify height. the width of the view is always preserved.
-        }
-
-        setMeasuredDimension(width, height);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }

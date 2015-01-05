@@ -7,8 +7,23 @@
               android:background="@android:color/black">
     <com.maksing.materialconceptdemo.view.FixedRatioImageView
         android:id="@+id/hero_image"
-        app:widthRatio="8"
-        app:heightRatio="3"
+        app:widthRatio="16"
+        app:heightRatio="9"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"/>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/poster_title_margin"
+        android:textSize="@dimen/hero_title_textSize"
+        android:layout_alignParentBottom="true"
+        android:textColor="@android:color/white"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:shadowRadius="1"/>
 </RelativeLayout>

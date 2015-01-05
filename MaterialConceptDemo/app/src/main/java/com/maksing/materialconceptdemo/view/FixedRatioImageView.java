@@ -13,16 +13,20 @@ public class FixedRatioImageView extends ImageView {
 
     private boolean mWrapDrawable = false;
 
+    private FixedRatioViewMeasurer mMeasurer;
+
     public FixedRatioImageView(Context context) {
         super(context);
     }
 
     public FixedRatioImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mMeasurer = new FixedRatioViewMeasurer(context, attrs);
     }
 
     public FixedRatioImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mMeasurer = new FixedRatioViewMeasurer(context, attrs);
     }
 
     public void setAspectRatio(float width, float height) {
@@ -37,19 +41,13 @@ public class FixedRatioImageView extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
+        mMeasurer.setMeasureSpec(widthMeasureSpec, heightMeasureSpec);
 
-        float imageSideRatio = 0;
+        int width = mMeasurer.getViewWidth();
+        int height = mMeasurer.getViewHeight();
 
         if (mWrapDrawable) {
-            imageSideRatio = (float)getDrawable().getIntrinsicWidth() / getDrawable().getIntrinsicHeight();
-        } else if (mRatioHeight != 0 && mRatioWidth != 0) {
-            imageSideRatio = mRatioWidth / mRatioHeight;
-        }
-
-        if (imageSideRatio > 0) {
-            height = (int) (width / imageSideRatio); //only modify height. the width of the view is always preserved.
+            height = (int)(width / (float)getDrawable().getIntrinsicWidth() / getDrawable().getIntrinsicHeight());
         }
 
         setMeasuredDimension(width, height);

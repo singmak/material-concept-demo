@@ -6,7 +6,6 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Space;
 import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
@@ -29,14 +28,22 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private SparseArray<SingleListAdapter> mListAdaptersMap = new SparseArray<>();
 
+    private HeroAdapter mHeroAdapter;
+
+    private View.OnTouchListener mOnHeroAnchorTouchListener;
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == 0) {
-            return new HeroViewHolder(new Space(parent.getContext()));
+            return new HeroViewHolder(inflater.inflate(R.layout.pager_anchor, parent, false), mOnHeroAnchorTouchListener);
         } else {
             return new ListViewHolder(inflater.inflate(R.layout.horizontal_list, parent, false));
         }
+    }
+
+    public void setOnHeroAnchorTouchListener(View.OnTouchListener onHeroAnchorTouchListener) {
+        mOnHeroAnchorTouchListener = onHeroAnchorTouchListener;
     }
 
     @Override
@@ -55,6 +62,11 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             }
             listViewHolder.bindList(adapter, mListItems.get(position));
+        } else {
+            if (mHeroAdapter == null) {
+                mHeroAdapter = new HeroAdapter();
+                mCallbacks.loadListAt(position);
+            }
         }
     }
 
@@ -82,13 +94,22 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void updateListAt(int row, List<Movie> movies) {
-        mListAdaptersMap.get(row).setMovies(movies);
+        if (row == 0) {
+            mHeroAdapter.setMovies(movies);
+        } else {
+            mListAdaptersMap.get(row).setMovies(movies);
+        }
+    }
+
+    public HeroAdapter getHeroAdapter() {
+        return mHeroAdapter;
     }
 
      static class HeroViewHolder extends RecyclerView.ViewHolder {
 
-        public HeroViewHolder(View itemView) {
+        public HeroViewHolder(View itemView, View.OnTouchListener onTouchListener) {
             super(itemView);
+            itemView.setOnTouchListener(onTouchListener);
         }
     }
 

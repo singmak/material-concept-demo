@@ -21,6 +21,7 @@
     <dimen name="poster_title_margin">10dp</dimen>
     <dimen name="fixed_poster_title_padding">5dp</dimen>
     <dimen name="poster_item_margin">5dp</dimen>
+    <dimen name="list_title_textSize">20sp</dimen>
 
     <!--nav menu item-->
     <dimen name="navItem_title_textSize">20sp</dimen>
