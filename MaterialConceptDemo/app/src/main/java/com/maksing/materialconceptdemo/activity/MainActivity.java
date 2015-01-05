@@ -1,5 +1,6 @@
 package com.maksing.materialconceptdemo.activity;
 
+import android.app.Fragment;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.adapter.NavigationMenuAdapter;
+import com.maksing.materialconceptdemo.fragment.MultiListsFragment;
+import com.maksing.materialconceptdemo.fragment.PresenterFragment;
 import com.maksing.materialconceptdemo.fragment.SingleListFragment;
 import com.maksing.materialconceptdemo.presentation.presenter.MainPresenter;
 import com.maksing.materialconceptdemo.presentation.view.MainView;
@@ -85,7 +88,13 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
     @Override
     public void gotoPage(Page page) {
-        switchPresenterFragment(R.id.page_container, SingleListFragment.createInstance(page), page.getPath());
+        PresenterFragment fragment;
+        if (page.getListsCount() > 1) {
+            fragment = MultiListsFragment.createInstance(page);
+        } else {
+            fragment = SingleListFragment.createInstance(page);
+        }
+        switchPresenterFragment(R.id.page_container, fragment, page.getPath());
     }
 
     @Override

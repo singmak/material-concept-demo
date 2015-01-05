@@ -24,11 +24,16 @@ import butterknife.InjectView;
 public class SingleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Movie> mMovies = new ArrayList<>();
+    private final int mItemLayoutResId;
+
+    public SingleListAdapter(int itemLayoutResId) {
+        mItemLayoutResId = itemLayoutResId;
+    }
 
     @Override
     public PosterViewHolder onCreateViewHolder(ViewGroup parent, int pos) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(mItemLayoutResId, parent, false);
         return new PosterViewHolder(view);
     }
 

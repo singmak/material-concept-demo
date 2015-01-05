@@ -19,6 +19,7 @@
     <dimen name="poster_height">180dp</dimen>
     <dimen name="poster_title_textSize">18sp</dimen>
     <dimen name="poster_title_margin">10dp</dimen>
+    <dimen name="fixed_poster_title_padding">5dp</dimen>
     <dimen name="poster_item_margin">5dp</dimen>
 
     <!--nav menu item-->

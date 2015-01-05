@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     >
-    <ViewPager
+    <com.maksing.materialconceptdemo.view.FixedRatioViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pager_height"/>
@@ -13,9 +13,5 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/multilistsBg"
-        android:paddingLeft="@dimen/poster_item_margin"
-        android:paddingRight="@dimen/poster_item_margin"
-        android:paddingBottom="@dimen/poster_item_margin"
-        android:clipToPadding="false"/>
-</merge>
+        android:background="@color/multilistsBg"/>
+</FrameLayout>

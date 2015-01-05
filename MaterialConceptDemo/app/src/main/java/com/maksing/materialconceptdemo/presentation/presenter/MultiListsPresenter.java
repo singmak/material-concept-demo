@@ -51,7 +51,7 @@ public class MultiListsPresenter extends Presenter<MultiListsView> {
         Observable<MovieList> request = mGetMovieListRequestsMap.get(row);
 
         if (request == null) {
-            request = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(row), 0).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            request = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(row), 1).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
             mGetMovieListRequestsMap.put(row, request);
         }
         getView().showProgressbar();

@@ -41,18 +41,16 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStateFragment = StateFragment.getInstance(getFragmentManager());
-        logD("onCreate");
+
         if (mStateFragment == null) {
             mStateFragment = StateFragment.createInstance(mBaseHandler, onCreatePresenter());
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(mStateFragment, StateFragment.TAG);
             ft.commit();
-            logD("onCreate new state");
         } else {
             if (getPresenter() == null) {
                 mStateFragment.setPresenter(onCreatePresenter());
             }
-            logD("onCreate old state");
             mStateFragment.setHandler(mBaseHandler);
         }
 
@@ -64,7 +62,6 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        logD("onPostCreate: " + (getPresenter() == null));
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,17 +106,13 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
     @Override
     protected void onResume() {
         super.onResume();
-        if (getPresenter() != null) {
-            getPresenter().resume();
-        }
+        getPresenter().resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (getPresenter() != null) {
-            getPresenter().pause();
-        }
+        getPresenter().pause();
     }
 
     @Override

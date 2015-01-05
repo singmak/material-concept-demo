@@ -13,7 +13,6 @@ import com.maksing.materialconceptdemo.adapter.SingleListAdapter;
 import com.maksing.materialconceptdemo.presentation.presenter.SingleListPresenter;
 import com.maksing.materialconceptdemo.presentation.view.SingleListView;
 import com.maksing.moviedbdomain.entity.Movie;
-import com.maksing.moviedbdomain.entity.MovieList;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
 
@@ -26,7 +25,7 @@ import butterknife.InjectView;
  * Created by maksing on 25/12/14.
  */
 public class SingleListFragment extends PresenterFragment<SingleListPresenter> implements SingleListView {
-    private SingleListAdapter mSingleListAdapter = new SingleListAdapter();
+    private SingleListAdapter mSingleListAdapter = new SingleListAdapter(R.layout.movie_list_item);
 
     private static final String ARG_PAGE = "ARG_PAGE";
 

@@ -11,29 +11,29 @@ public class Page implements Serializable{
     public static Page EMPTY = new Page("", "", "");
 
     private final String mTitle;
-    private final List<String> mDiscoverQueries;
+    private final List<ListItem> mListItems;
     private final String mPath;
 
-    public Page(String title, List<String> discoveryQueries, String path) {
+    public Page(String title, List<ListItem> listItems, String path) {
         mPath = path;
 
         if (title == null) {
             title = "";
         }
 
-        if (discoveryQueries == null) {
-            discoveryQueries = new ArrayList<>();
+        if (listItems == null) {
+            listItems = new ArrayList<>();
         }
 
         mTitle = title;
-        mDiscoverQueries = discoveryQueries;
+        mListItems = listItems;
     }
 
     public Page(String title, String discoveryQuery, String path) {
         mPath = path;
         mTitle = title;
-        mDiscoverQueries = new ArrayList<>();
-        mDiscoverQueries.add(discoveryQuery);
+        mListItems = new ArrayList<>();
+        mListItems.add(new ListItem(discoveryQuery, title));
     }
 
     public String getPath() {
@@ -41,7 +41,15 @@ public class Page implements Serializable{
     }
 
     public String getDiscoverQueryAt(int pos) {
-        if (mDiscoverQueries.size() == 0) return "";
-        return mDiscoverQueries.get(pos);
+        if (mListItems.size() == 0) return "";
+        return mListItems.get(pos).getQuery();
+    }
+
+    public int getListsCount() {
+        return mListItems.size();
+    }
+
+    public List<ListItem> getListItems() {
+        return mListItems;
     }
 }

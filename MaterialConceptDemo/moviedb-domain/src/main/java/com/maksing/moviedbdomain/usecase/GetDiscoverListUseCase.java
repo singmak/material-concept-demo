@@ -22,6 +22,10 @@ public class GetDiscoverListUseCase extends SessionUseCase {
     }
 
     public Observable<MovieList> getObservable(final String query, final int page) {
+        if (page <= 0 || page > 1000) {
+            throw new IllegalArgumentException("Invalid page: Pages start at 1 and max at 1000. They are expected to be an integer.");
+        }
+
         return getMovieDbConfig().flatMap(new Func1<MovieDbConfig, Observable<MovieList>>() {
             @Override
             public Observable<MovieList> call(MovieDbConfig movieDbConfig) {
