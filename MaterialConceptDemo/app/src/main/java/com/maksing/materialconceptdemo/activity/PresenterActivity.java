@@ -24,6 +24,8 @@ import com.maksing.moviedbdomain.service.ServiceHolder;
 
 import java.lang.ref.WeakReference;
 
+import butterknife.InjectView;
+
 /**
  * Created by maksing on 22/12/14.
  */
@@ -35,7 +37,9 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
 
     protected StateFragment mStateFragment;
     private BaseHandler mBaseHandler = new BaseHandler(this);
-    protected Toolbar mToolbar;
+
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +64,18 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
         getPresenter().initialize(this);
+    }
+
+    public Toolbar getToolbar(){
+        return mToolbar;
     }
 
     protected void logD(String message) {

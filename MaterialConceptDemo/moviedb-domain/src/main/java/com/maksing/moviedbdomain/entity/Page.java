@@ -33,7 +33,7 @@ public class Page implements Serializable{
         mPath = path;
         mTitle = title;
         mListItems = new ArrayList<>();
-        mListItems.add(new ListItem(discoveryQuery, title));
+        mListItems.add(new ListItem(title, discoveryQuery));
     }
 
     public String getPath() {

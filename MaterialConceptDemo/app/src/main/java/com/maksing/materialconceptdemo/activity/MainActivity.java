@@ -80,7 +80,7 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(colorResId));
 
         mDrawerToggle = new ActionBarDrawerToggle(
-                this,  mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+                this,  mDrawerLayout, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -88,10 +88,10 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
         mDrawerToggle.syncState();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -107,6 +107,8 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
     @Override
     public void gotoPage(Page page) {
+        mDrawerLayout.closeDrawers();
+        mNavigationMenuAdapter.notifyDataSetChanged();
         PresenterFragment fragment;
         if (page.getListsCount() > 1) {
             fragment = MultiListsFragment.createInstance(page);

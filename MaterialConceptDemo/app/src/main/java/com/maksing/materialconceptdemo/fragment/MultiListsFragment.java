@@ -53,6 +53,7 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mPage = (Page)getArguments().getSerializable(ARG_PAGE);
         super.onCreate(savedInstanceState);
     }
 
@@ -82,10 +83,29 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mViewPager.dispatchTouchEvent(event);
-                mRecyclerView.requestDisallowInterceptTouchEvent(true);
                 return true;
             }
         });
+
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //do nothing
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //do nothing
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if(state == ViewPager.SCROLL_STATE_DRAGGING) {
+                    mRecyclerView.requestDisallowInterceptTouchEvent(true); //disallow recyclerview to intercept the touch event in dragging the viewpager.
+                }
+            }
+        });
+
         mViewPager.setAdapter(mMultiListsAdapter.getHeroAdapter());
         return view;
     }
@@ -94,7 +114,9 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
         int baseColor = getResources().getColor(R.color.colorPrimary);
         int height = mViewPager.getHeight();
         float alpha = 1 - (float) Math.max(0, height - scrollY) / height;
-        getToolbar().setBackgroundColor(CommonUtils.getColorWithAlpha(alpha, baseColor));
+        if (getToolbar() != null) {
+            getToolbar().setBackgroundColor(CommonUtils.getColorWithAlpha(alpha, baseColor));
+        }
 
         mViewPager.setTranslationY(-scrollY / 2);
     }
@@ -119,7 +141,6 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
 
     @Override
     MultiListsPresenter onCreateFragmentPresenter() {
-        mPage = (Page)getArguments().getSerializable(ARG_PAGE);
         return new MultiListsPresenter(mPage, new GetDiscoverListUseCase(getServiceHolder()));
     }
 

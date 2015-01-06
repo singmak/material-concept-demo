@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.maksing.materialconceptdemo.R;
+import com.maksing.materialconceptdemo.activity.PresenterActivity;
 import com.maksing.materialconceptdemo.manager.ServiceManager;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.PresenterView;
@@ -31,12 +32,22 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
             throw new IllegalArgumentException("Fragment must has a tag");
         }
 
+        if (!(getActivity() instanceof PresenterActivity)) {
+            throw new IllegalStateException("Parent Activity must be PresenterActivity");
+        }
+
         mStateFragment = StateFragment.getInstance(getFragmentManager());
         mPresenter = (T)mStateFragment.getChildPresenter(getTag());
         if (mPresenter == null) {
             mPresenter = onCreateFragmentPresenter();
             mStateFragment.putChildPresenter(getTag(), mPresenter);
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mToolbar = ((PresenterActivity) getActivity()).getToolbar();
     }
 
     @Override
@@ -72,7 +83,6 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mToolbar = (Toolbar)activity.findViewById(R.id.toolbar);
     }
 
     protected T getPresenter() {
