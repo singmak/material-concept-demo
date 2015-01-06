@@ -1,5 +1,7 @@
 package com.maksing.materialconceptdemo.utils;
 
+import com.maksing.materialconceptdemo.manager.ApplicationManager;
+
 /**
  * Created by maksing on 5/1/15.
  */
@@ -21,5 +23,11 @@ public class CommonUtils {
         int a = Math.min(255, Math.max(0, (int) (alpha * 255))) << 24;
         int rgb = 0x00ffffff & baseColor;
         return a + rgb;
+    }
+
+    public static int dpToPx(int dp)
+    {
+        float density = ApplicationManager.getInstance().getApplicationContext().getResources().getDisplayMetrics().density;
+        return Math.round((float)dp * density);
     }
 }

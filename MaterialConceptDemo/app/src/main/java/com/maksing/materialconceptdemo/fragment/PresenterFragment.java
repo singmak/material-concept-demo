@@ -1,7 +1,9 @@
 package com.maksing.materialconceptdemo.fragment;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -23,6 +25,10 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
     private T mPresenter;
     private StateFragment mStateFragment;
     private Toolbar mToolbar;
+    private float mToolbarHeight;
+
+    private ObjectAnimator mHideToolbarAnimator;
+    private ObjectAnimator mShowToolbarAnimator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,11 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mToolbar = ((PresenterActivity) getActivity()).getToolbar();
+
+        TypedArray a = getActivity().getTheme().obtainStyledAttributes(R.style.AppTheme, new int[]{R.attr.actionBarSize});
+        int attributeResourceId = a.getResourceId(0, 0);
+        mToolbarHeight = getResources().getDimension(attributeResourceId);
+        showToolbar();
     }
 
     @Override
@@ -78,6 +89,38 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
 
     protected Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    protected void hideToolbar() {
+        if (mToolbar == null) {
+            return;
+        }
+
+        if (mHideToolbarAnimator == null) {
+            mHideToolbarAnimator = ObjectAnimator.ofFloat(mToolbar, "translationY", -mToolbarHeight);
+        }
+        if (mShowToolbarAnimator != null) {
+            mShowToolbarAnimator.cancel();
+        }
+        if (!mHideToolbarAnimator.isRunning() && getToolbar().getTranslationY() == 0) {
+            mHideToolbarAnimator.start();
+        }
+    }
+
+    protected void showToolbar() {
+        if (mToolbar == null) {
+            return;
+        }
+
+        if (mShowToolbarAnimator == null) {
+            mShowToolbarAnimator = ObjectAnimator.ofFloat(mToolbar, "translationY", 0f);
+        }
+        if (mHideToolbarAnimator != null) {
+            mHideToolbarAnimator.cancel();
+        }
+        if (!mShowToolbarAnimator.isRunning() && getToolbar().getTranslationY() != 0) {
+            mShowToolbarAnimator.start();
+        }
     }
 
     @Override

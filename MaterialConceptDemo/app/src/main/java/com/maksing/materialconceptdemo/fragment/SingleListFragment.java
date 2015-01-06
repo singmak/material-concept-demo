@@ -1,6 +1,7 @@
 package com.maksing.materialconceptdemo.fragment;
 
-import android.graphics.Color;
+import android.animation.ObjectAnimator;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.adapter.SingleListAdapter;
 import com.maksing.materialconceptdemo.presentation.presenter.SingleListPresenter;
 import com.maksing.materialconceptdemo.presentation.view.SingleListView;
+import com.maksing.materialconceptdemo.utils.CommonUtils;
 import com.maksing.materialconceptdemo.view.LoaderLayout;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
@@ -36,6 +38,8 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
     @InjectView(R.id.loaderLayout)
     LoaderLayout mLoaderLayout;
 
+    private int mListScrolledY;
+
     public static SingleListFragment createInstance(Page page) {
         SingleListFragment fragment = new SingleListFragment();
         Bundle bundle = new Bundle();
@@ -53,6 +57,7 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
 
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.single_list_cols), StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mSingleListAdapter);
+        mListScrolledY = mRecyclerView.getScrollY();
         return view;
     }
 
@@ -65,7 +70,22 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getToolbar().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        getToolbar().setTitle(((Page)getArguments().getSerializable(ARG_PAGE)).getTitle());
+        getToolbar().setTitle(((Page) getArguments().getSerializable(ARG_PAGE)).getTitle());
+        final int limit = CommonUtils.dpToPx(100);
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                mListScrolledY += dy;
+
+                if (dy > 0 && mListScrolledY > limit) {
+                    hideToolbar();
+                }
+
+                if (dy < 0) {
+                    showToolbar();
+                }
+            }
+        });
     }
 
     @Override
