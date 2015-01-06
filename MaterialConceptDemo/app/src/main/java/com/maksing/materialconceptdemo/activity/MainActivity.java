@@ -97,18 +97,14 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
     @Override
     public void gotoPage(Page page) {
-        getSupportActionBar().setTitle(page.getTitle());
         mDrawerLayout.closeDrawers();
         mNavigationMenuAdapter.notifyDataSetChanged();
         PresenterFragment fragment;
-        int baseColor = getResources().getColor(R.color.colorPrimary);
         if (page.getListsCount() > 1) {
             fragment = MultiListsFragment.createInstance(page);
-            baseColor = Color.TRANSPARENT;
         } else {
             fragment = SingleListFragment.createInstance(page);
         }
-        getToolbar().setBackgroundColor(baseColor);
         switchPresenterFragment(R.id.page_container, fragment, page.getPath());
     }
 

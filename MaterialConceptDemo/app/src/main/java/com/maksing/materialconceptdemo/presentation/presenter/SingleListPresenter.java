@@ -34,12 +34,11 @@ public class SingleListPresenter extends Presenter<SingleListView> {
 
     @Override
     protected void restoreView() {
-        getView().displayLists(mMovies);
     }
 
     @Override
     protected boolean shouldRestore() {
-        return mMovies != null;
+        return false;
     }
 
     @Override

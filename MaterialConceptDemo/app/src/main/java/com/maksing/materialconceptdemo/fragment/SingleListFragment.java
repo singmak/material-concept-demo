@@ -1,5 +1,6 @@
 package com.maksing.materialconceptdemo.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -58,6 +59,13 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
     @Override
     SingleListPresenter onCreateFragmentPresenter() {
         return new SingleListPresenter((Page)getArguments().getSerializable(ARG_PAGE), new GetDiscoverListUseCase(getServiceHolder()));
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getToolbar().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        getToolbar().setTitle(((Page)getArguments().getSerializable(ARG_PAGE)).getTitle());
     }
 
     @Override

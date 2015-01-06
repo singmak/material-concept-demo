@@ -1,5 +1,6 @@
 package com.maksing.materialconceptdemo.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -12,17 +13,13 @@ import android.view.ViewGroup;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.adapter.MultiListsAdapter;
-import com.maksing.materialconceptdemo.presentation.model.HorizontalListItem;
 import com.maksing.materialconceptdemo.presentation.presenter.MultiListsPresenter;
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
 import com.maksing.materialconceptdemo.utils.CommonUtils;
-import com.maksing.materialconceptdemo.view.LoaderLayout;
-import com.maksing.moviedbdomain.entity.ListItem;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -113,6 +110,13 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
 
         mViewPager.setAdapter(mMultiListsAdapter.getHeroAdapter());
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getToolbar().setBackgroundColor(Color.TRANSPARENT);
+        getToolbar().setTitle(mPage.getTitle());
     }
 
     public void onScrollChanged(int scrollY) {
