@@ -40,8 +40,8 @@ public class NavigationDataService extends HttpService implements NavigationServ
 
         items.add(new NavItem("Home", new Page("Home", listItems, "home")));
 
-        items.add(new NavItem("Kids", new Page("Most popular kids movies", "certification_country=US&certification.lte=G&sort_by=popularity.desc", "kids")));
-        items.add(new NavItem("The best of 2014", new Page("The best movies from 2014", "primary_release_year=2014&sort_by=vote_average.desc", "best2014")));
+        items.add(new NavItem("Kids", new Page("Kids movies", "certification_country=US&certification.lte=G&sort_by=popularity.desc", "kids")));
+        items.add(new NavItem("The best of 2014", new Page("The best of 2014", "primary_release_year=2014&sort_by=vote_average.desc", "best2014")));
         return Observable.just(items);
     }
 }

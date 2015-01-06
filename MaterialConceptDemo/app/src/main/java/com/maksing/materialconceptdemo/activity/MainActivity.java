@@ -69,7 +69,6 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        getSupportActionBar().setTitle(R.string.title_home);
 
         // Now retrieve the DrawerLayout so that we can set the status bar color.
         // This only takes effect on Lollipop, or when using translucentStatusBar
@@ -103,6 +102,7 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
     @Override
     public void gotoPage(Page page) {
+        getSupportActionBar().setTitle(page.getTitle());
         mDrawerLayout.closeDrawers();
         mNavigationMenuAdapter.notifyDataSetChanged();
         PresenterFragment fragment;

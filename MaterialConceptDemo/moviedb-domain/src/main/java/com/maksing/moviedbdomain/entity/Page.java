@@ -52,4 +52,8 @@ public class Page implements Serializable{
     public List<ListItem> getListItems() {
         return mListItems;
     }
+
+    public String getTitle() {
+        return mTitle;
+    }
 }
