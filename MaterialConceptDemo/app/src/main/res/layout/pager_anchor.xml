@@ -5,5 +5,5 @@
       android:orientation="vertical"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:widthRatio="16"
-      app:heightRatio="9"/>
+      app:widthRatio="@integer/hero_width_ratio"
+      app:heightRatio="@integer/hero_height_ratio"/>

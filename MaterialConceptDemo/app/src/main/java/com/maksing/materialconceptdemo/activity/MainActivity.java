@@ -2,6 +2,7 @@ package com.maksing.materialconceptdemo.activity;
 
 import android.app.Fragment;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -88,11 +89,6 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
         mDrawerToggle.syncState();
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-//    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(KEY_SELETED_NAVITEM, getPresenter().getCurrentNavMenuItem());
@@ -110,11 +106,14 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
         mDrawerLayout.closeDrawers();
         mNavigationMenuAdapter.notifyDataSetChanged();
         PresenterFragment fragment;
+        int baseColor = getResources().getColor(R.color.colorPrimary);
         if (page.getListsCount() > 1) {
             fragment = MultiListsFragment.createInstance(page);
+            baseColor = Color.TRANSPARENT;
         } else {
             fragment = SingleListFragment.createInstance(page);
         }
+        getToolbar().setBackgroundColor(baseColor);
         switchPresenterFragment(R.id.page_container, fragment, page.getPath());
     }
 

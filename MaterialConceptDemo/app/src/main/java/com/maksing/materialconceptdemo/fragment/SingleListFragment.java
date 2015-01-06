@@ -47,7 +47,7 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
         View view = inflater.inflate(R.layout.fragment_singlelist, container, false);
         ButterKnife.inject(this, view);
 
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.single_list_cols), StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mSingleListAdapter);
         return view;
     }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="single_list_cols">4</integer>
+    <integer name="hero_width_ratio">8</integer>
+    <integer name="hero_height_ratio">3</integer>
+</resources>
