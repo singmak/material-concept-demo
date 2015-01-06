@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface SingleListView extends PresenterView {
     void showProgressbar();
-    void hideProgressbar();
+    void showError();
     void displayLists(List<Movie> lists);
 }

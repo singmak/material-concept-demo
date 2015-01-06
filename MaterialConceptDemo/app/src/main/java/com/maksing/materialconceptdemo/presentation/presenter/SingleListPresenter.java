@@ -54,7 +54,6 @@ public class SingleListPresenter extends Presenter<SingleListView> {
         addSubscription(mGetMovieListRequest.subscribe(new Subscriber<MovieList>() {
             @Override
             public void onCompleted() {
-                getView().hideProgressbar();
             }
 
             @Override

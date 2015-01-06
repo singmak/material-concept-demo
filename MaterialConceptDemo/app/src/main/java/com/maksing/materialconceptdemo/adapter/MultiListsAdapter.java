@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
+import com.maksing.materialconceptdemo.presentation.model.HorizontalListItem;
+import com.maksing.materialconceptdemo.view.LoaderLayout;
 import com.maksing.moviedbdomain.entity.ListItem;
 import com.maksing.moviedbdomain.entity.Movie;
 
@@ -22,7 +24,7 @@ import butterknife.InjectView;
  * Created by maksing on 1/1/15.
  */
 public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<ListItem> mListItems = new ArrayList<>();
+    private List<HorizontalListItem> mListItems = new ArrayList<>();
 
     private Callbacks mCallbacks;
 
@@ -67,6 +69,8 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 mHeroAdapter = new HeroAdapter();
                 mCallbacks.loadListAt(position);
             }
+            HeroViewHolder heroViewHolder = (HeroViewHolder)holder;
+            heroViewHolder.bindList(mListItems.get(position));
         }
     }
 
@@ -89,7 +93,14 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void setListItems(List<ListItem> listItems) {
-        mListItems = listItems;
+        ArrayList<HorizontalListItem> horizontalListItems = new ArrayList<>();
+        for (ListItem item : listItems) {
+            HorizontalListItem horizontalListItem = new HorizontalListItem(item.getTitle(), item.getQuery());
+            horizontalListItem.setLoading(true);
+            horizontalListItems.add(horizontalListItem);
+        }
+
+        mListItems = horizontalListItems;
         notifyDataSetChanged();
     }
 
@@ -99,6 +110,8 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             mListAdaptersMap.get(row).setMovies(movies);
         }
+        mListItems.get(row).setLoading(false);
+        notifyDataSetChanged();
     }
 
     public HeroAdapter getHeroAdapter() {
@@ -107,9 +120,21 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
      static class HeroViewHolder extends RecyclerView.ViewHolder {
 
+         @InjectView(R.id.loaderLayout)
+         LoaderLayout mLoaderLayout;
+
         public HeroViewHolder(View itemView, View.OnTouchListener onTouchListener) {
             super(itemView);
+            ButterKnife.inject(this, itemView);
             itemView.setOnTouchListener(onTouchListener);
+        }
+
+        public void bindList(HorizontalListItem listItem) {
+            if (listItem.isLoading()) {
+                mLoaderLayout.load();
+            } else {
+                mLoaderLayout.displayContent();
+            }
         }
     }
 
@@ -118,6 +143,8 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         RecyclerView mRecyclerView;
         @InjectView(R.id.title)
         TextView mTitle;
+        @InjectView(R.id.loaderLayout)
+        LoaderLayout mLoaderLayout;
 
         public ListViewHolder(View itemView) {
             super(itemView);
@@ -125,8 +152,15 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         }
 
-        public void bindList(SingleListAdapter adapter, ListItem listItem) {
-            mRecyclerView.setAdapter(adapter);
+        public void bindList(SingleListAdapter adapter, HorizontalListItem listItem) {
+            if (mRecyclerView.getAdapter() != adapter) {
+                mRecyclerView.setAdapter(adapter);
+            }
+            if (listItem.isLoading()) {
+                mLoaderLayout.load();
+            } else {
+                mLoaderLayout.displayContent();
+            }
             mTitle.setText(listItem.getTitle());
         }
     }

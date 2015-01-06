@@ -12,6 +12,7 @@ import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.adapter.SingleListAdapter;
 import com.maksing.materialconceptdemo.presentation.presenter.SingleListPresenter;
 import com.maksing.materialconceptdemo.presentation.view.SingleListView;
+import com.maksing.materialconceptdemo.view.LoaderLayout;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
@@ -31,6 +32,8 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
 
     @InjectView(R.id.list)
     RecyclerView mRecyclerView;
+    @InjectView(R.id.loaderLayout)
+    LoaderLayout mLoaderLayout;
 
     public static SingleListFragment createInstance(Page page) {
         SingleListFragment fragment = new SingleListFragment();
@@ -59,16 +62,17 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
 
     @Override
     public void showProgressbar() {
-
+        mLoaderLayout.load();
     }
 
     @Override
-    public void hideProgressbar() {
-
+    public void showError() {
+        mLoaderLayout.error(getString(R.string.error_list));
     }
 
     @Override
     public void displayLists(List<Movie> lists) {
+        mLoaderLayout.displayContent();
         mSingleListAdapter.setMovies(lists);
     }
 }

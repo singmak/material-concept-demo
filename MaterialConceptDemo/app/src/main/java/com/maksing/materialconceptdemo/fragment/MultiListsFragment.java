@@ -12,13 +12,17 @@ import android.view.ViewGroup;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.adapter.MultiListsAdapter;
+import com.maksing.materialconceptdemo.presentation.model.HorizontalListItem;
 import com.maksing.materialconceptdemo.presentation.presenter.MultiListsPresenter;
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
 import com.maksing.materialconceptdemo.utils.CommonUtils;
+import com.maksing.materialconceptdemo.view.LoaderLayout;
+import com.maksing.moviedbdomain.entity.ListItem;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -78,6 +82,7 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
 
         mRecyclerView.setAdapter(mMultiListsAdapter);
         mMultiListsAdapter.setCallbacks(this);
+
         mMultiListsAdapter.setListItems(mPage.getListItems());
         mMultiListsAdapter.setOnHeroAnchorTouchListener(new View.OnTouchListener() {
             @Override
@@ -122,21 +127,21 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
     }
 
     @Override
-    public void showProgressbar() {
-
-    }
-
-    @Override
-    public void hideProgressbar() {
-
-    }
-
-    @Override
     public void displayListAt(List<Movie> movies, int row) {
         mMultiListsAdapter.updateListAt(row, movies);
         if (row == 0) {
             mViewPager.setAdapter(mMultiListsAdapter.getHeroAdapter());
         }
+    }
+
+    @Override
+    public void showProgressBarAt(int row) {
+
+    }
+
+    @Override
+    public void showErrorAt(int row) {
+
     }
 
     @Override

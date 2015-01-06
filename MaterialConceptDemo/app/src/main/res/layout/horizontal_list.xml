@@ -14,12 +14,17 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/list_title_textSize"
         android:layout_marginLeft="@dimen/poster_title_margin"/>
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/list"
+    <com.maksing.materialconceptdemo.view.LoaderLayout
+        android:id="@+id/loaderLayout"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:paddingLeft="@dimen/poster_item_margin"
-        android:paddingRight="@dimen/poster_item_margin"
-        android:clipToPadding="false"/>
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:paddingLeft="@dimen/poster_item_margin"
+            android:paddingRight="@dimen/poster_item_margin"
+            android:clipToPadding="false"/>
+    </com.maksing.materialconceptdemo.view.LoaderLayout>
 </LinearLayout>

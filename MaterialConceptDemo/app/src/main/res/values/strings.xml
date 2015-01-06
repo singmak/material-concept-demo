@@ -25,4 +25,6 @@
     <string name="navigation_drawer_close">Close</string>>
     <string name="text_signin">Sign In</string>>
 
+    <!--message-->
+    <string name="error_list">Content cannot be loaded.</string>
 </resources>

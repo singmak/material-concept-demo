@@ -28,4 +28,5 @@
         android:paddingTop="@dimen/multilist_vertical_padding"
         android:paddingBottom="@dimen/multilist_vertical_padding"
         android:clipToPadding="false"/>
+
 </FrameLayout>

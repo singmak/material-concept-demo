@@ -1,6 +1,5 @@
 package com.maksing.materialconceptdemo.activity;
 
-import android.app.Fragment;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,9 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
@@ -19,11 +16,9 @@ import com.maksing.materialconceptdemo.adapter.NavigationMenuAdapter;
 import com.maksing.materialconceptdemo.fragment.MultiListsFragment;
 import com.maksing.materialconceptdemo.fragment.PresenterFragment;
 import com.maksing.materialconceptdemo.fragment.SingleListFragment;
-import com.maksing.materialconceptdemo.presentation.model.NavMenu;
 import com.maksing.materialconceptdemo.presentation.model.NavMenuItem;
 import com.maksing.materialconceptdemo.presentation.presenter.MainPresenter;
 import com.maksing.materialconceptdemo.presentation.view.MainView;
-import com.maksing.moviedbdomain.entity.NavItem;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.entity.User;
 import com.maksing.moviedbdomain.usecase.GetNavItemsUseCase;
