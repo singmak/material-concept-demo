@@ -9,6 +9,8 @@
 
     <!--home page-->
     <dimen name="hero_title_textSize">25sp</dimen>
+    <dimen name="user_textSize">20sp</dimen>
+    <dimen name="signin_textSize">17sp</dimen>
     <dimen name="drawer_width">254dp</dimen>
 
     <!--details-->
@@ -21,6 +23,7 @@
     <dimen name="poster_title_margin">10dp</dimen>
     <dimen name="fixed_poster_title_padding">5dp</dimen>
     <dimen name="poster_item_margin">5dp</dimen>
+    <dimen name="multilist_vertical_padding">10dp</dimen>
     <dimen name="list_title_textSize">20sp</dimen>
 
     <!--nav menu item-->
@@ -29,6 +32,9 @@
     <dimen name="navMenu_header_height">80dp</dimen>
     <dimen name="navMenu_username_marginHorizontal">20dp</dimen>
     <dimen name="navMenu_username_marginVertical">10dp</dimen>
+    <dimen name="navMenu_btn_signin_marginHorizontal">10dp</dimen>
+    <dimen name="navMenu_btn_signin_marginVertical">5dp</dimen>
+    <dimen name="navMenu_btn_signin_padding">5dp</dimen>
     <dimen name="navMenu_item_marginHorizontal">20dp</dimen>
     <dimen name="navMenu_item_marginVertical">10dp</dimen>
 

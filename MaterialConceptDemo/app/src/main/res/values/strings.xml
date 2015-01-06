@@ -23,5 +23,6 @@
     <!--drawer-->
     <string name="navigation_drawer_open">Open</string>>
     <string name="navigation_drawer_close">Close</string>>
+    <string name="text_signin">Sign In</string>>
 
 </resources>

@@ -7,8 +7,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
@@ -16,6 +18,8 @@ import com.maksing.materialconceptdemo.adapter.NavigationMenuAdapter;
 import com.maksing.materialconceptdemo.fragment.MultiListsFragment;
 import com.maksing.materialconceptdemo.fragment.PresenterFragment;
 import com.maksing.materialconceptdemo.fragment.SingleListFragment;
+import com.maksing.materialconceptdemo.presentation.model.NavMenu;
+import com.maksing.materialconceptdemo.presentation.model.NavMenuItem;
 import com.maksing.materialconceptdemo.presentation.presenter.MainPresenter;
 import com.maksing.materialconceptdemo.presentation.view.MainView;
 import com.maksing.moviedbdomain.entity.NavItem;
@@ -43,6 +47,10 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
     @InjectView(R.id.username)
     TextView mUsername;
 
+    private NavMenuItem mSelectedNavItem;
+
+    private static final String KEY_SELETED_NAVITEM = "KEY_SELETED_NAVITEM";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,10 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mNavigationMenuAdapter);
+
+        if (savedInstanceState != null) {
+            getPresenter().setCurrentNavMenuItem((NavMenuItem) savedInstanceState.getSerializable(KEY_SELETED_NAVITEM));
+        }
     }
 
     @Override
@@ -72,12 +84,19 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
         );
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.setDrawerShadow(R.drawable.shadow_nav_menu, Gravity.START);
         mDrawerToggle.syncState();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(KEY_SELETED_NAVITEM, getPresenter().getCurrentNavMenuItem());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -98,8 +117,8 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
     }
 
     @Override
-    public void updateNavigationMenu(List<NavItem> navItems) {
-        mNavigationMenuAdapter.setNavItems(navItems);
+    public void updateNavigationMenu(List<NavMenuItem> navItems) {
+        mNavigationMenuAdapter.setNavMenuItems(navItems);
     }
 
     @Override
@@ -109,6 +128,6 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
     @Override
     public void onClick(View v) {
-        getPresenter().selectedNavItem((NavItem)v.getTag());
+        getPresenter().selectedNavItem((NavMenuItem)v.getTag());
     }
 }

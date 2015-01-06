@@ -5,6 +5,11 @@
     <color name="colorPrimaryDarker">#424242</color>
     <color name="colorAccent">#E0E0E0</color>
 
-    <color name="headerUserName">#000000</color>
+    <color name="headerUserName">#ffffff</color>
     <color name="multilistsBg">#EEEEEE</color>
+
+    <!--nav menu item-->
+    <color name="navItem_selected">#22ffffff</color>
+    <color name="navItem_focused">#11ffffff</color>
+    <color name="navItem_pressed">#11ffffff</color>
 </resources>

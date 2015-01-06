@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
+import com.maksing.materialconceptdemo.presentation.model.NavMenuItem;
 import com.maksing.moviedbdomain.entity.NavItem;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import butterknife.InjectView;
  * Created by maksing on 31/12/14.
  */
 public class NavigationMenuAdapter extends RecyclerView.Adapter<NavigationMenuAdapter.NavMenuItemViewHolder> {
-    private List<NavItem> mNavItems = new ArrayList<>();
+    private List<NavMenuItem> mNavItems = new ArrayList<>();
 
     private View.OnClickListener mOnClickListener;
 
@@ -43,7 +44,7 @@ public class NavigationMenuAdapter extends RecyclerView.Adapter<NavigationMenuAd
         return mNavItems.size();
     }
 
-    public void setNavItems(List<NavItem> navItems) {
+    public void setNavMenuItems(List<NavMenuItem> navItems) {
         mNavItems = navItems;
         notifyDataSetChanged();
     }
@@ -64,8 +65,9 @@ public class NavigationMenuAdapter extends RecyclerView.Adapter<NavigationMenuAd
             mView = itemView;
         }
 
-        public void bindNavItem(NavItem navItem) {
+        public void bindNavItem(NavMenuItem navItem) {
             mTitle.setText(navItem.getTitle());
+            mView.setSelected(navItem.isSelected());
             mView.setTag(navItem);
         }
 

@@ -26,5 +26,8 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never"
+        android:paddingTop="@dimen/multilist_vertical_padding"
+        android:paddingBottom="@dimen/multilist_vertical_padding"
+        android:clipToPadding="false"/>
 </FrameLayout>

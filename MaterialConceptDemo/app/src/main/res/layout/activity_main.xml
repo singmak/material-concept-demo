@@ -33,11 +33,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="left|start"
-        android:fitsSystemWindows="true"
-        android:background="@android:color/white">
+        android:fitsSystemWindows="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/navMenu_header_height">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/popcorn"
+                android:scaleType="centerCrop"/>
             <TextView
                 android:id="@+id/username"
                 android:textColor="@color/headerUserName"
@@ -48,6 +52,33 @@
                 android:layout_marginRight="@dimen/navMenu_username_marginHorizontal"
                 android:layout_marginTop="@dimen/navMenu_username_marginVertical"
                 android:layout_marginBottom="@dimen/navMenu_username_marginVertical"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:shadowRadius="1"
+                android:textSize="@dimen/user_textSize"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/btnLogInOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/navMenu_btn_signin_marginHorizontal"
+                android:layout_marginBottom="@dimen/navMenu_btn_signin_marginVertical"
+                android:padding="@dimen/navMenu_btn_signin_padding"
+                android:textColor="@android:color/white"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:shadowRadius="1"
+                android:textSize="@dimen/signin_textSize"
+                android:text="@string/text_signin"
                 />
             </RelativeLayout>
 
@@ -56,10 +87,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/colorPrimaryDark"
             android:clipToPadding="false"
             android:paddingTop="@dimen/navMenu_item_marginVertical"
-            android:paddingBottom="@dimen/navMenu_item_marginVertical"/>
+            android:paddingBottom="@dimen/navMenu_item_marginVertical"
+            android:overScrollMode="never"/>
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

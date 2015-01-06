@@ -1,9 +1,11 @@
 package com.maksing.moviedbdomain.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by maksing on 26/12/14.
  */
-public class NavItem {
+public class NavItem implements Serializable {
 
     private final String mTitle;
     private final Page mPage;

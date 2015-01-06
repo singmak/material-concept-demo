@@ -1,6 +1,7 @@
 package com.maksing.materialconceptdemo.presentation.presenter;
 
 import com.maksing.materialconceptdemo.presentation.model.NavMenu;
+import com.maksing.materialconceptdemo.presentation.model.NavMenuItem;
 import com.maksing.materialconceptdemo.presentation.view.MainView;
 import com.maksing.moviedbdomain.entity.NavItem;
 import com.maksing.moviedbdomain.entity.User;
@@ -8,6 +9,7 @@ import com.maksing.moviedbdomain.usecase.GetNavItemsUseCase;
 import com.maksing.moviedbdomain.usecase.GetUserDataUseCase;
 import com.maksing.moviedbdomain.usecase.UseCase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -23,8 +25,8 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class MainPresenter extends Presenter<MainView> {
 
-    private List<NavItem> mNavItems;
-    private NavItem mCurrentNavItem;
+    private List<NavMenuItem> mNavMenuItems;
+    private NavMenuItem mCurrentNavMenuItem;
 
     private User mCurrentUser;
 
@@ -45,7 +47,7 @@ public class MainPresenter extends Presenter<MainView> {
 
     @Override
     protected boolean shouldRestore() {
-        return mNavItems != null && mCurrentUser != null;
+        return mNavMenuItems != null && mCurrentUser != null;
     }
 
     @Override
@@ -72,21 +74,38 @@ public class MainPresenter extends Presenter<MainView> {
 
             @Override
             public void onNext(NavMenu navMenu) {
-                mNavItems = navMenu.getNavItems();
-                mCurrentNavItem = mNavItems.get(0);
+                mNavMenuItems = new ArrayList<NavMenuItem>();
+
+                for (NavItem item : navMenu.getNavItems()) {
+                    mNavMenuItems.add(new NavMenuItem(item.getTitle(), item.getPage()));
+                }
+                mNavMenuItems.get(0).setSelected(true);
+
+                mCurrentNavMenuItem = mNavMenuItems.get(0);
                 mCurrentUser = navMenu.getUser();
-                getView().gotoPage(mCurrentNavItem.getPage());
+                getView().gotoPage(mCurrentNavMenuItem.getPage());
                 updateData();
             }
         }));
     }
 
-    public void selectedNavItem(NavItem navItem) {
-        getView().gotoPage(navItem.getPage());
+    public NavMenuItem getCurrentNavMenuItem() {
+        return mCurrentNavMenuItem;
+    }
+
+    public void setCurrentNavMenuItem(NavMenuItem currentNavMenuItem) {
+        mCurrentNavMenuItem = currentNavMenuItem;
+    }
+
+    public void selectedNavItem(NavMenuItem navMenuItem) {
+        mCurrentNavMenuItem.setSelected(false);
+        mCurrentNavMenuItem = navMenuItem;
+        navMenuItem.setSelected(true);
+        getView().gotoPage(navMenuItem.getPage());
     }
 
     private void updateData() {
-        getView().updateNavigationMenu(mNavItems);
+        getView().updateNavigationMenu(mNavMenuItems);
         getView().updateUser(mCurrentUser);
     }
 
