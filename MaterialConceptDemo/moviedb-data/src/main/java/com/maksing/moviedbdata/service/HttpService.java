@@ -8,6 +8,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -61,5 +62,13 @@ public class HttpService {
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
         return response;
+    }
+
+    protected String objectToJson(Object object) {
+        return gson.toJson(object);
+    }
+
+    protected Object jsonToObject(String json, final Class model) {
+        return gson.fromJson(json, model);
     }
 }

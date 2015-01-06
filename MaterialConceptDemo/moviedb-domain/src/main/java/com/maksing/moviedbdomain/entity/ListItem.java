@@ -1,9 +1,11 @@
 package com.maksing.moviedbdomain.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by maksing on 5/1/15.
  */
-public class ListItem {
+public class ListItem implements Serializable{
     private final String mQuery;
     private final String mTitle;
 

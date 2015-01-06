@@ -29,10 +29,6 @@ public class ConfigurationDataService extends HttpService implements Configurati
     private final RetrofitServiceStore<MovieDbConfigService> mMovieDbConfigServiceStore;
     private final Context mContext;
     private final String mApiKey;
-    private static final String PREF_SETTINGS = "PREF_SETTINGS";
-    private static final String KEY_USERNAME = "USERNAME";
-    private static final String KEY_ID = "KEY_ID";
-    private static final String KEY_SESSION_ID = "KEY_SESSION_ID";
 
     private static volatile ConfigurationDataService sInstance;
 
@@ -81,17 +77,6 @@ public class ConfigurationDataService extends HttpService implements Configurati
 
     @Override
     public Observable<DeviceConfig> getDeviceConfiguration() {
-
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
-
-        String username = sharedPreferences.getString(KEY_USERNAME, "");
-        String id = sharedPreferences.getString(KEY_ID, "");
-        String sessionId = sharedPreferences.getString(KEY_SESSION_ID, "");
-
-        if (!TextUtils.isEmpty(sessionId)) {
-            AuthenticationManager.getInstance().setCurrentSession(new Session(new User(id, username), sessionId));
-        }
-
         return Observable.just(new DeviceConfig(mContext.getResources().getBoolean(R.bool.isTablet)));
     }
 }

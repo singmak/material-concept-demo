@@ -1,5 +1,9 @@
 package com.maksing.moviedbdata.service;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
+
 import com.maksing.moviedbdata.model.AccountData;
 import com.maksing.moviedbdata.model.GuestSessionData;
 import com.maksing.moviedbdata.model.RequestTokenData;
@@ -21,12 +25,15 @@ public class SessionDataService extends HttpService implements SessionService {
     private final String mApiKey;
 
     private static volatile SessionDataService sInstance;
+    private SharedPreferences mPrefs;
 
-    public static SessionDataService getInstance(String endPoint, String apiKey) {
+    private static final String KEY_GUEST_SESSION = "KEY_GUEST_SESSION";
+
+    public static SessionDataService getInstance(SharedPreferences prefs, String endPoint, String apiKey) {
         if (sInstance == null) {
             synchronized (SessionDataService.class) {
                 if (sInstance == null) {
-                    sInstance = new SessionDataService(endPoint, apiKey);
+                    sInstance = new SessionDataService(prefs, endPoint, apiKey);
                 }
             }
         }
@@ -34,13 +41,14 @@ public class SessionDataService extends HttpService implements SessionService {
     }
 
     //Make it private to disallow to call constructor directly
-    private SessionDataService(String endPoint, String apiKey) {
+    private SessionDataService(SharedPreferences prefs, String endPoint, String apiKey) {
         if (endPoint == null || apiKey == null) {
             throw new IllegalArgumentException("Arguments must not be null in constructing ConfigurationDataRepository");
         }
 
         mServiceStore = new RetrofitServiceStore<MovieDbAuthenticateService>(endPoint, MovieDbAuthenticateService.class);
         mApiKey = apiKey;
+        mPrefs = prefs;
     }
 
     @Override
@@ -81,13 +89,32 @@ public class SessionDataService extends HttpService implements SessionService {
         });
     }
 
+    private Session getSavedGuestSession() {
+        return (Session)jsonToObject(mPrefs.getString(KEY_GUEST_SESSION, ""), Session.class);
+    }
+
+    private void saveGuestSession(Session session) {
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putString(KEY_GUEST_SESSION, objectToJson(session));
+        editor.apply();
+    }
+
     @Override
     public Observable<Session> getGuestSession() {
-        return mServiceStore.getService().createGuestSession(mApiKey).map(new Func1<GuestSessionData, Session>() {
-            @Override
-            public Session call(GuestSessionData guestSessionData) {
-                return new Session(User.GUEST, guestSessionData.getGuestSessionId());
-            }
-        });
+
+        final Session session = getSavedGuestSession();
+
+        if (session != null && !TextUtils.isEmpty(session.getSessionId())) {
+            return Observable.just(session);
+        } else {
+            return mServiceStore.getService().createGuestSession(mApiKey).map(new Func1<GuestSessionData, Session>() {
+                @Override
+                public Session call(GuestSessionData guestSessionData) {
+                    Session newSession = new Session(User.GUEST, guestSessionData.getGuestSessionId());
+                    saveGuestSession(newSession);
+                    return newSession;
+                }
+            });
+        }
     }
 }
