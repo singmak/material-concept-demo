@@ -13,10 +13,8 @@ import android.view.ViewGroup;
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.adapter.MultiListsAdapter;
 import com.maksing.materialconceptdemo.presentation.presenter.MultiListsPresenter;
-import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
-import com.maksing.materialconceptdemo.view.FixedRatioView;
-import com.maksing.materialconceptdemo.view.FixedRatioViewPager;
+import com.maksing.materialconceptdemo.utils.CommonUtils;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
@@ -25,6 +23,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+
+import static android.support.v7.widget.RecyclerView.OnScrollListener;
 
 /**
  * Created by maksing on 1/1/15.
@@ -39,6 +39,8 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
     RecyclerView mRecyclerView;
     @InjectView(R.id.pager)
     ViewPager mViewPager;
+
+    private int mListScrolledY;
 
     public static MultiListsFragment createInstance(Page page) {
         MultiListsFragment fragment = new MultiListsFragment();
@@ -60,6 +62,19 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
         View view = inflater.inflate(R.layout.fragment_multilists, container, false);
         ButterKnife.inject(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        mListScrolledY = mRecyclerView.getScrollY();
+
+        mRecyclerView.setOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                mListScrolledY += dy;
+
+                onScrollChanged(mListScrolledY);
+            }
+        });
+
         mRecyclerView.setAdapter(mMultiListsAdapter);
         mMultiListsAdapter.setCallbacks(this);
         mMultiListsAdapter.setListItems(mPage.getListItems());
@@ -73,6 +88,15 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
         });
         mViewPager.setAdapter(mMultiListsAdapter.getHeroAdapter());
         return view;
+    }
+
+    public void onScrollChanged(int scrollY) {
+        int baseColor = getResources().getColor(R.color.colorPrimary);
+        int height = mViewPager.getHeight();
+        float alpha = 1 - (float) Math.max(0, height - scrollY) / height;
+        getToolbar().setBackgroundColor(CommonUtils.getColorWithAlpha(alpha, baseColor));
+
+        mViewPager.setTranslationY(-scrollY / 2);
     }
 
     @Override

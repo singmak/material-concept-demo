@@ -5,8 +5,10 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.manager.ServiceManager;
 import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.PresenterView;
@@ -19,6 +21,7 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
 
     private T mPresenter;
     private StateFragment mStateFragment;
+    private Toolbar mToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
         if (getTag() == null) {
             throw new IllegalArgumentException("Fragment must has a tag");
         }
+
         mStateFragment = StateFragment.getInstance(getFragmentManager());
         mPresenter = (T)mStateFragment.getChildPresenter(getTag());
         if (mPresenter == null) {
@@ -61,9 +65,14 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
         return ServiceManager.getInstance().getServiceHolder();
     }
 
+    protected Toolbar getToolbar() {
+        return mToolbar;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        mToolbar = (Toolbar)activity.findViewById(R.id.toolbar);
     }
 
     protected T getPresenter() {
