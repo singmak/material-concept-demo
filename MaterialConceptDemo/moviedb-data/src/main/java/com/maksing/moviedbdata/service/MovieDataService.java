@@ -58,8 +58,14 @@ public class MovieDataService extends HttpService implements MovieService {
 
                 if (movieListData.getResults() != null) {
                     for (Result result : movieListData.getResults()) {
-                        String posterPath = posterBasePath + result.getPosterPath() + "?api_key=" + mApiKey;
-                        String backdropPath = backdropBasePath + result.getBackdropPath() + "?api_key=" + mApiKey;
+                        String posterPath = "";
+                        if (result.getPosterPath() != null) {
+                            posterPath = posterBasePath + result.getPosterPath() + "?api_key=" + mApiKey;
+                        }
+                        String backdropPath = "";
+                        if (result.getBackdropPath() != null) {
+                            backdropPath = backdropBasePath + result.getBackdropPath() + "?api_key=" + mApiKey;
+                        }
                         movies.add(new Movie(String.valueOf(result.getId()), result.getTitle(), posterPath, backdropPath));
                     }
                 }
