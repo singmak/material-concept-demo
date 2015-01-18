@@ -5,9 +5,8 @@ import com.maksing.materialconceptdemo.presentation.model.NavMenuItem;
 import com.maksing.materialconceptdemo.presentation.view.MainView;
 import com.maksing.moviedbdomain.entity.NavItem;
 import com.maksing.moviedbdomain.entity.User;
-import com.maksing.moviedbdomain.usecase.GetNavItemsUseCase;
-import com.maksing.moviedbdomain.usecase.GetUserDataUseCase;
-import com.maksing.moviedbdomain.usecase.UseCase;
+import com.maksing.moviedbdomain.usecase.configuration.GetNavItemsUseCase;
+import com.maksing.moviedbdomain.usecase.session.GetUserDataUseCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +15,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func2;
-import rx.observers.Subscribers;
 import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by maksing on 30/12/14.

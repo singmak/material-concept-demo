@@ -18,7 +18,7 @@ import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
 import com.maksing.materialconceptdemo.utils.CommonUtils;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
-import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
+import com.maksing.moviedbdomain.usecase.movie.GetDiscoverListUseCase;
 
 import java.util.List;
 

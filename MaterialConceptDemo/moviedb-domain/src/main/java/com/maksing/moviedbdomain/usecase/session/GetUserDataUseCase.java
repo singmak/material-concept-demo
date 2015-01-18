@@ -1,4 +1,4 @@
-package com.maksing.moviedbdomain.usecase;
+package com.maksing.moviedbdomain.usecase.session;
 
 import com.maksing.moviedbdomain.entity.Session;
 import com.maksing.moviedbdomain.entity.User;

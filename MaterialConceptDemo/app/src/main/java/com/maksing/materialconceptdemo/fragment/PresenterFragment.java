@@ -48,6 +48,8 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
             mPresenter = onCreateFragmentPresenter();
             mStateFragment.putChildPresenter(getTag(), mPresenter);
         }
+
+        mPresenter.restoreState(savedInstanceState);
     }
 
     @Override
@@ -138,5 +140,11 @@ public abstract class PresenterFragment<T extends Presenter> extends Fragment im
     public void onDestroy() {
         mPresenter.destroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        mPresenter.saveState(outState);
+        super.onSaveInstanceState(outState);
     }
 }

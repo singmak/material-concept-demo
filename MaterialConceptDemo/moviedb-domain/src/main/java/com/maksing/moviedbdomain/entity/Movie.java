@@ -1,19 +1,32 @@
 package com.maksing.moviedbdomain.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by maksing on 25/12/14.
  */
 public class Movie {
+    public enum Status{
+        RELEASED, PRODUCTION
+    }
+
     private final String mId;
     private final String mTitle;
     private final String mPosterSource;
     private final String mBackdropSource;
 
+    //optional fields set through builder
+    private int mRatingsCount;
+    private float mRating;
     private String mDescription = "";
     private List<String> mGenres = new ArrayList<>();
+
+    private String mTagline;
+    private String mLanguage;
+    private Date mReleaseDate;
+    private int mRunTime;
 
     public Movie(String id, String title, String posterSource, String backdropSource) {
 
@@ -39,13 +52,6 @@ public class Movie {
         mBackdropSource = backdropSource;
     }
 
-    public void setGenres(List<String> genres) {
-        if (genres == null) {
-            genres = new ArrayList<>();
-        }
-        mGenres = genres;
-    }
-
     public List<String> getGenres() {
         return mGenres;
     }
@@ -66,11 +72,46 @@ public class Movie {
         return mDescription;
     }
 
-    public void setDescription(String description) {
-        if (description == null) {
-            description = "";
+    public static class Builder {
+        private Movie mMovie;
+        public Builder(String id, String title, String posterSource, String backdropSource) {
+            mMovie = new Movie(id, title, posterSource, backdropSource);
         }
 
-        mDescription = description;
+        public Builder setGenres(List<String> genres) {
+            if (genres == null) {
+                genres = new ArrayList<>();
+            }
+            mMovie.mGenres = genres;
+            return this;
+        }
+
+        public Builder setRatingsCount(int ratingsCount) {
+            if (ratingsCount < 0) {
+                ratingsCount = 0;
+            }
+            mMovie.mRatingsCount = ratingsCount;
+            return this;
+        }
+
+        public Builder setRating(float rating) {
+            if (rating < 0) {
+                rating = 0;
+            }
+            mMovie.mRating = rating;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            if (description == null) {
+                description = "";
+            }
+            mMovie.mDescription = description;
+            return this;
+        }
+
+        public Movie build() {
+            return mMovie;
+        }
     }
 }

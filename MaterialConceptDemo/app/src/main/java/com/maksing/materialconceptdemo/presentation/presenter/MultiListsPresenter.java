@@ -3,14 +3,9 @@ package com.maksing.materialconceptdemo.presentation.presenter;
 import android.util.SparseArray;
 
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
-import com.maksing.materialconceptdemo.presentation.view.SingleListView;
-import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.MovieList;
 import com.maksing.moviedbdomain.entity.Page;
-import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.maksing.moviedbdomain.usecase.movie.GetDiscoverListUseCase;
 
 import rx.Observable;
 import rx.Subscriber;

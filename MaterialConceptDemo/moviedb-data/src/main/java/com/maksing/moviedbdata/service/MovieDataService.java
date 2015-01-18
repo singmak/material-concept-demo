@@ -15,7 +15,6 @@ import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
-import rx.observers.Subscribers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -83,19 +82,25 @@ public class MovieDataService extends HttpService implements MovieService {
                 String posterPath = posterBasePath + movieData.getPosterPath() + "?api_key=" + mApiKey;
                 String backdropPath = backdropBasePath + movieData.getBackdropPath() + "?api_key=" + mApiKey;
 
-                Movie movie = new Movie(String.valueOf(movieData.getId()), movieData.getTitle(), posterPath, backdropPath);
-                movie.setDescription(movieData.getOverview());
-
                 List<String> genres = new ArrayList<>();
-                if (movie.getGenres() != null) {
+                if (movieData.getGenres() != null) {
                     for (Genre genre : movieData.getGenres()) {
                         genres.add(genre.getName());
                     }
                 }
 
-                movie.setGenres(genres);
+                Movie movie = new Movie.Builder(String.valueOf(movieData.getId()), movieData.getTitle(), posterPath, backdropPath)
+                        .setDescription(movieData.getOverview())
+                        .setGenres(genres)
+                        .build();
+
                 return movie;
             }
         });
+    }
+
+    @Override
+    public Observable<Movie> getReviewsByMovieId(int id) {
+        return null;
     }
 }

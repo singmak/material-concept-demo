@@ -1,7 +1,6 @@
 package com.maksing.materialconceptdemo.activity;
 
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,8 +20,8 @@ import com.maksing.materialconceptdemo.presentation.presenter.MainPresenter;
 import com.maksing.materialconceptdemo.presentation.view.MainView;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.entity.User;
-import com.maksing.moviedbdomain.usecase.GetNavItemsUseCase;
-import com.maksing.moviedbdomain.usecase.GetUserDataUseCase;
+import com.maksing.moviedbdomain.usecase.configuration.GetNavItemsUseCase;
+import com.maksing.moviedbdomain.usecase.session.GetUserDataUseCase;
 
 import java.util.List;
 

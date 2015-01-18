@@ -1,10 +1,11 @@
-package com.maksing.moviedbdomain.usecase;
+package com.maksing.moviedbdomain.usecase.session;
 
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.entity.Session;
 import com.maksing.moviedbdomain.exception.InvalidSessionException;
 import com.maksing.moviedbdomain.manager.AuthenticationManager;
 import com.maksing.moviedbdomain.service.ServiceHolder;
+import com.maksing.moviedbdomain.usecase.session.SessionUseCase;
 
 import rx.Observable;
 import rx.functions.Func1;

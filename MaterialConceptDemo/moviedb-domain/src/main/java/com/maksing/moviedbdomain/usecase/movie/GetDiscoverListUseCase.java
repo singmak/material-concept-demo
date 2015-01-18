@@ -1,14 +1,13 @@
-package com.maksing.moviedbdomain.usecase;
+package com.maksing.moviedbdomain.usecase.movie;
 
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.entity.MovieList;
-import com.maksing.moviedbdomain.entity.Session;
 import com.maksing.moviedbdomain.service.MovieService;
 import com.maksing.moviedbdomain.service.ServiceHolder;
+import com.maksing.moviedbdomain.usecase.session.SessionUseCase;
 
 import rx.Observable;
 import rx.functions.Func1;
-import rx.functions.Func2;
 
 /**
  * Created by maksing on 23/12/14.

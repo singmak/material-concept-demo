@@ -1,8 +1,9 @@
-package com.maksing.moviedbdomain.usecase;
+package com.maksing.moviedbdomain.usecase.configuration;
 
 import com.maksing.moviedbdomain.entity.NavItem;
 import com.maksing.moviedbdomain.service.NavigationService;
 import com.maksing.moviedbdomain.service.ServiceHolder;
+import com.maksing.moviedbdomain.usecase.session.SessionUseCase;
 
 import java.util.List;
 

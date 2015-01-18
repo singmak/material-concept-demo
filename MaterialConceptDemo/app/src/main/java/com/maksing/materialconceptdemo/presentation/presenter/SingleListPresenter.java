@@ -4,7 +4,7 @@ import com.maksing.materialconceptdemo.presentation.view.SingleListView;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.MovieList;
 import com.maksing.moviedbdomain.entity.Page;
-import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
+import com.maksing.moviedbdomain.usecase.movie.GetDiscoverListUseCase;
 
 import java.util.ArrayList;
 import java.util.List;

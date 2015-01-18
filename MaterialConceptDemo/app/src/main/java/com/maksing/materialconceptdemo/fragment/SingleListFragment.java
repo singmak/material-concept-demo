@@ -1,7 +1,5 @@
 package com.maksing.materialconceptdemo.fragment;
 
-import android.animation.ObjectAnimator;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +16,7 @@ import com.maksing.materialconceptdemo.utils.CommonUtils;
 import com.maksing.materialconceptdemo.view.LoaderLayout;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
-import com.maksing.moviedbdomain.usecase.GetDiscoverListUseCase;
+import com.maksing.moviedbdomain.usecase.movie.GetDiscoverListUseCase;
 
 import java.util.List;
 

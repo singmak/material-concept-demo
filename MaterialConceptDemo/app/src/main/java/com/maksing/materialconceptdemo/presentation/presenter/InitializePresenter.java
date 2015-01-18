@@ -3,7 +3,7 @@ package com.maksing.materialconceptdemo.presentation.presenter;
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
 import com.maksing.materialconceptdemo.presentation.view.PresenterView;
 import com.maksing.moviedbdomain.exception.InvalidSessionException;
-import com.maksing.moviedbdomain.usecase.InitializeSessionUseCase;
+import com.maksing.moviedbdomain.usecase.session.InitializeSessionUseCase;
 
 import rx.Observable;
 import rx.Subscriber;

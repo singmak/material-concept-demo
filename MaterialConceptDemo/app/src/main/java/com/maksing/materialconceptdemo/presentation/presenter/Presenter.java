@@ -4,6 +4,8 @@
  */
 package com.maksing.materialconceptdemo.presentation.presenter;
 
+import android.os.Bundle;
+
 import com.maksing.materialconceptdemo.presentation.view.PresenterView;
 
 import rx.Subscription;
@@ -67,5 +69,13 @@ public abstract class Presenter<T extends PresenterView> {
     public void destroy() {
         mSubscription.unsubscribe();
         mSubscription = null;
+    }
+
+    public void restoreState(Bundle state) {
+
+    }
+
+    public void saveState(Bundle state) {
+
     }
 }

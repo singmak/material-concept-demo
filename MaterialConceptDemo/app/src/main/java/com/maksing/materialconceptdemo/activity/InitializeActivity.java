@@ -10,9 +10,8 @@ import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.fragment.ConfirmDialogFragment;
 import com.maksing.materialconceptdemo.navigation.Navigator;
 import com.maksing.materialconceptdemo.presentation.presenter.InitializePresenter;
-import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
 import com.maksing.materialconceptdemo.presentation.view.InitializeView;
-import com.maksing.moviedbdomain.usecase.InitializeSessionUseCase;
+import com.maksing.moviedbdomain.usecase.session.InitializeSessionUseCase;
 
 import rx.Observable;
 import rx.Subscriber;

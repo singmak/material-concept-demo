@@ -58,6 +58,7 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
             mStateFragment.setHandler(mBaseHandler);
         }
 
+        getPresenter().restoreState(savedInstanceState);
     }
 
     @Override
@@ -210,5 +211,11 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
                 activity.processMessage(msg);
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        getPresenter().saveState(outState);
+        super.onSaveInstanceState(outState);
     }
 }
