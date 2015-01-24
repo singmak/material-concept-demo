@@ -1,4 +1,4 @@
-package com.maksing.materialconceptdemo.view;
+package com.maksing.materialconceptdemo.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
