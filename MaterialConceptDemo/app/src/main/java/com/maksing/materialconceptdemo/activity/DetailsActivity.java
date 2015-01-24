@@ -7,6 +7,8 @@ import com.maksing.materialconceptdemo.presentation.presenter.Presenter;
  */
 public class DetailsActivity extends PresenterActivity {
 
+
+
     @Override
     protected Presenter onCreatePresenter() {
         return null;

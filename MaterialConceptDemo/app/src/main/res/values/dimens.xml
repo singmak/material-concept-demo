@@ -40,4 +40,8 @@
 
     <!--main-->
     <dimen name="pager_height">180dp</dimen>
+
+    <!--details-->
+    <dimen name="details_poster_width">200dp</dimen>
+
 </resources>
