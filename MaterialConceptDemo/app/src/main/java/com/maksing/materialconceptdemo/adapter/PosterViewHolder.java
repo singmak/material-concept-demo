@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
-import com.maksing.materialconceptdemo.view.FixedRatioImageView;
+import com.maksing.materialconceptdemo.widget.FixedRatioImageView;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.squareup.picasso.Picasso;
 

@@ -14,7 +14,7 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/list_title_textSize"
         android:layout_marginLeft="@dimen/poster_title_margin"/>
-    <com.maksing.materialconceptdemo.view.LoaderLayout
+    <com.maksing.materialconceptdemo.widget.LoaderLayout
         android:id="@+id/loaderLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,5 +26,5 @@
             android:paddingLeft="@dimen/poster_item_margin"
             android:paddingRight="@dimen/poster_item_margin"
             android:clipToPadding="false"/>
-    </com.maksing.materialconceptdemo.view.LoaderLayout>
+    </com.maksing.materialconceptdemo.widget.LoaderLayout>
 </LinearLayout>

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.presentation.model.HorizontalListItem;
-import com.maksing.materialconceptdemo.view.LoaderLayout;
+import com.maksing.materialconceptdemo.widget.LoaderLayout;
 import com.maksing.moviedbdomain.entity.ListItem;
 import com.maksing.moviedbdomain.entity.Movie;
 

@@ -11,7 +11,7 @@
           android:orientation="vertical"
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
-            <com.maksing.materialconceptdemo.view.FixedRatioImageView
+            <com.maksing.materialconceptdemo.widget.FixedRatioImageView
                 android:id="@+id/poster_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

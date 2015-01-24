@@ -13,7 +13,7 @@ import com.maksing.materialconceptdemo.adapter.SingleListAdapter;
 import com.maksing.materialconceptdemo.presentation.presenter.SingleListPresenter;
 import com.maksing.materialconceptdemo.presentation.view.SingleListView;
 import com.maksing.materialconceptdemo.utils.CommonUtils;
-import com.maksing.materialconceptdemo.view.LoaderLayout;
+import com.maksing.materialconceptdemo.widget.LoaderLayout;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.usecase.movie.GetDiscoverListUseCase;

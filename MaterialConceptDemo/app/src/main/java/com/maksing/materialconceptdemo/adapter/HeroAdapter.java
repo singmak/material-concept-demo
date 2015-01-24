@@ -10,11 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maksing.materialconceptdemo.R;
-import com.maksing.materialconceptdemo.view.FixedRatioImageView;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
