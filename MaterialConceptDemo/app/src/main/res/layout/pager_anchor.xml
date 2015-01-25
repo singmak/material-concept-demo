@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.maksing.materialconceptdemo.widget.LoaderLayout
+<com.maksing.materialconceptdemo.presentation.widget.LoaderLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/loaderLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.maksing.materialconceptdemo.widget.FixedRatioView
+    <com.maksing.materialconceptdemo.presentation.widget.FixedRatioView
           android:orientation="vertical"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           app:widthRatio="@integer/hero_width_ratio"
           app:heightRatio="@integer/hero_height_ratio"/>
-</com.maksing.materialconceptdemo.widget.LoaderLayout>
+</com.maksing.materialconceptdemo.presentation.widget.LoaderLayout>

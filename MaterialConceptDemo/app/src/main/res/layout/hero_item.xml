@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@android:color/black">
-    <com.maksing.materialconceptdemo.widget.FixedRatioImageView
+    <com.maksing.materialconceptdemo.presentation.widget.FixedRatioImageView
         android:id="@+id/hero_image"
         app:widthRatio="16"
         app:heightRatio="9"

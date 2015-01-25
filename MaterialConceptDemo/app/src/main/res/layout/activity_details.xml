@@ -8,7 +8,7 @@
              android:layout_height="match_parent"
              tools:context=".activity.DetailsActivity">
 
-    <com.maksing.materialconceptdemo.widget.LoaderLayout
+    <com.maksing.materialconceptdemo.presentation.widget.LoaderLayout
         android:id="@+id/loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,7 +28,7 @@
                     android:background="@android:color/black"
                     tools:background="@color/tools_red1">
 
-                    <com.maksing.materialconceptdemo.widget.FixedRatioView
+                    <com.maksing.materialconceptdemo.presentation.widget.FixedRatioView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:widthRatio="16"
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_rowSpan="3">
 
-                        <com.maksing.materialconceptdemo.widget.FixedRatioImageView
+                        <com.maksing.materialconceptdemo.presentation.widget.FixedRatioImageView
                             android:id="@+id/poster_image"
                             android:layout_width="@dimen/details_poster_width"
                             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
 
             </LinearLayout>
         </ScrollView>
-    </com.maksing.materialconceptdemo.widget.LoaderLayout>
+    </com.maksing.materialconceptdemo.presentation.widget.LoaderLayout>
     <include layout="@layout/toolbar"/>
 
 </FrameLayout>

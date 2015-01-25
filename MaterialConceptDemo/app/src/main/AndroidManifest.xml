@@ -9,19 +9,19 @@
                  android:icon="@drawable/ic_launcher"
                  android:theme="@style/AppTheme"
                  android:name=".DemoApplication">
-        <activity android:name=".activity.InitializeActivity">
+        <activity android:name=".presentation.splash.InitializeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"
+        <activity android:name=".presentation.home.MainActivity"
             android:launchMode="singleTop">
         </activity>
-        <activity android:name=".activity.SignInActivity">
+        <activity android:name=".presentation.signin.SignInActivity">
         </activity>
-        <activity android:name=".activity.DetailsActivity"
-            android:parentActivityName=".activity.MainActivity">
+        <activity android:name=".presentation.details.DetailsActivity"
+            android:parentActivityName=".presentation.home.MainActivity">
         </activity>
     </application>
 
