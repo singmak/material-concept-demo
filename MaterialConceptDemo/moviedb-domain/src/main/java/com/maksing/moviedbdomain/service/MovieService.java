@@ -10,6 +10,6 @@ import rx.Observable;
  */
 public interface MovieService {
     public Observable<MovieList> getDiscoverMovieList(String query, int page, String posterBasePath, String backdropBasePath);
-    public Observable<Movie> getMovieById(int id, String posterBasePath, String backdropBasePath);
+    public Observable<Movie> getMovieById(String id, String posterBasePath, String backdropBasePath);
     public Observable<Movie> getReviewsByMovieId(int id);
 }

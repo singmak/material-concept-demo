@@ -58,7 +58,9 @@ public abstract class PresenterActivity<T extends Presenter> extends ActionBarAc
             mStateFragment.setHandler(mBaseHandler);
         }
 
-        getPresenter().restoreState(savedInstanceState);
+        if (savedInstanceState != null) {
+            getPresenter().restoreState(savedInstanceState);
+        }
     }
 
     @Override

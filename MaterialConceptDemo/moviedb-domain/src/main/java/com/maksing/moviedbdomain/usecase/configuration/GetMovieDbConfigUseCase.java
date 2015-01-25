@@ -7,6 +7,7 @@ package com.maksing.moviedbdomain.usecase.configuration;
 import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.entity.Page;
 import com.maksing.moviedbdomain.manager.ConfigurationManager;
+import com.maksing.moviedbdomain.query.Query;
 import com.maksing.moviedbdomain.service.ConfigurationService;
 import com.maksing.moviedbdomain.service.ServiceHolder;
 import com.maksing.moviedbdomain.usecase.UseCase;
@@ -23,13 +24,19 @@ import rx.functions.Action1;
  * By convention each Interactor implementation will return the result using a Callback that should
  * be executed in the UI thread.
  */
-public class GetMovieDbConfigUseCase implements UseCase {
+public class GetMovieDbConfigUseCase extends UseCase<MovieDbConfig, Query> {
     private final ConfigurationService mConfigurationService;
 
     public GetMovieDbConfigUseCase(ServiceHolder serviceHolder) {
         mConfigurationService = serviceHolder.getConfigurationService();
     }
 
+    @Override
+    protected Observable<MovieDbConfig> getObservable(Query query) {
+        return null;
+    }
+
+    @Override
     public Observable<MovieDbConfig> getObservable() {
         MovieDbConfig config = ConfigurationManager.getInstance().getMovieDbConfig();
 

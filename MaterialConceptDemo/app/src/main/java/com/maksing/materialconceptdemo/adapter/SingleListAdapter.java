@@ -19,7 +19,10 @@ public class SingleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<Movie> mMovies = new ArrayList<>();
     private final int mItemLayoutResId;
 
-    public SingleListAdapter(int itemLayoutResId) {
+    private PosterViewHolder.OnPosterClickedListner mOnPosterClickedListner;
+
+    public SingleListAdapter(int itemLayoutResId, PosterViewHolder.OnPosterClickedListner onPosterClickedListner) {
+        mOnPosterClickedListner = onPosterClickedListner;
         mItemLayoutResId = itemLayoutResId;
     }
 
@@ -27,7 +30,7 @@ public class SingleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public PosterViewHolder onCreateViewHolder(ViewGroup parent, int pos) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(mItemLayoutResId, parent, false);
-        return new PosterViewHolder(view);
+        return new PosterViewHolder(view, mOnPosterClickedListner);
     }
 
     @Override

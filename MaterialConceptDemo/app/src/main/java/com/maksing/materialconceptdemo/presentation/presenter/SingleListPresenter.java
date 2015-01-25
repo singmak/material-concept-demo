@@ -4,6 +4,7 @@ import com.maksing.materialconceptdemo.presentation.view.SingleListView;
 import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.MovieList;
 import com.maksing.moviedbdomain.entity.Page;
+import com.maksing.moviedbdomain.query.DiscoverQuery;
 import com.maksing.moviedbdomain.usecase.movie.GetDiscoverListUseCase;
 
 import java.util.ArrayList;
@@ -47,7 +48,17 @@ public class SingleListPresenter extends Presenter<SingleListView> {
         mMovies = new ArrayList<>();
 
         if (mGetMovieListRequest == null) {
-            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(0), mCurrentListPage).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            mGetMovieListRequest = mGetDiscoverListUseCase.getObservable(new DiscoverQuery() {
+                                                                             @Override
+                                                                             public String getQuery() {
+                                                                                 return mPage.getDiscoverQueryAt(0);
+                                                                             }
+
+                                                                             @Override
+                                                                             public int getPage() {
+                                                                                 return mCurrentListPage;
+                                                                             }
+                                                                         }).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
         getView().showProgressbar();
         addSubscription(mGetMovieListRequest.subscribe(new Subscriber<MovieList>() {
@@ -78,5 +89,9 @@ public class SingleListPresenter extends Presenter<SingleListView> {
     @Override
     public void pause() {
 
+    }
+
+    public void onPosterClicked(Movie movie) {
+        getView().displayDetailsPage(movie.getId());
     }
 }

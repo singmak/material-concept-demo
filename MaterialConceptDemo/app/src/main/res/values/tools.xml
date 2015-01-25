@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file has values that's used in designtime only-->
+<resources>
+    <color name="tools_red">#ff0000</color>
+    <color name="tools_red1">#ffff645b</color>
+
+    <string name="tools_longText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum auctor ligula quis ante vulputate, a rhoncus est auctor. Donec malesuada diam id velit congue elementum. Nunc sollicitudin varius lacus in pulvinar. Integer volutpat consequat arcu, eu lobortis leo vulputate at. Etiam quis nibh viverra, ultrices lorem at, bibendum velit. Integer ac ornare est, sit amet hendrerit sem. Maecenas scelerisque finibus neque eu fringilla. Quisque ac ex quis sem porta sagittis vel nec massa. Nunc vitae nulla id lectus laoreet accumsan. Sed at purus libero. Phasellus at commodo ante. Ut tincidunt turpis a lectus egestas, quis pellentesque dolor ultrices. Vestibulum volutpat, risus non finibus posuere, nibh velit commodo tortor, eu venenatis nibh arcu vel est. Nam fermentum in lorem vitae facilisis.</string>
+</resources>

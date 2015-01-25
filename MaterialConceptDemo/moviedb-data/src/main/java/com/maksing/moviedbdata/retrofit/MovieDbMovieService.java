@@ -13,7 +13,7 @@ import rx.Observable;
  */
 public interface MovieDbMovieService {
     @GET("/movie/{id}")
-    Observable<MovieData> getMovieById(@Query("api_key") String apiKey, @Path("id") int id);
+    Observable<MovieData> getMovieById(@Query("api_key") String apiKey, @Path("id") String id);
     @GET("/movie/{id}/reviews")
     Observable<MovieData> getMovieReviewsById(@Query("api_key") String apiKey, @Path("id") int id);
     @GET("/movie/{id}/similar")

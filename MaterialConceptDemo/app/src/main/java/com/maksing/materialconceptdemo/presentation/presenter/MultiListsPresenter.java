@@ -3,8 +3,10 @@ package com.maksing.materialconceptdemo.presentation.presenter;
 import android.util.SparseArray;
 
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
+import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.MovieList;
 import com.maksing.moviedbdomain.entity.Page;
+import com.maksing.moviedbdomain.query.DiscoverQuery;
 import com.maksing.moviedbdomain.usecase.movie.GetDiscoverListUseCase;
 
 import rx.Observable;
@@ -46,7 +48,17 @@ public class MultiListsPresenter extends Presenter<MultiListsView> {
         Observable<MovieList> request = mGetMovieListRequestsMap.get(row);
 
         if (request == null) {
-            request = mGetDiscoverListUseCase.getObservable(mPage.getDiscoverQueryAt(row), 1).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            request = mGetDiscoverListUseCase.getObservable(new DiscoverQuery() {
+                                                                @Override
+                                                                public String getQuery() {
+                                                                    return mPage.getDiscoverQueryAt(row);
+                                                                }
+
+                                                                @Override
+                                                                public int getPage() {
+                                                                    return 1;
+                                                                }
+                                                            }).cache().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
             mGetMovieListRequestsMap.put(row, request);
         }
 
@@ -75,6 +87,10 @@ public class MultiListsPresenter extends Presenter<MultiListsView> {
 
         mSubscriptionsMap.put(row, subscription);
         addSubscription(subscription);
+    }
+
+    public void onPosterClicked(Movie movie) {
+        getView().displayDetailsPage(movie);
     }
 
     @Override

@@ -15,9 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTop">
         </activity>
         <activity android:name=".activity.SignInActivity">
+        </activity>
+        <activity android:name=".activity.DetailsActivity"
+            android:parentActivityName=".activity.MainActivity">
         </activity>
     </application>
 

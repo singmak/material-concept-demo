@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.maksing.materialconceptdemo.R;
 import com.maksing.materialconceptdemo.adapter.MultiListsAdapter;
+import com.maksing.materialconceptdemo.adapter.PosterViewHolder;
+import com.maksing.materialconceptdemo.navigation.Navigator;
 import com.maksing.materialconceptdemo.presentation.presenter.MultiListsPresenter;
 import com.maksing.materialconceptdemo.presentation.view.MultiListsView;
 import com.maksing.materialconceptdemo.utils.CommonUtils;
@@ -30,8 +32,8 @@ import static android.support.v7.widget.RecyclerView.OnScrollListener;
 /**
  * Created by maksing on 1/1/15.
  */
-public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> implements MultiListsView, MultiListsAdapter.Callbacks {
-    private MultiListsAdapter mMultiListsAdapter = new MultiListsAdapter();
+public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> implements MultiListsView, MultiListsAdapter.Callbacks, PosterViewHolder.OnPosterClickedListner {
+    private MultiListsAdapter mMultiListsAdapter = new MultiListsAdapter(this);
 
     private static final String ARG_PAGE = "ARG_PAGE";
     private Page mPage;
@@ -149,6 +151,11 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
     }
 
     @Override
+    public void displayDetailsPage(Movie movie) {
+        Navigator.gotoDetailPage(getActivity(), movie.getId());
+    }
+
+    @Override
     MultiListsPresenter onCreateFragmentPresenter() {
         return new MultiListsPresenter(mPage, new GetDiscoverListUseCase(getServiceHolder()));
     }
@@ -156,5 +163,10 @@ public class MultiListsFragment extends PresenterFragment<MultiListsPresenter> i
     @Override
     public void loadListAt(int position) {
         getPresenter().loadListAt(position);
+    }
+
+    @Override
+    public void onPosterClicked(Movie movie) {
+        getPresenter().onPosterClicked(movie);
     }
 }

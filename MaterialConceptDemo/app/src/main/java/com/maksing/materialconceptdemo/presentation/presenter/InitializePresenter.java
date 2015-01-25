@@ -39,7 +39,8 @@ public class InitializePresenter extends Presenter<InitializeView> {
     protected void initializeView() {
         if (mInitializeRequest == null) {
             getView().updateStatusText(InitializeView.Status.LOADING_CONFIG);
-            mInitializeRequest = mInitializeSessionUseCase.getObservable(new InitializeSessionUseCase.Callbacks() {
+
+            mInitializeSessionUseCase.setCallbacks(new InitializeSessionUseCase.Callbacks() {
                 @Override
                 public Observable<Boolean> shouldStartGuestSession() {
                     return getView().showConfirmDialog().map(new Func1<PresenterView.ConfirmDialogButton, Boolean>() {
@@ -56,7 +57,9 @@ public class InitializePresenter extends Presenter<InitializeView> {
                         }
                     });
                 }
-            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            });
+
+            mInitializeRequest = mInitializeSessionUseCase.getObservable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         }
 
         addSubscription(mInitializeRequest.subscribe(new Subscriber<String>() {

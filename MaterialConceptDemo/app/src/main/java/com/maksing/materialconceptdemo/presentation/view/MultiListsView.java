@@ -11,4 +11,5 @@ public interface MultiListsView extends PresenterView {
     void displayListAt(List<Movie> movies, int row);
     void showProgressBarAt(int row);
     void showErrorAt(int row);
+    void displayDetailsPage(Movie movie);
 }

@@ -10,7 +10,10 @@ import com.maksing.moviedbdomain.entity.Movie;
 import com.maksing.moviedbdomain.entity.MovieList;
 import com.maksing.moviedbdomain.service.MovieService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import rx.Observable;
@@ -75,7 +78,7 @@ public class MovieDataService extends HttpService implements MovieService {
     }
 
     @Override
-    public Observable<Movie> getMovieById(int id, final String posterBasePath, final String backdropBasePath) {
+    public Observable<Movie> getMovieById(String id, final String posterBasePath, final String backdropBasePath) {
         return mMovieDbMovieServiceStore.getService().getMovieById(mApiKey, id).map(new Func1<MovieData, Movie>() {
             @Override
             public Movie call(MovieData movieData) {
@@ -89,9 +92,28 @@ public class MovieDataService extends HttpService implements MovieService {
                     }
                 }
 
+                String lang = "";
+                if (movieData.getSpokenLanguages() != null && !movieData.getSpokenLanguages().isEmpty()) {
+                    lang = movieData.getSpokenLanguages().get(0).getName();
+                }
+
+                Date date = null;
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    date = simpleDateFormat.parse(movieData.getReleaseDate());
+                } catch (ParseException e) {
+
+                }
+
                 Movie movie = new Movie.Builder(String.valueOf(movieData.getId()), movieData.getTitle(), posterPath, backdropPath)
                         .setDescription(movieData.getOverview())
                         .setGenres(genres)
+                        .setLanguage(lang)
+                        .setRating((float)movieData.getVoteAverage())
+                        .setRatingsCount(movieData.getVoteCount())
+                        .setReleaseDate(date)
+                        .setRunTime(movieData.getRuntime())
+                        .setTagline(movieData.getTagline())
                         .build();
 
                 return movie;

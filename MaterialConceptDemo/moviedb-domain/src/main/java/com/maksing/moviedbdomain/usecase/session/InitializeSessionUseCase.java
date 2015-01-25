@@ -4,6 +4,7 @@ import com.maksing.moviedbdomain.entity.MovieDbConfig;
 import com.maksing.moviedbdomain.entity.Session;
 import com.maksing.moviedbdomain.exception.InvalidSessionException;
 import com.maksing.moviedbdomain.manager.AuthenticationManager;
+import com.maksing.moviedbdomain.query.Query;
 import com.maksing.moviedbdomain.service.ServiceHolder;
 import com.maksing.moviedbdomain.usecase.session.SessionUseCase;
 
@@ -13,22 +14,27 @@ import rx.functions.Func1;
 /**
  * Created by maksing on 26/12/14.
  */
-public class InitializeSessionUseCase extends SessionUseCase {
+public class InitializeSessionUseCase extends SessionUseCase<String, Query> {
+    private Callbacks mCallbacks;
+
     public InitializeSessionUseCase(ServiceHolder serviceHolder) {
         super(serviceHolder);
     }
 
+    public void setCallbacks(Callbacks callbacks) {
+        mCallbacks = callbacks;
+    }
+
     /**
      *
-     * @param callbacks
      * @return an obserable which emit true or false,
      */
-    public Observable<String> getObservable(final Callbacks callbacks) {
+    public Observable<String> getObservable() {
         return getMovieDbConfig().cache().flatMap(new Func1<MovieDbConfig, Observable<Boolean>>() {
             @Override
             public Observable<Boolean> call(MovieDbConfig movieDbConfig) {
                 if (AuthenticationManager.getInstance().getCurrentSession() == null) {
-                    return callbacks.shouldStartGuestSession();
+                    return mCallbacks.shouldStartGuestSession();
                 } else {
                     return Observable.just(true);
                 }

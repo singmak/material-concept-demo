@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.maksing.materialconceptdemo.R;
+import com.maksing.materialconceptdemo.adapter.PosterViewHolder;
 import com.maksing.materialconceptdemo.adapter.SingleListAdapter;
+import com.maksing.materialconceptdemo.navigation.Navigator;
 import com.maksing.materialconceptdemo.presentation.presenter.SingleListPresenter;
 import com.maksing.materialconceptdemo.presentation.view.SingleListView;
 import com.maksing.materialconceptdemo.utils.CommonUtils;
@@ -26,8 +28,8 @@ import butterknife.InjectView;
 /**
  * Created by maksing on 25/12/14.
  */
-public class SingleListFragment extends PresenterFragment<SingleListPresenter> implements SingleListView {
-    private SingleListAdapter mSingleListAdapter = new SingleListAdapter(R.layout.movie_list_item);
+public class SingleListFragment extends PresenterFragment<SingleListPresenter> implements SingleListView, PosterViewHolder.OnPosterClickedListner {
+    private SingleListAdapter mSingleListAdapter = new SingleListAdapter(R.layout.movie_list_item, this);
 
     private static final String ARG_PAGE = "ARG_PAGE";
 
@@ -100,5 +102,15 @@ public class SingleListFragment extends PresenterFragment<SingleListPresenter> i
     public void displayLists(List<Movie> lists) {
         mLoaderLayout.displayContent();
         mSingleListAdapter.setMovies(lists);
+    }
+
+    @Override
+    public void displayDetailsPage(String movieId) {
+        Navigator.gotoDetailPage(getActivity(), movieId);
+    }
+
+    @Override
+    public void onPosterClicked(Movie movie) {
+        getPresenter().onPosterClicked(movie);
     }
 }

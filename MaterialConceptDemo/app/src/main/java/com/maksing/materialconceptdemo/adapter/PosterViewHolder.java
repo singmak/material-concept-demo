@@ -22,15 +22,29 @@ public class PosterViewHolder extends RecyclerView.ViewHolder implements MovieBi
     @InjectView(R.id.movie_title)
     TextView mTitle;
 
-    public PosterViewHolder(View itemView) {
+    private OnPosterClickedListner mOnPosterClickedListner;
+
+    public PosterViewHolder(View itemView, OnPosterClickedListner onPosterClickedListner) {
         super(itemView);
         ButterKnife.inject(this, itemView);
         mPosterImage.setAspectRatio(2, 3);
+        mOnPosterClickedListner = onPosterClickedListner;
     }
 
     @Override
-    public void bindMovie(Movie movie) {
+    public void bindMovie(final Movie movie) {
         mTitle.setText(movie.getTitle());
         Picasso.with(mPosterImage.getContext()).load(movie.getPosterSource()).fit().centerCrop().into(mPosterImage);
+
+        mPosterImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnPosterClickedListner.onPosterClicked(movie);
+            }
+        });
+    }
+
+    public interface OnPosterClickedListner {
+        public void onPosterClicked(Movie movie);
     }
 }

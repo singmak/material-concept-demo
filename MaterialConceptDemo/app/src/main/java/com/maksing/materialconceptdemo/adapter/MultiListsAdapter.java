@@ -34,6 +34,12 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private View.OnTouchListener mOnHeroAnchorTouchListener;
 
+    private PosterViewHolder.OnPosterClickedListner mOnPosterClickedListner;
+
+    public MultiListsAdapter(PosterViewHolder.OnPosterClickedListner onPosterClickedListner) {
+        mOnPosterClickedListner = onPosterClickedListner;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -57,7 +63,7 @@ public class MultiListsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (mListAdaptersMap.get(position) != null) {
                 adapter = mListAdaptersMap.get(position);
             } else {
-                adapter = new SingleListAdapter(R.layout.fixed_size_movie_list_item);
+                adapter = new SingleListAdapter(R.layout.fixed_size_movie_list_item, mOnPosterClickedListner);
                 mListAdaptersMap.put(position, adapter);
                 if (mCallbacks != null) {
                     mCallbacks.loadListAt(position);

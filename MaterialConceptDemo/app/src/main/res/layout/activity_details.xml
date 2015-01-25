@@ -1,118 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+             xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
              android:orientation="vertical"
              android:layout_width="match_parent"
-             android:layout_height="match_parent">
+             android:layout_height="match_parent"
+             tools:context=".activity.DetailsActivity">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.maksing.materialconceptdemo.widget.LoaderLayout
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_height="wrap_content">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/black">
-
-                <com.maksing.materialconceptdemo.widget.FixedRatioView
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:widthRatio="16"
-                    app:heightRatio="9"
-                    />
+                    android:background="@android:color/black"
+                    tools:background="@color/tools_red1">
 
-            </FrameLayout>
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:columnCount="2"
-                android:rowCount="3">
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_rowSpan="3">
-
-                    <com.maksing.materialconceptdemo.widget.FixedRatioImageView
-                        android:layout_width="@dimen/details_poster_width"
+                    <com.maksing.materialconceptdemo.widget.FixedRatioView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:widthRatio="3"
-                        app:heightRatio="2"/>
+                        app:widthRatio="16"
+                        app:heightRatio="9"/>
 
-                </android.support.v7.widget.CardView>
+                    <TextView
+                        android:id="@+id/movie_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="@dimen/details_poster_vertical"
+                        android:layout_marginLeft="@dimen/details_poster_horizontal"
+                        android:layout_marginRight="@dimen/details_poster_horizontal"
+                        tools:text="Movie title here"
+                        android:textStyle="bold"/>
 
-                <TextView
-                    android:id="@+id/date"
+                </FrameLayout>
+
+                <GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:columnCount="2"
+                    android:rowCount="3">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_rowSpan="3">
+
+                        <com.maksing.materialconceptdemo.widget.FixedRatioImageView
+                            android:id="@+id/poster_image"
+                            android:layout_width="@dimen/details_poster_width"
+                            android:layout_height="wrap_content"
+                            app:widthRatio="2"
+                            app:heightRatio="3"/>
+
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:layout_gravity="fill_horizontal"
+                        android:ellipsize="end"
+                        tools:text="@string/tools_longText"/>
+
+                    <TextView
+                        android:id="@+id/runtime"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill_horizontal"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        tools:text="@string/tools_longText"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                </GridLayout>
 
                 <TextView
-                    android:id="@+id/time"
+                    android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <LinearLayout
+                    android:id="@+id/rating_container"
                     android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
+                <LinearLayout
+                    android:id="@+id/reviews_container"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/related_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-
-                </LinearLayout>
-
-            </GridLayout>
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:id="@+id/rating_container"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:id="@+id/reviews_container"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/related_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-    </ScrollView>
-
+            </LinearLayout>
+        </ScrollView>
+    </com.maksing.materialconceptdemo.widget.LoaderLayout>
     <include layout="@layout/toolbar"/>
 
 </FrameLayout>
