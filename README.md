@@ -1,4 +1,4 @@
-material-concept-demo
+material-concept-demo (Deprecated)
 =====================
 
 A practise for material design and clean Android architecture
